@@ -25,7 +25,7 @@ To address this, we have developed EDA-Q, an integrated platform that enables fu
 
 # Installation
 
-We provide an installment-free version in **Packages** that allows you to run the UI launcher without environment configuration. If you need to use code for your quantum chip design, please refer to the installation documentation below.
+We provide an installment-free version in **Releases** that allows you to run the UI launcher without environment configuration. If you need to use code for your quantum chip design, please refer to the installation documentation below.
 
 ## installation method
 
