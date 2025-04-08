@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7d4fe7c6-39b3-4137-9853-034d553e20a4" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/../Widget_2/Generate_Ctls.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Widget_2/Generate_Ctls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Widget_2/Qubit_type.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Widget_2/Qubit_type.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Widget_2/Topo_Node.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Widget_2/Topo_Node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Widget_2/Widget_Others.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Widget_2/Widget_Others.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Widget_2/Widget_chiplayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Widget_2/Widget_chiplayer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/AirBridge_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/AirBridge_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/AirbriageNb_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/AirbriageNb_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/ChargeLine_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/ChargeLine_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/ControlLineCircle_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/ControlLineCircle_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/ControlLineWidthDiff_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/ControlLineWidthDiff_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/CouplerBase_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/CouplerBase_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/CouplingCavity_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/CouplingCavity_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/CouplingLineStraight_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/CouplingLineStraight_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/IndiumBump_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/IndiumBump_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/LaunchPad_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/LaunchPad_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/ReadoutArrowPlus_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/ReadoutArrowPlus_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/ReadoutArrow_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/ReadoutArrow_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/ReadoutCavityFlipchip_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/ReadoutCavityFlipchip_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/ReadoutCavityPlus_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/ReadoutCavityPlus_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/ReadoutCavity_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/ReadoutCavity_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/TransmissionPath_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/TransmissionPath_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/Transmon_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/Transmon_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component/Xmon_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component/Xmon_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/Component_Actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/Component_Actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/design_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/design_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/display_area.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/display_area.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/global_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/global_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/menu_bar.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/menu_bar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/styles.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/styles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gui_modules/tool_bar.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gui_modules/tool_bar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../icons/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/old_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/picture/gds.svg" beforeDir="false" afterPath="$PROJECT_DIR$/picture/gds.svg" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2vJQp3WIo25zEcH0YAYyBmAKARE" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "v5.19.1-temp",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.24807.21" />
+        <option value="bundled-python-sdk-00717045f1d3-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.24807.21" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="7d4fe7c6-39b3-4137-9853-034d553e20a4" name="更改" comment="" />
+      <created>1743860877826</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1743860877826</updated>
+      <workItem from="1743860879175" duration="7000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

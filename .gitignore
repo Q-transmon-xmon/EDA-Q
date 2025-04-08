@@ -1,0 +1,8 @@
+*.pyc
+__pycache__
+migrations
+*.svg
+*.gds
+/test_private
+/library_private
+/demo_private
