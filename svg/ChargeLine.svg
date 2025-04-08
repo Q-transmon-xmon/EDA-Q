@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="700.0" height="2200.0" viewBox="-350.0 -2100.0 700.0 2200.0">
+<defs>
+<style type="text/css">
+.l0d0 {stroke: rgb(255, 0, 0); fill: rgb(255, 0, 0); fill-opacity: 0.5;}
+</style>
+</defs>
+<rect x="-350.0" y="-2100.0" width="700.0" height="2200.0" fill="#222" stroke="none"/>
+<g id="charge_line0_cell" transform="scale(1 -1)">
+<polygon class="l0d0" points="150.0,1500.0 150.0,0.0 250.0,0.0 250.0,2000.0 -250.0,2000.0 -250.0,0.0 -150.0,0.0 -150.0,1500.0"/>
+</g>
+</svg>

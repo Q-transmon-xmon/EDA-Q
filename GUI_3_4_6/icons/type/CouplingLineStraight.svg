@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="550.0" height="70.0" viewBox="-25.0 -35.0 550.0 70.0">
+<defs>
+<style type="text/css">
+.l0d0 {stroke: rgb(255, 0, 0); fill: rgb(255, 0, 0); fill-opacity: 0.5;}
+</style>
+</defs>
+<rect x="-25.0" y="-35.0" width="500.0" height="70.0" fill="#222" stroke="none"/>
+<g id="q0_cp_q1_cell" transform="scale(1 -1)">
+<polygon class="l0d0" points="440.0,10.0 20.0,10.0 20.0,5.0 440.0,5.0"/>  <!-- 修改宽度 -->
+<polygon class="l0d0" points="440.0,-10.0 440.0,-5.0 20.0,-5.0 20.0,-10.0"/>  <!-- 修改宽度 -->
+</g>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="550.0" height="350.0" viewBox="-25.0 -235.0 550.0 350.0">
+<defs>
+<style type="text/css">
+.l0d0 {stroke: rgb(255, 0, 0); fill: rgb(255, 0, 0); fill-opacity: 0.5;}
+</style>
+</defs>
+<rect x="-25.0" y="-235.0" width="550.0" height="350.0" fill="#222" stroke="none"/>
+<g id="CouplerBase0_cell" transform="scale(1 -1)">
+<polygon class="l0d0" points="160.0,210.0 160.0,25.0 0.0,25.0 0.0,10.0 190.0,10.0 190.0,180.0 310.0,180.0 310.0,10.0 500.0,10.0 500.0,25.0 340.0,25.0 340.0,210.0"/>
+<polygon class="l0d0" points="310.0,-60.0 190.0,-60.0 190.0,-10.0 0.0,-10.0 0.0,-25.0 160.0,-25.0 160.0,-90.0 340.0,-90.0 340.0,-25.0 500.0,-25.0 500.0,-10.0 310.0,-10.0"/>
+</g>
+</svg>
