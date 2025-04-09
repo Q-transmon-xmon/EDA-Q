@@ -12,15 +12,10 @@ from library.others.indium_bump import IndiumBump
 from library.others.zline_flipchip import ZlineFlipchip
 from library.others.zline import Zline
 
-# private
-from library.others.zline_nju import ZlineNju
-
 module_name_list = ["air_bridge",
                     "Airbriage_Nb",
                     "arrow",
                     "finger",
                     "indium_bump",
                     "zline_flipchip",
-                    "zline",
-                    # private
-                    "zline_nju"]
+                    "zline"]

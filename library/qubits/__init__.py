@@ -13,14 +13,7 @@ from library.qubits.transmon_teeth import TransmonTeeth
 from library.qubits.transmon import Transmon
 from library.qubits.xmon import Xmon
 from library.qubits.xmon_rotate import XmonRotate
-
-
-# private
-from library.qubits.smon import Smon
 from library.qubits.transmon_benzheng import TransmonBenzheng
-from library.qubits.xmon_nju import XmonNju
-from library.qubits.smon0815 import Smon0815
-from library.qubits.smon_read_test import SmonReadTest
 
 module_name_list = ["circlemon", 
                     "custom_qubit",  
@@ -30,9 +23,4 @@ module_name_list = ["circlemon",
                     "transmon", 
                     "xmon",
                     "xmon_rotate",
-                    # private
-                    "smon",
-                    "transmon_benzheng",
-                    "xmon_nju",
-                    "smon085",
-                    "smon_read_test"]
+                    "transmon_benzheng"]
