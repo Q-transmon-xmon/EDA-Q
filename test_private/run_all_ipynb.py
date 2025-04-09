@@ -163,13 +163,13 @@ if __name__ == "__main__":
         success, elapsed_time, error_info = execute_notebook_without_interruption(notebook_file)
         if success:
             formatted_time = format_time(elapsed_time)
-            print(f"[SUCCESS] {notebook_file}")
+            print(f"[SUCCESS]")
             print(f"(耗时: {formatted_time})")
             success_count += 1
             total_time += elapsed_time
         else:
             error_log_path = save_error_log(error_info, notebook_file)
-            print(f"[FAILURE] {notebook_file}")
+            print(f"[FAILURE]")
             print(f"    Error log saved to: {error_log_path}")
             failure_count += 1
         print("-" * 80)
