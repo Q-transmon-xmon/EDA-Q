@@ -1,18 +1,18 @@
 import os
 import datetime
 import traceback
-import time  # 新增时间模块
+import time
 
 # 获取脚本启动时间（统一时间戳）
 SCRIPT_START_TIME = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-# 设置要忽略的路径（可以是文件或目录）
+# 设置要忽略的路径（可以是文件或目录），支持相对路径（如 ./path 或 ../path）
 IGNORE_PATHS = [
     # 示例忽略路径，请根据实际需要修改
     # "path/to/ignore_directory",
     # "path/to/specific_file.ipynb"
-    "C:/my_things/disk_backup/4_QEDA/0_tianyan_proj/3_EDA_Q_codeup/test_private/12_test_metal_lom_qubits_cpw/0.ipynb",
-    "C:/my_things/disk_backup/4_QEDA/0_tianyan_proj/3_EDA_Q_codeup/test_private/5_test_equ_circ/demo.ipynb"
+    "./12_test_metal_lom_qubits_cpw/0.ipynb",
+    "./5_test_equ_circ/demo.ipynb"
 ]
 
 def should_ignore(path, ignore_list):
@@ -28,7 +28,12 @@ def should_ignore(path, ignore_list):
     """
     abs_path = os.path.abspath(path)
     for ignore_path in ignore_list:
+        # 处理相对路径（包括./和../开头的路径）
+        if not os.path.isabs(ignore_path):
+            # 将相对路径转换为绝对路径（基于当前工作目录）
+            ignore_path = os.path.normpath(os.path.join(os.getcwd(), ignore_path))
         abs_ignore = os.path.abspath(ignore_path)
+        
         # 检查是否是目录路径
         if os.path.isdir(abs_ignore):
             if abs_path.startswith(abs_ignore + os.sep) or abs_path == abs_ignore:
