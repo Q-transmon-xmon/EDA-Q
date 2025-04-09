@@ -279,3 +279,7 @@ def new_sim_method(gds_ops):
     toolbox.show_options(gds_ops)
     ################################
     return
+
+def metal_lom_qubit_cpw(gds_ops, name_qubit, name_cpw):
+    print("Xu Ziheng's work...")
+    return

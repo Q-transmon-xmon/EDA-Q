@@ -663,3 +663,30 @@ class Gds(GdsBase):
         gds_ops = self.options
         sim.new_sim_method(gds_ops)
         return
+    
+    def generate_qubits_1(self,
+                          num: int,
+                          num_cols: int,
+                          num_rows: int,
+                          type: str = "Transmon",
+                          chip: str = "default_layer",
+                          dist: int = 2000,
+                          geometric_options: Dict = Dict()):
+        gds_ops = self.options
+        qubits_ops = func_modules.qubits.generate_qubits_1(num=num,
+                                                           num_cols=num_cols,
+                                                           num_rows=num_rows,
+                                                           type=type,
+                                                           chip=chip,
+                                                           dist=dist,
+                                                           geometric_options=geometric_options)
+        gds_ops.qubits = qubits_ops
+        self.inject_options(gds_ops)
+        return
+    
+    def metal_lom_qubit_cpw(self, name_qubit, name_cpw):
+        gds_ops = self.options
+        sim.metal_lom_qubit_cpw(gds_ops=gds_ops,
+                                name_qubit=name_qubit,
+                                name_cpw=name_cpw)
+        return

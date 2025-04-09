@@ -213,6 +213,86 @@ def generate_qubits(**generate_ops):
     qubits_ops = gene_qubits.gene_qubits(**generate_ops)
     return copy.deepcopy(qubits_ops)
 
+def generate_qubits_1(num: int,
+                    num_cols: int,
+                    num_rows: int,
+                    type: str = "Transmon",
+                    chip: str = "default_layer",
+                    dist: int = 2000,
+                    geometric_options: Dict = Dict()):
+    """
+    Generate operational parameters based on the number of quantum bits and type.
+
+    Input:
+        gene_ops: dict, containing the number of quantum bits and type.
+
+    Output:
+        qubits_ops: dict, the generated set of operational parameters for quantum bits.
+    """
+
+    def generate_topo_pos(num, col, row):
+        """
+        Generate topological positions for quantum bits based on column and row numbers.
+
+        Input:
+            col: int, the number of columns.
+            row: int, the number of rows.
+
+        Output:
+            topo_pos: list, a list of topological positions for quantum bits.
+        """
+        gds_pos = []
+        for x in range(0, col):
+            for y in range(0, row):
+                gds_pos.append((x, y))
+                num -= 1
+                if num == 0:
+                    break
+        return copy.deepcopy(gds_pos)
+    
+    def generate_gds_pos(num, col, row, dist):
+        """
+        Generate GDS coordinates for quantum bits based on column and row numbers and spacing.
+
+        Input:
+            col: int, the number of columns.
+            row: int, the number of rows.
+            dist: float, the spacing between quantum bits.
+
+        Output:
+            gds_pos: list, a list of GDS coordinates for quantum bits.
+        """
+        gds_pos = []
+        for x in range(0, col):
+            for y in range(0, row):
+                gds_pos.append((x*dist, y*dist))
+                num -= 1
+                if num == 0:
+                    break
+        return copy.deepcopy(gds_pos)
+    
+    topo_pos_list = generate_topo_pos(num=num, col=num_cols, row=num_rows)
+    gds_pos_list = generate_gds_pos(num=num, col=num_cols, row=num_rows, dist=dist)
+
+    qubits_ops = Dict()
+    for i in range(num):
+        q_name = "q" + str(i)
+        qubits_ops[q_name].name = q_name
+        qubits_ops[q_name].type = type
+        qubits_ops[q_name].gds_pos = copy.deepcopy(gds_pos_list[i])
+        qubits_ops[q_name].topo_pos = copy.deepcopy(topo_pos_list[i])
+        qubits_ops[q_name].chip = chip
+        for k, v in geometric_options:
+            qubits_ops[q_name][k] = copy.deepcopy(v)
+    return qubits_ops
+
+def generate_qubits_from_topology(topo_ops: Dict = None, 
+                                  type: str = "Transmon", 
+                                  dist: int = 2000,
+                                  geometric_options: Dict = Dict()):
+
+    return
+
 def generate_qubits_from_topo(**gene_ops):
     """根据拓扑坐标在对应的位置生成qubits
     
