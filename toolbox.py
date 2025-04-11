@@ -744,3 +744,15 @@ def get_cell_bounding_box(cell):
 def custom_calculation(options1, options2):
     
     return
+
+def read_layout_gds(file_path):
+    """Reads a GDS layout file and automatically parses the layout components into Python classes.
+    
+    Input:
+        file_path (str): Path to the GDS file to be read.
+        
+    Output:
+        output_path (str): A file directory containing the parsed component results.
+    """
+    
+    return
