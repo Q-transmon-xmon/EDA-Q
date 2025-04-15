@@ -228,6 +228,11 @@ def find_coupling_options(rcsv_path, coupling_line_name, op_name):
             elif op_name == 'l' and row[0] == coupling_line_name:
                 return float(row[3])
 
+    print("No coupling component named \"{}\" was found. The list of coupling components is:".format(coupling_line_name))
+    with open(rcsv_path, newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            print(row[0])
     return None  # Return None if no corresponding data is found
 
 

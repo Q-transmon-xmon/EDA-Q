@@ -224,3 +224,18 @@ class EquivalentCircuit(Base):
 
         self.inject_options(equ_circ_ops)
         return
+    
+    def is_qubit_exist(self, qname):
+        qubit_ops = self.find_qubit_options(qname)
+        if qubit_ops is None:
+            return False
+        else:
+            return True
+        
+    def is_coupling_exist(self, coupling_name):
+        cl_ops = self.find_coupling_options(coupling_line_name=coupling_name,
+                                            op_name="l")
+        if cl_ops is None:
+            return False
+        else:
+            return True
