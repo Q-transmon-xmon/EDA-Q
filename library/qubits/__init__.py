@@ -20,7 +20,7 @@ module_name_list = ["circlemon",
                     "transmon_interdigitated", 
                     "transmon_rotate", 
                     "transmon_teeth", 
-                    "transmon",
-                    "transmon_benzheng",
+                    "transmon", 
                     "xmon",
-                    "xmon_rotate"]
+                    "xmon_rotate",
+                    "transmon_benzheng",]
