@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="256.0" height="1056.0" viewBox="-128.0 -528.0 256.0 1056.0">
+<defs>
+<style type="text/css">
+.l3d0 {stroke: rgb(255, 255, 64); fill: rgb(255, 255, 64); fill-opacity: 0.5;}
+</style>
+</defs>
+<rect x="-128.0" y="-528.0" width="256.0" height="1056.0" fill="#222" stroke="none"/> <!-- 修改黑色区域 -->
+<g id="gds" transform="scale(1 -1)">
+<polygon class="l3d0" points="-80.0,-480.0 -80.0,480.0 80.0,480.0 80.0,-480.0"/> <!-- 修改多边形 -->
+</g>
+</svg>

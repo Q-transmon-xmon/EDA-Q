@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>功能分区示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .section {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            padding: 20px;
+            width: 30%;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon {
+            margin: 15px 0;
+            font-size: 24px; /* 图标字体大小 */
+        }
+
+        h2 {
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="section" id="section1">
+            <h2>功能分区 1</h2>
+            <div class="icon">🔧<br>设置</div>
+            <div class="icon">📂<br>打开</div>
+            <div class="icon">💾<br>保存</div>
+        </div>
+        <div class="section" id="section2">
+            <h2>功能分区 2</h2>
+            <div class="icon">🔍<br>搜索</div>
+            <div class="icon">⚙️<br>配置</div>
+            <div class="icon">❓<br>帮助</div>
+        </div>
+        <div class="section" id="section3">
+            <h2>功能分区 3</h2>
+            <div class="icon">📊<br>分析</div>
+            <div class="icon">📅<br>日历</div>
+            <div class="icon">🚀<br>启动</div>
+        </div>
+    </div>
+</body>
+
+</html>
