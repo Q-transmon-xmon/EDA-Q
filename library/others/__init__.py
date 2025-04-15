@@ -11,6 +11,7 @@ from library.others.finger import Finger
 from library.others.indium_bump import IndiumBump
 from library.others.zline_flipchip import ZlineFlipchip
 from library.others.zline import Zline
+from library.others.cover_bridge import CoverBridge
 
 module_name_list = ["air_bridge",
                     "Airbriage_Nb",
@@ -18,4 +19,5 @@ module_name_list = ["air_bridge",
                     "finger",
                     "indium_bump",
                     "zline_flipchip",
-                    "zline"]
+                    "zline",
+                    "cover_bridge"]
