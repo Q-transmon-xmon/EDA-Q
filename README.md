@@ -79,7 +79,7 @@ Submit a PR (https://github.com/Q-transmon-xmon/EDA-Q/pulls) request, and I will
 
 ### Contributors
 
-Thank you to all those who contributed.
+Thanks to all the collaborators.
 
 [@Institute of Physics, Chinese Academy of Sciences]() <br>
 [@CIQTEK Co.,Ltd]() <br>
