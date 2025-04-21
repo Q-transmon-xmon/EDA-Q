@@ -1,4 +1,4 @@
-# EDA-Q v0.4.1
+# EDA-Q v0.5.0
 
 [![](https://img.shields.io/badge/homepage-EDA_Q-orange)](https://github.com/Q-transmon-xmon/EDA-Q)
 
@@ -63,7 +63,7 @@ To simplify the installation process of the **EDA-Q** tool, we provide a pre-con
 
 ## Key Project Leaders
 
-[@Tiacaizhi](Tiancaizhi.github.io)
+[@Tiancaizhi](Tiancaizhi.github.io)
 [@XiaohanEating](XiaohanEating.github.io)
 [@BeautyGao](BeautyGao.github.io)
 [@aknbg1thub](aknbg1thub.github.io)
@@ -79,7 +79,7 @@ Submit a PR (https://github.com/Q-transmon-xmon/EDA-Q/pulls) request, and I will
 
 ### Contributors
 
-Thanks to all the collaborators.
+Thank you to all those who contributed.
 
 [@Institute of Physics, Chinese Academy of Sciences]() <br>
 [@CIQTEK Co.,Ltd]() <br>
