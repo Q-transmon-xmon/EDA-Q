@@ -38,3 +38,6 @@ def auto_generate_air_bridges_ops2(gds_ops,
                                                              chip_name=chip_name, 
                                                              width=width, 
                                                              air_bridge_type=air_bridge_type)
+
+def auto_generate_air_bridges_ops3(gds_ops):
+    return generate_air_bridges.add_air_bridges_czy2(gds_ops)

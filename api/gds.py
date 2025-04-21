@@ -676,6 +676,44 @@ class Gds(GdsBase):
         self.inject_options(gds_ops)
         return
     
+    def auto_generate_air_bridge5(self, line_type, line_name, spacing=120, chip_name="chip3", width=10, air_bridge_type="AirBridgeNb"):
+        """
+        Automatically generate an air bridge (advanced version).
+
+        Input:
+            line_type: str, the type of line, supports "control_lines" or "transmission_lines".
+            line_name: str, the name of the line.
+            spacing: float, the spacing of the air bridge, default is 120.
+            chip_name: str, the name of the chip, default is "chip3".
+            width: float, the width of the air bridge, default is 10.
+            air_bridge_type: str, the type of air bridge, default is "AirBridgeNb".
+
+        Output:
+            None
+        """
+
+        # parameters preparation
+        gds_ops = self.options
+
+        # Compatible with path and pos
+        line_ops = copy.deepcopy(gds_ops[line_type][line_name])  # Get line parameters
+        allow_type_list = ["control_lines", "transmission_lines"]
+        if line_type not in allow_type_list:
+            raise ValueError("Automatic generation of air bridges for {} has not been developed.".format(line_type))
+        
+        if "pos" in line_ops.keys():
+            path = gds_ops[line_type][line_name].pos
+        elif "path" in line_ops.keys():
+            path = gds_ops[line_type][line_name].path
+        else:
+            print(line_ops.keys())
+            raise ValueError("The selected component properties do not have pos or path, unable to automatically generate an air bridge.")
+
+        # operation
+        new_gds_ops = func_modules.air_bridges.auto_generate_air_bridges_ops3(gds_ops)
+        self.inject_options(new_gds_ops)
+        return
+    
     def get_gds_bounding_box(self):
         min_coor, max_coor = toolbox.get_cell_bounding_box(self.cell)
         return min_coor, max_coor

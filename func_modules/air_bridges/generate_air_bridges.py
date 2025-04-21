@@ -496,3 +496,19 @@ def add_air_bridges_czy(pos, bend_radius, spacing=120, chip_type="chip3", width=
                 )
                 options[option.name] = option
     return options
+
+def add_air_bridges_czy2(gds_ops):
+    """
+    
+    """
+
+    # uncoupling
+    import copy
+    gds_ops = copy.deepcopy(gds_ops)
+    new_gds_ops = copy.deepcopy(gds_ops)
+
+    # your code
+    print("to be continued...")
+
+
+    return new_gds_ops
