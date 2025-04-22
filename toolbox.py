@@ -609,7 +609,7 @@ class {class_name}(LibraryBase):
         return
 
     def _add_polygons_to_cell(self):
-        polygoascqcqewqwdqwdqwdqwdn_data = [
+        polygon_data = [
 """
 
     # Add polygons for each cell
