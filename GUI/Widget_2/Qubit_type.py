@@ -2,7 +2,7 @@ import sys
 from PyQt5 import QtCore
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QApplication, QDialog, QHBoxLayout, QVBoxLayout,
-                            QLabel, QSizePolicy, QSpacerItem, QMessageBox, QComboBox)
+                             QLabel, QSizePolicy, QSpacerItem, QMessageBox, QComboBox, QDialogButtonBox)
 
 from GUI.gui_modules.design_validator import design_validator
 from api.design import Design
@@ -57,7 +57,6 @@ class Dialog_Selection(QDialog):
         # 创建下拉框
         self.type_combo = QComboBox()
         self.type_combo.addItems(valid_names)
-        self.type_combo.currentIndexChanged.connect(self.on_qubit_selected)
         self.type_combo.setFixedWidth(250)  # 设置固定宽度为250px
         self.type_combo.setFixedHeight(25)  # 设置固定高度为40px
         # 将下拉框居中
@@ -71,11 +70,17 @@ class Dialog_Selection(QDialog):
         # 添加底部间隔
         main_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
+        # 添加按钮框
+        self.button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        self.button_box.accepted.connect(self.on_confirm)
+        self.button_box.rejected.connect(self.reject)
+        main_layout.addWidget(self.button_box)
+
         self.setLayout(main_layout)
         self.move(400, 400)
 
-    def on_qubit_selected(self):
-        """统一处理量子比特类型选择"""
+    def on_confirm(self):
+        """处理确认按钮点击事件"""
         selected_type = self.type_combo.currentText()
         print(f"You selected: {selected_type}")
 
@@ -95,6 +100,11 @@ class Dialog_Selection(QDialog):
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Failed to generate qubits: {str(e)}")
             self.reject()
+
+    def on_qubit_selected(self):
+        """处理下拉框选项变化事件"""
+        selected_type = self.type_combo.currentText()
+        print(f"You selected: {selected_type}")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
