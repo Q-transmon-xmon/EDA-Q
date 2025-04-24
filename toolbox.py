@@ -744,3 +744,32 @@ def get_cell_bounding_box(cell):
 def custom_calculation(options1, options2):
     
     return
+
+
+def caculate_qubits_parms(f_q=65, Ec=30):
+    """
+    Calculate parameters for the qubit.
+
+    Input:
+        f_q: Float, frequency of the qubit (GHz).
+    """
+    # Define constants
+    import numpy as np
+
+    e = 1.60217657e-19  # Electron charge
+    h = 6.62606957e-34  # Planck's constant
+    hbar = 1.0545718E-34  # Reduced Planck's constant
+    phinot = 2.067 * 1E-15  # Magnetic flux quantum h/2e
+    phi0 = phinot / (2 * np.pi)  # Reduced magnetic flux quantum
+    c = 3 * 10 ** 8  # Speed of light
+    Cq = 65
+    # Ec = e ** 2 / 2 / Cq * 1e15 / hbar  # Angular frequency, unit: MHz, angular frequency / 2π = frequency
+
+    Ej = (f_q * 10 ** 9 + Ec) ** 2 / 8 / Ec
+    print("If fq =", f_q, 'GHz')
+    print("Then, Ej =", round((Ej / 10 ** 9), 2), "GHz")
+    Ic = Ej * h / phi0
+    print("Then, Ic =", round((Ic * 10 ** 9), 2), "nA")
+    Rn = np.pi * 0.182 * 10 ** -3 / 2 / Ic
+    print("Then, Rn =", round(Rn, 4), "Ω")
+    return

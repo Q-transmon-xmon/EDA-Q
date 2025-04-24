@@ -120,8 +120,6 @@ design.equivalent_circuit.find_qubit_options(qubit_name="q0")
 design.equivalent_circuit.find_coupling_options(coupling_line_name="c21", op_name="L")
 design.equivalent_circuit.find_coupling_options(coupling_line_name="c21", op_name="C")
 
-# Calculate qubit parameters.
-design.equivalent_circuit.caculate_qubits_parms(f_q=65, Ec=30)
 
 # Save the equivalent circuit diagram as an image.
 design.equivalent_circuit.save_image(path="./picture/equivalent_circuit.png")  # This feature currently has errors.
@@ -397,4 +395,23 @@ op1 = Dict(
 )
 options_list = [op0, op1]
 design.gds.qubits.batch_add(options_list=options_list)
+```
+
+## Calculation of physical parameters
+```python
+# calculate qubit parameters
+toolbox.caculate_qubits_parms(f_q=65, Ec=30)
+```
+
+## Other functions
+```python
+# Temporarily add a single component
+path = "./transmon_test.gds"
+components_type = "qubits"
+from gds_analysis import add_component_temporarily
+add_component_temporarily(path, components_type)
+# Read the component based on the gds layout
+import gds_analysis
+layout_file_path = "./Fsim_gate.gds"
+gds_analysis.read_chip(layout_file_path)
 ```
