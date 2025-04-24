@@ -6,7 +6,7 @@ from func_modules.chips import gene_chips_ops
 from func_modules.chips import primitives
 
 #####################################################################################################
-# 功能模块
+# functional module 
 #####################################################################################################
 from addict import Dict
 from library import chips as chips_lib
@@ -72,7 +72,7 @@ def soak_chips(chips_ops):
     return copy.deepcopy(chips_ops)
 
 def generate_chip_ops(**gene_ops):
-    # 向前兼容
+    # forward compatibility
     return copy.deepcopy(gene_chip_ops.gene_chip_ops(**gene_ops))
 
 def generate_chip(**gene_ops):

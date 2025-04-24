@@ -6,7 +6,7 @@ from func_modules.qubits import gene_qubits
 from func_modules.qubits import primitives
 
 ############################################################################################
-# 和跨线有关的参数处理
+# Parameter processing related to crossing lines
 ############################################################################################
 
 from addict import Dict
@@ -16,43 +16,43 @@ import toolbox
 import copy
 
 def soak_qubit(qubit_ops):
-    """根据类补全qubit参数
+    """Complete according to classqubitparameter
 
-    输入：
-        options: qubit参数
+    input：
+        options: qubitparameter
 
-    输出：
-        options: 补全后的qubit参数
+    output：
+        options: After completionqubitparameter
     """
     qubit_ops = primitives.soak_qubit(qubit_ops=qubit_ops)
     return copy.deepcopy(qubit_ops)
 
 def soak_qubits(qubits_ops):
-    """根据类补全qubits参数
+    """Complete according to classqubitsparameter
 
-    输入：
-        qubits_op: qubits参数
+    input：
+        qubits_op: qubitsparameter
 
-    输出：
-        qubits_op: 补全后的qubit参数
+    output：
+        qubits_op: After completionqubitparameter
     """
     qubits_ops=  primitives.soak_qubits(qubits_ops=qubits_ops)
     return copy.deepcopy(qubits_ops)
 
 def check_cp_info(qubits):
-    """检查每个qubit耦合的那个qubit是否存在，如果不存在就删除这个耦合信息
+    """Check each onequbitThe coupled onequbitDoes it exist，If it doesn't exist, delete this coupling information
 
-    输入：
-        qubits: qubits参数
+    input：
+        qubits: qubitsparameter
 
-    输出：
-        qubits: 处理耦合信息后的qubis参数
+    output：
+        qubits: After processing coupled informationqubisparameter
     """
 
-    # 接口
+    # interface
     qubits = copy.deepcopy(qubits)
 
-    # 依次每个qubit判断
+    # Each one in turnqubitjudge
     for q_name, q_op in qubits.items():
         for cp_dir, cp_q_name in q_op.coupling_qubits.items():
             if cp_q_name is None:
@@ -64,17 +64,17 @@ def check_cp_info(qubits):
     return copy.deepcopy(qubits)
 
 def change_qubits_type(qubits_ops, qubits_type):
-    """设置qubits的类型
+    """set upqubitsType of
 
-    输入： 
-        qubits: qubits参数
-        type: 目标类型
+    input： 
+        qubits: qubitsparameter
+        type: target type
 
-    输出：
-        qubits: 修改类型后的耦合先参数
+    output：
+        qubits: 修改类型后的耦合先parameter
     """
 
-    # 接口
+    # interface
     copy.deepcopy(qubits_ops)
 
     qubits_ops = primitives.dehy_qubits(qubits_ops)
@@ -84,19 +84,19 @@ def change_qubits_type(qubits_ops, qubits_type):
     return copy.deepcopy(qubits_ops)
 
 def reset_cp_info(qubits):
-    """重置qubits耦合信息
+    """resetqubitscoupling information
     
-    输入：
-        qubits: qubits参数
+    input：
+        qubits: qubitsparameter
 
-    输出：
-        qubits: 重置耦合信息后的qubits参数
+    output：
+        qubits: resetcoupling information后的qubitsparameter
     """
 
-    # 接口
+    # interface
     qubits = Dict(qubits)
 
-    # 重置耦合信息
+    # Reset coupling information
     coupling_qubits = Dict(
         top = None,
         bot = None,
@@ -109,20 +109,20 @@ def reset_cp_info(qubits):
     return copy.deepcopy(qubits)
 
 def topo_to_cp_info(qubits, topology):
-    """根据拓扑信息补充qubit的耦合信息
+    """Supplement based on topology informationqubitCoupling information
 
-    输入：
-        qubits: qubits参数
-        topology: 拓扑参数
+    input：
+        qubits: qubitsparameter
+        topology: 拓扑parameter
 
-    输出：  
-        qubits: 补充耦合信息后的qubits参数
+    output：  
+        qubits: After supplementing the coupling informationqubitsparameter
     """
 
-    # 接口
+    # interface
     qubits = copy.deepcopy(qubits)
 
-    # 补充耦合信息
+    # Supplementary coupling information
     for edge in topology.edges:
         q0 = edge[0]
         q1 = edge[1]
@@ -134,21 +134,21 @@ def topo_to_cp_info(qubits, topology):
     return copy.deepcopy(qubits)
 
 def add_rd_info(qubits, readout_lines):
-    """添加读取腔信息
+    """Add reading cavity information
     
-    输入：
-        qubits: qubits参数
-        readout_lines: 读取腔参数
+    input：
+        qubits: qubitsparameter
+        readout_lines: 读取腔parameter
     
-    输出：
-        qubits: 补充读取腔信息后的qubits参数
+    output：
+        qubits: After supplementing the reading of cavity informationqubitsparameter
     """
 
-    # 接口
+    # interface
     qubits = copy.deepcopy(qubits)
     readout_lines = copy.deepcopy(readout_lines)
 
-    # 依次补充读取腔信息
+    # Supplement and read cavity information sequentially
     for rd_name, rd_op in readout_lines.items():
         q_name = rd_op.qubit_connect
         if q_name == Dict():
@@ -160,51 +160,51 @@ def add_rd_info(qubits, readout_lines):
     return copy.deepcopy(qubits)
 
 def dehy_qubits(qubits_ops):
-    """将qubits参数简化成每个qubit类类型通用的参数
+    """supportqubitsSimplify the parameters into eachqubitCommon parameters for class types
 
-    输入：
-        qubits_ops: 简化前qubits参数
+    input：
+        qubits_ops: Before simplificationqubitsparameter
     
-    输出：
-        new_qubits_ops: 简化后qubits参数
+    output：
+        new_qubits_ops: After simplificationqubitsparameter
     """
     return copy.deepcopy(primitives.dehy_qubits(qubits_ops))
 
 def set_chips(qubits, chip_name):
-    """设置qubits的芯片信息
+    """set upqubitsChip information
 
-    输入：
-        qubits: qubits参数
-        chip_name: 要设置的芯片名称
+    input：
+        qubits: qubitsparameter
+        chip_name: 要set up的芯片名称
 
-    输出： 
-        qubits: 设置芯片名称后的耦合线参数
+    output： 
+        qubits: set up芯片名称后的耦合线parameter
     """
 
-    # 接口
+    # interface
     copy.deepcopy(qubits)
 
-    # 依次设置芯片
+    # Set the chips in sequence
     for k, v in qubits.items():
         qubits[k].chip = chip_name
 
     return copy.deepcopy(qubits)
 
 def set_chip(qubit, chip_name):
-    """设置单个qubit的芯片
+    """Set up a singlequbitThe chip
     
-    输入：
-        qubit: qubit的参数
-        chip_name: 要设置的芯片名称
+    input：
+        qubit: qubitParameters for
+        chip_name: 要设置The chip名称
 
-    输出： 
-        qubit: 设置芯片名称后的耦合线参数
+    output： 
+        qubit: Coupling line parameters after setting the chip name
     """
 
-    # 接口
+    # interface
     copy.deepcopy(qubit)
 
-    # 设置芯片
+    # Set chip
     qubit.chip = chip_name
 
     return copy.deepcopy(qubit)
@@ -294,13 +294,13 @@ def generate_qubits_from_topology(topo_ops: Dict = None,
     return
 
 def generate_qubits_from_topo(**gene_ops):
-    """根据拓扑坐标在对应的位置生成qubits
+    """Generate corresponding positions based on topological coordinatesqubits
     
-    输入：
-        topo_poss: 拓扑坐标
+    input：
+        topo_poss: Topological coordinates
 
-    输出：
-        qubits: 生成的qubits参数
+    output：
+        qubits: Generatedqubitsparameter
     """
     if "topo_positions" not in gene_ops.keys():
         raise ValueError("参数中没有topo_positions, 无法执行此参数! ")

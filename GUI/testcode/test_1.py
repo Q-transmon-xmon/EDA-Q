@@ -1,12 +1,12 @@
 import sys
 import os
 
-# 获取当前脚本所在的目录
+# Retrieve the directory where the current script is located
 current_path = os.path.dirname(os.path.abspath(__file__))
 GUI_PATH = os.path.dirname(current_path)
 PROJ_PATH = os.path.dirname(GUI_PATH)
 
-# 添加路径
+# Add path
 sys.path.append(GUI_PATH)
 sys.path.append(PROJ_PATH)
 
@@ -26,33 +26,33 @@ from GUI.Widget.Widget_Others import Dialog_Others
 from api.design import Design
 
 
-class MainWindow(QtWidgets.QMainWindow):  # 更改为 QMainWindow
+class MainWindow(QtWidgets.QMainWindow):  # change to QMainWindow
 
 
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        # 设置窗口的初始 design
+        # Set the initial setting of the window design
         self.design = Design()
 
-        # 限制窗口的最大最小尺寸
+        # Limit the maximum and minimum size of the window
         self.setMinimumSize(QtCore.QSize(1420, 800))
 
-        # 位置
+        # position
         self.move(100, 100)
 
-        # 创建菜单栏
+        # Create a menu bar
         self.create_menu_bar()
 
         layout = QtWidgets.QVBoxLayout()
 
-        # 菜单列表
+        # Menu List
         menu_layout = FlowLayout(needAni=False)
         menu_layout.setContentsMargins(50, 30, 50, 30)
         menu_layout.setVerticalSpacing(20)
         menu_layout.setHorizontalSpacing(20)
 
-        # 定义按钮
+        # Custom Button
         btn1 = QtWidgets.QPushButton('算法定制拓扑')
         btn2 = QtWidgets.QPushButton('自定义拓扑')
         btn3 = QtWidgets.QPushButton('构建等效电路')
@@ -67,7 +67,7 @@ class MainWindow(QtWidgets.QMainWindow):  # 更改为 QMainWindow
         btn12 = QtWidgets.QPushButton('Others')
         btn13 = QtWidgets.QPushButton('清空')
 
-        # 设置按钮名称
+        # Set button name
         btn1.setObjectName('Algorithm')
         btn2.setObjectName('Topology')
         btn3.setObjectName('Circuit')
@@ -82,7 +82,7 @@ class MainWindow(QtWidgets.QMainWindow):  # 更改为 QMainWindow
         btn12.setObjectName('Others')
         btn13.setObjectName('Clear')
 
-        # 绑定按钮事件
+        # Binding button event
         btn1.clicked.connect(self._select_file)
         btn2.clicked.connect(self.MenuAffairs)
         btn3.clicked.connect(self.MenuAffairs)
@@ -97,7 +97,7 @@ class MainWindow(QtWidgets.QMainWindow):  # 更改为 QMainWindow
         btn12.clicked.connect(self.MenuAffairs)
         btn13.clicked.connect(self.MenuAffairs)
 
-        # 将按钮添加到布局
+        # Add buttons to the layout
         menu_layout.addWidget(btn1)
         menu_layout.addWidget(btn2)
         menu_layout.addWidget(btn3)
@@ -112,12 +112,12 @@ class MainWindow(QtWidgets.QMainWindow):  # 更改为 QMainWindow
         menu_layout.addWidget(btn12)
         menu_layout.addWidget(btn13)
 
-        # 右侧内容区域布局
+        # Layout of the right content area
         vBoxLayout = QtWidgets.QVBoxLayout()
         self.pivot = SegmentedWidget()
         self.stackedWidget = QtWidgets.QStackedWidget()
 
-        # 创建不同的界面
+        # Create different interfaces
         topoInterface = QtWidgets.QLabel('topo Interface')
         CircuitInterface = QtWidgets.QLabel('Circuit Interface')
         GDSInterface = QtWidgets.QLabel('GDS Interface')
@@ -126,28 +126,28 @@ class MainWindow(QtWidgets.QMainWindow):  # 更改为 QMainWindow
         self.circuitface = CircuitInterface
         self.gdsface = GDSInterface
 
-        # 添加子界面
+        # Add sub interface
         self.addSubInterface(topoInterface, 'topoInterface', 'topo')
         self.addSubInterface(GDSInterface, 'GDSInterface', 'GDS')
 
-        # 添加到布局
+        # Add to Layout
         vBoxLayout.addWidget(self.pivot)
         vBoxLayout.addWidget(self.stackedWidget)
         vBoxLayout.setContentsMargins(30, 10, 30, 30)
 
-        # 监听界面切换
+        # Switching between monitoring interfaces
         self.stackedWidget.currentChanged.connect(self.onCurrentIndexChanged)
         self.stackedWidget.setCurrentWidget(topoInterface)
         self.pivot.setCurrentItem(topoInterface.objectName())
 
-        # 添加放大按钮
+        # Add zoom in button
         self.zoomButton = QtWidgets.QPushButton("放大")
         self.zoomButton.setFixedSize(60, 30)
         self.zoomButton.setStyleSheet("position: absolute; bottom: 10px; right: 10px;")
-        self.zoomButton.clicked.connect(self.onZoomButtonClicked)  # 绑定点击事件
+        self.zoomButton.clicked.connect(self.onZoomButtonClicked)  # Bind click event
         vBoxLayout.addWidget(self.zoomButton, alignment=QtCore.Qt.AlignRight | QtCore.Qt.AlignBottom)
 
-        # 左侧导航栏
+        # Left navigation bar
         hBoxLayout = QtWidgets.QHBoxLayout()
 
         view = TreeView()
@@ -160,28 +160,28 @@ class MainWindow(QtWidgets.QMainWindow):  # 更改为 QMainWindow
         hBoxLayout.addWidget(view)
         hBoxLayout.setContentsMargins(30, 20, 200, 30)
 
-        # 布局
+        # layout
         layout.addLayout(menu_layout)
         content_layout = QtWidgets.QHBoxLayout()
         content_layout.addLayout(hBoxLayout)
         content_layout.addLayout(vBoxLayout)
         layout.addLayout(content_layout)
 
-        # 设置中心窗口
+        # Set Central Window
         central_widget = QtWidgets.QWidget(self)
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
-        # 式样定义（式样最后再调！！）
+        # Style definition（Adjust the style at the end！！）
         self.setStyleSheet('*{background:rgb(255,255,255)} QPushButton{padding: 5px 10px; font:13px "Microsoft YaHei"}')
 
-        self.design_updated_flag = False  # 添加状态标志
+        self.design_updated_flag = False  # Add status flag
 
     def create_menu_bar(self):
-        # 创建菜单栏
+        # Create a menu bar
         menu_bar = QtWidgets.QMenuBar(self)
 
-        # 添加菜单项
+        # Add Menu Item
         file_menu = menu_bar.addMenu("File")
         edit_menu = menu_bar.addMenu("Edit")
         view_menu = menu_bar.addMenu("View")
@@ -190,7 +190,7 @@ class MainWindow(QtWidgets.QMainWindow):  # 更改为 QMainWindow
         window_menu = menu_bar.addMenu("Window")
         help_menu = menu_bar.addMenu("Help")
 
-        # 添加菜单项的示例
+        # Example of adding menu items
         file_menu.addAction("New", self.new_file)
         file_menu.addAction("Open", self.open_file)
         file_menu.addAction("Save", self.save_file)
@@ -224,7 +224,7 @@ class MainWindow(QtWidgets.QMainWindow):  # 更改为 QMainWindow
         print("保存文件")
 
     def onZoomButtonClicked(self):
-        # 获取当前界面
+        # Get the current interface
         currentWidget = self.stackedWidget.currentWidget()
         if currentWidget == self.topoface:
             self.zoomTopoInterface()

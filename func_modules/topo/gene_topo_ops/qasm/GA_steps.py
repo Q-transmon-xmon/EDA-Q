@@ -26,8 +26,8 @@ def get_DNA_fitness(DNA,row,column,M):
         not_1_total_edge_d_and_weight: individual fitness value.
     """
     Q_NUM=len(M)
-    node_index = 0  #标准序号起始点
-    # 创建完全网格图
+    node_index = 0  #Starting point of standard serial number
+    # Create a complete grid diagram
     G_complete = nx.grid_graph(dim=[row, column], periodic=False)
     DNA_set = set(tuple(pair) for pair in zip(DNA[0::2], DNA[1::2]))
     G_complete_set = set(list(G_complete.nodes()))
@@ -47,7 +47,7 @@ def get_DNA_fitness(DNA,row,column,M):
     
     # Pruning(Adjacent and connected in the program)
     actual_edge1 = np.matlib.zeros((Q_NUM,Q_NUM))
-    actual_edge1 = np.asarray(actual_edge1) # 实际边矩阵
+    actual_edge1 = np.asarray(actual_edge1) # Actual edge matrix
     for i in range(len(M)):
         for j in range(len(M[i])):
             if j<i:
@@ -169,7 +169,7 @@ def crossover_GATS(popsize,parent1_pops,parent2_pops,ts_list,row,column):
                         temp.append(children[0][j])
                 # print("child1")
                 # print(children[0])
-                # 插入parent2的编号，并不与child1固定的冲突
+                # insertparent2The number，Not withchild1Fixed conflicts
                 cro_points = list()
                 for j in range(len(children[0])):
                     if children[0][j] == -1:
@@ -180,7 +180,7 @@ def crossover_GATS(popsize,parent1_pops,parent2_pops,ts_list,row,column):
                     if (parent2[j] not in temp) and (k != len(cro_points)-1):
                             children[0][cro_points[k]] = parent2[j]
                             k += 1
-                # 若插入完仍有空余
+                # If there is still space after insertion
                 for j in range(len(children[0])):
                     if children[0][j] == -1:
                         flag = True
@@ -196,7 +196,7 @@ def crossover_GATS(popsize,parent1_pops,parent2_pops,ts_list,row,column):
                         children[1][parent2.index(temp[j])] = temp[j]
                 # print("child2")
                 # print(children[1])
-                # 插入parent1的编号，并不与child2固定的冲突
+                # insertparent1The number，Not withchild2Fixed conflicts
                 cro_points_2 = list()
                 for j in range(len(children[1])):
                     if children[1][j] == -1:
@@ -207,7 +207,7 @@ def crossover_GATS(popsize,parent1_pops,parent2_pops,ts_list,row,column):
                     if (parent1[j] not in temp) and (k != len(cro_points_2)-1):
                             children[1][cro_points_2[k]] = parent1[j]
                             k += 1
-                # 若插入完仍有空余
+                # If there is still space after insertion
                 for j in range(len(children[1])):
                     if children[1][j] == -1:
                         flag = True
@@ -231,7 +231,7 @@ def crossover_GATS(popsize,parent1_pops,parent2_pops,ts_list,row,column):
                     flag = False
                     # print(child)
     while(len(child_pops) != popsize):
-        temp_DNA = random.sample(range(0,row*column),len(parent1)) # 不重复抽样
+        temp_DNA = random.sample(range(0,row*column),len(parent1)) # Non-repeated sample
         if temp_DNA not in child_pops:
             child_pops.append(temp_DNA)
     return child_pops
@@ -271,13 +271,13 @@ def mutate_GATS(pops,ts_list,par_pops,row,column):
                         if (empty_pos[j]==0):
                             empty_list.append(j)
                     if len(empty_list)!= 0:
-                        # 交换的空位个数
+                        # Number of vacancies for exchange
                         t = random.randint(1,len(empty_list))
-                        # 选出空位的index
+                        # Select the vacant seatsindex
                         empty_index = random.sample(range(0, len(empty_list)), t)
-                        # 选出变异点比特
+                        # Select mutation point bits
                         mut_pos = random.sample(range(0, len(pop)), t)
-                        # 对应移动到空位上
+                        # Correspondingly move to the vacant position
                         for j in range(t):
                             pop[mut_pos[j]] = empty_index[j]
             # TS

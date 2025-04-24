@@ -5,7 +5,7 @@ import sys
 
 
 class RandomEdge_Dialog(QtWidgets.QDialog):
-    # 定义一个信号，用于在设计更新后通知外部
+    # Define a signal，Used to notify external parties after design updates
     designUpdated = QtCore.Signal(object)
 
     def __init__(self, design, parent=None):
@@ -17,7 +17,7 @@ class RandomEdge_Dialog(QtWidgets.QDialog):
     def setupUi(self):
         self.setObjectName("Dialog")
         self.resize(400, 129)
-        # 设置整个界面的字体为微软雅黑
+        # Set the font of the entire interface to Microsoft Yahei
         self.setFont(QFont("Microsoft YaHei", 10.5))
         self.buttonBox = QtWidgets.QDialogButtonBox(self)
         self.buttonBox.setGeometry(QtCore.QRect(290, 20, 81, 241))
@@ -52,16 +52,16 @@ class RandomEdge_Dialog(QtWidgets.QDialog):
         self.label.setText(_translate("Dialog", "添加边的数目："))
 
     def Process_RandomEdge(self):
-        """保存输入框的数值到 num 变量"""
+        """Save the value of the input box to num variable"""
         try:
             self.num = int(self.lineEdit.text())  # Convert input to an integer
             print(f"输入的边数：{self.num}")
             self.design.topology.generate_random_edges(self.num)
             # self.design.topology.show_image()
 
-            # 发出信号，传递设计对象给外部
+            # emit a signal，Transfer design objects to external parties
             self.designUpdated.emit(self.design)
-            # 关闭窗口
+            # close window
             self.accept()
 
         except ValueError:
@@ -70,11 +70,11 @@ class RandomEdge_Dialog(QtWidgets.QDialog):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    # 假设有一个设计对象
-    design = Design()  # 这里需要替换为实际的设计对象
+    # Assuming there is a design object
+    design = Design()  # This needs to be replaced with the actual design object
     dialog = RandomEdge_Dialog(design)
 
-    # 连接信号到一个函数以处理设计更新
+    # Connect signals to a function to handle design updates
     dialog.designUpdated.connect(lambda updated_design: print("设计更新已传回主窗口！"))
     dialog.exec()  # Show the dialog
 

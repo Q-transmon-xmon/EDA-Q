@@ -1,12 +1,12 @@
 import sys
 import os
 
-# 获取当前脚本所在的目录
+# Retrieve the directory where the current script is located
 current_path = os.path.dirname(os.path.abspath(__file__))
 GUI_PATH = os.path.dirname(current_path)
 PROJ_PATH = os.path.dirname(GUI_PATH)
 
-# 添加路径
+# Add path
 sys.path.append(GUI_PATH)
 sys.path.append(PROJ_PATH)
 
@@ -15,7 +15,7 @@ from PySide6 import QtWidgets, QtCore, QtGui
 from PySide6.QtWidgets import QDialog, QDialogButtonBox, QLabel, QVBoxLayout, QWidget, QRadioButton
 from PySide6.QtCore import QSettings, Signal, Qt, QRect, QMetaObject, QCoreApplication
 
-# 假设这些模块是你项目中的自定义模块
+# Assuming these modules are custom modules in your project
 from api.design import Design
 from GUI.Widget.Sim_Trans import Dialog_Transmon
 from GUI.Widget.Sim_Xmon import Dialog_Xmon
@@ -27,7 +27,7 @@ class Ui_Dialog(object):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
         Dialog.resize(400, 300)
-        # 设置整个界面的字体
+        # Set the font for the entire interface
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei")
         font.setPointSize(11)
@@ -39,7 +39,7 @@ class Ui_Dialog(object):
         self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
         self.label = QLabel(Dialog)
         self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(20, 50, 100, 20))  # 调整标签大小
+        self.label.setGeometry(QRect(20, 50, 100, 20))  # Adjust label size
         self.label.setText("仿真类型：")
         self.widget_type = QWidget(Dialog)
         self.widget_type.setObjectName(u"widget_type")
@@ -85,38 +85,38 @@ class Dialog_Simulation(QDialog, Ui_Dialog):
         self.resize(400, 300)
         self.settings = QSettings("MyCompany", "MyApp")
 
-        # 连接保存输入的方法
+        # Method of connecting and saving input
         self.buttonBox.accepted.connect(self.Process_Simulation)
         self.buttonBox.rejected.connect(self.reject)
 
     def Process_Simulation(self):
-        # 输出选择的选项
+        # Output the selected options
         if self.radioButton_Transmon.isChecked():
             print("选择了 Transmon Sim")
-            # 进行 Transmon 仿真的处理
+            # perform Transmon Simulation processing
             dialog_transmon = Dialog_Transmon(self.design)
             dialog_transmon.designUpdated.connect(self.updateDesign)
-            dialog_transmon.exec()  # 阻塞显示
+            dialog_transmon.exec()  # Blocking display
 
         elif self.radioButton_Xmon.isChecked():
             print("选择了 Xmon Sim")
-            # 进行 Xmon 仿真的处理
+            # perform Xmon Simulation processing
             dialog_Xmon = Dialog_Xmon(self.design)
             dialog_Xmon.designUpdated.connect(self.updateDesign)
-            dialog_Xmon.exec()  # 阻塞显示
+            dialog_Xmon.exec()  # Blocking display
 
         elif self.radioButton_Readout.isChecked():
             print("选择了 Readout Sim")
-            # 进行 Readout 仿真的处理
+            # perform Readout Simulation processing
             dialog_s21 = Dialog_s21(self.design)
             dialog_s21.designUpdated.connect(self.updateDesign)
-            dialog_s21.exec()  # 阻塞显示
+            dialog_s21.exec()  # Blocking display
 
 
     def updateDesign(self, updated_design):
         self.design = updated_design
         print("simulation中的设计已更新")
-        self.designUpdated.emit(self.design)  # 发出信号，传递更新后的设计
+        self.designUpdated.emit(self.design)  # emit a signal，Transfer the updated design
 
 
 

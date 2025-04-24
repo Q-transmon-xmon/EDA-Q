@@ -9,15 +9,15 @@ class Qubits(CmpntsBase):
         return
     
     def initialization(self, **init_ops):
-        # 组件列表
+        # Component List
         self.cmpnt_name_list = []
-        # 初始化
+        # initialization
         options = func_modules.qubits.generate_qubits(**init_ops)
         self.inject_options(options)
         return
     
     def generate_from_topo(self, topo_positions, qtype: str = "Transmon", dist: float = 2000, geometric_ops: Dict = Dict()):
-        # 已废弃
+        # obsolete
         options = func_modules.qubits.generate_qubits(topo_positions = topo_positions,
                                                     qtype = qtype,
                                                     dist = dist,

@@ -14,7 +14,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("嵌套字典查看器")
         self.setGeometry(100, 100, 800, 600)
         design_ops = copy().deepcopy(design.options)
-        # 示例数据
+        # sample data
         self.data = {
             "设备1": {
                 "通道1": {
@@ -43,33 +43,33 @@ class MainWindow(QMainWindow):
             }
         }
 
-        # 创建主窗口部件
+        # Create the main widget
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
-        # 创建水平布局
+        # Create horizontal layout
         layout = QHBoxLayout(central_widget)
 
-        # 创建树形控件
+        # Create tree control
         self.tree = QTreeWidget()
         self.tree.setHeaderLabel("导航")
         self.tree.setMinimumWidth(200)
         self.tree.itemClicked.connect(self.on_item_clicked)
 
-        # 创建右侧内容区域
+        # Create the right content area
         self.content_widget = QWidget()
         self.content_layout = QFormLayout(self.content_widget)
 
-        # 创建滚动区域
+        # Create a scrolling area
         scroll = QScrollArea()
         scroll.setWidget(self.content_widget)
         scroll.setWidgetResizable(True)
 
-        # 添加部件到布局
+        # Add components to layout
         layout.addWidget(self.tree)
         layout.addWidget(scroll)
 
-        # 填充树形控件
+        # Fill in tree control
         self.populate_tree(self.data)
 
     def populate_tree(self, data, parent=None):
@@ -84,42 +84,42 @@ class MainWindow(QMainWindow):
                 self.populate_tree(value, item)
 
     def on_item_clicked(self, item, column):
-        # 清除右侧内容
+        # Clear the content on the right side
         while self.content_layout.count():
             child = self.content_layout.takeAt(0)
             if child.widget():
                 child.widget().deleteLater()
 
-        # 获取完整路径
+        # Obtain the complete path
         path = []
         current = item
         while current:
             path.insert(0, current.text(0))
             current = current.parent()
 
-        # 查找对应的字典
+        # Search for the corresponding dictionary
         current_dict = self.data
-        for key in path[:-1]:  # 除了最后一个键
+        for key in path[:-1]:  # Except for the last key
             if key in current_dict:
                 current_dict = current_dict[key]
 
-        # 如果最后一个项是 qubits，显示其键值对
+        # If the last item is qubits，Display its key value pairs
         if path[-1] == "qubits":
             qubits_dict = current_dict["qubits"]
             self.display_qubits(qubits_dict, path)
 
     def display_qubits(self, qubits_dict, path):
-        self.current_path = path  # 保存当前路径以供更新使用
+        self.current_path = path  # Save the current path for updating purposes
         for key, value in qubits_dict.items():
-            # 创建标签和输入框
+            # Create tags and input boxes
             line_edit = QLineEdit(str(value))
             line_edit.textChanged.connect(lambda text, k=key: self.update_value(k, text))
             self.content_layout.addRow(QLabel(key + ":"), line_edit)
 
     def update_value(self, key, new_value):
-        # 更新数据
+        # update data
         current_dict = self.data
-        for path_key in self.current_path[:-1]:  # 导航到正确的字典
+        for path_key in self.current_path[:-1]:  # Navigate to the correct dictionary
             current_dict = current_dict[path_key]
         current_dict["qubits"][key] = new_value
 

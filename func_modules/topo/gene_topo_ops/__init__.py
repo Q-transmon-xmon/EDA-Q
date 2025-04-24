@@ -13,10 +13,10 @@ class GeneTopoOps(BranchBase):
         """
         qubits_num
         """
-        # 接口
+        # interface
         qubits_num = gene_ops.qubits_num
 
-        # 生成坐标
+        # Generate coordinates
         options = Dict()
         options.positions, options.col_num, options.row_num = primitives.generate_topo_positions_col_row(qubits_num)
         
@@ -26,11 +26,11 @@ class GeneTopoOps(BranchBase):
         """
         qubits_num, topo_col
         """
-        # 接口
+        # interface
         qubits_num = gene_ops.qubits_num
         topo_col = gene_ops.topo_col
 
-        # 生成坐标
+        # Generate coordinates
         options = Dict()
         options.positions, options.col_num, options.row_num = primitives.generate_topo_positions_col_row(qubits_num, topo_col)
 
@@ -40,18 +40,18 @@ class GeneTopoOps(BranchBase):
         return copy.deepcopy(gene_ops.options)
     
     def topo_col__topo_row(self, gene_ops):
-        # 接口
+        # interface
         topo_col = gene_ops.topo_col
         topo_row = gene_ops.topo_row
         qubits_num = topo_col * topo_row
 
-        # 生成坐标
+        # Generate coordinates
         options = Dict()
         options.positions, options.col_num, options.row_num = primitives.generate_topo_positions_col_row(qubits_num, topo_col, topo_row)
 
         return copy.deepcopy(options)
     
-    # qasm有关
+    # qasmhave sth. to do with
     def qasm_path(self, gene_ops):
         qasm_path = gene_ops.qasm_path
         row = None

@@ -4,23 +4,23 @@ from base.library_base import LibraryBase
 
 class Chip(LibraryBase):
     """
-    Chip类,继承自LibraryBase,用于定义芯片的基本属性和功能。
+    Chipclass,Inherited fromLibraryBase,Used to define the basic properties and functions of chips。
     """
 
     def __init__(self, options: Dict = None):
         """
-        初始化Chip对象。
+        initializationChipobject。
 
-        输入：
-            options: Dict,包含芯片初始化参数的字典,默认为None。
+        input：
+            options: Dict,包含芯片initialization参数的字典,Default isNone。
 
-        输出：
-            无
+        output：
+            not have
         """
-        self.name = "chip0"  # 芯片的默认名称
-        self.type = "RecChip"  # 芯片的默认类型（矩形芯片）
-        self.op_name_list = copy.deepcopy(list(self.__dict__.keys()))  # 保存初始化时的参数名称列表
-        self.inject_options(options)  # 将传入的参数注入到对象中
+        self.name = "chip0"  # The default name of the chip
+        self.type = "RecChip"  # Default type of chip（Rectangular chip）
+        self.op_name_list = copy.deepcopy(list(self.__dict__.keys()))  # Save the list of parameter names during initialization
+        self.inject_options(options)  # Inject the incoming parameters into the object
         return
 
     def calc_general_ops(self):

@@ -12,28 +12,28 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("EDA 工具")
         self.setGeometry(100, 100, 1200, 800)
 
-        # 创建菜单栏
+        # Create a menu bar
         self.menu_bar = self.create_menu_bar()
         self.setMenuBar(self.menu_bar)
 
-        # 创建工具栏
+        # Create toolbar
         self.tool_bar = self.create_tool_bar()
         self.addToolBar(self.tool_bar)
 
-        # 设置中央小部件
+        # Set central widget
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
         self.layout = QVBoxLayout()
 
-        # 创建一个分割器来放置左侧的项目管理器和右侧的主要工作区域
+        # Create a splitter to place the project manager on the left and the main workspace on the right
         splitter = QSplitter()
 
-        # 项目管理器
+        # project manager
         self.project_manager = QListWidget()
         self.project_manager.addItems(["Project1", "Project2", "Project3"])
         splitter.addWidget(self.project_manager)
 
-        # 主工作区
+        # Main workspace
         self.main_frame = QFrame()
         self.main_frame.setStyleSheet("background-color: lightgrey;")
         splitter.addWidget(self.main_frame)
@@ -41,19 +41,19 @@ class MainWindow(QMainWindow):
         self.layout.addWidget(splitter)
         self.central_widget.setLayout(self.layout)
 
-        # 属性面板
+        # Attribute Panel
         self.properties_widget = QListWidget()
         self.properties_widget.addItems(["Name", "Value", "Unit", "Evaluation"])
         self.layout.addWidget(self.properties_widget)
 
-        # 状态栏
+        # status bar
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
 
     def create_menu_bar(self):
         menu_bar = QMenuBar()
 
-        # 文件菜单
+        # FILE
         file_menu = menu_bar.addMenu("文件")
         new_action = QAction("新建", self)
         new_action.triggered.connect(self.new_file)
@@ -67,7 +67,7 @@ class MainWindow(QMainWindow):
         save_action.triggered.connect(self.save_file)
         file_menu.addAction(save_action)
 
-        # 编辑菜单
+        # edit
         edit_menu = menu_bar.addMenu("编辑")
         undo_action = QAction("撤销", self)
         edit_menu.addAction(undo_action)

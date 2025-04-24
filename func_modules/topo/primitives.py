@@ -18,7 +18,7 @@ def generate_topo_positions(qubits_num, topo_col: int = None, topo_row: int = No
     Output:
         topology_pos: the topology coordinates
     """
-    # 未指定行列数时尽量为方阵
+    # When the number of rows and columns is not specified, try to use a square matrix as much as possible
     if topo_col is None and topo_row is None:
         topo_col = math.ceil(math.sqrt(qubits_num))
         topo_row = math.ceil(qubits_num/topo_col)
@@ -34,7 +34,7 @@ def generate_topo_positions(qubits_num, topo_col: int = None, topo_row: int = No
             raise ValueError("拓扑的行列数不足以容纳量子比特：\n \
                              qubits_num = {}, topo_col = {}, topo_row = {}".format(qubits_num, topo_col, topo_row))
 
-    # 生成坐标
+    # Generate coordinates
     positions = Dict()
     idx = 0
     for y in range(topo_row):
@@ -58,7 +58,7 @@ def generate_topo_positions_col_row(qubits_num, topo_col: int = None, topo_row: 
         topology_pos: the topology coordinates
     """
 
-    # 未指定行列数时尽量为方阵
+    # When the number of rows and columns is not specified, try to use a square matrix as much as possible
     if topo_col is None and topo_row is None:
         topo_col = math.ceil(math.sqrt(qubits_num))
         topo_row = math.ceil(qubits_num/topo_col)
@@ -74,7 +74,7 @@ def generate_topo_positions_col_row(qubits_num, topo_col: int = None, topo_row: 
             raise ValueError("拓扑的行列数不足以容纳量子比特：\n \
                              qubits_num = {}, topo_col = {}, topo_row = {}".format(qubits_num, topo_col, topo_row))
 
-    # 生成坐标
+    # Generate coordinates
     positions = Dict()
     idx = 0
     for y in range(topo_row):
@@ -124,11 +124,11 @@ def generate_random_edges(positions, edges_num: int = None):
     if edges_num is None:
         edges_num = random.randint(1, max_edges_num)
     print("随机生成拓扑边的数量是{}...".format(edges_num))
-    # 异常检测
+    # outlier detection
     if edges_num > max_edges_num:
         print("设置的边太多，自动降为能容纳边数的最大值: {}".format(max_edges_num))
         edges_num = max_edges_num
-    # 取样
+    # take a sample
     edges = random.sample(full_edges, edges_num)
     return copy.deepcopy(edges)
 
@@ -143,10 +143,10 @@ def to_random_edges_full_connected(topo_poss):
         topo_edges: Topology edges
     """
 
-    # 提示信息
+    # Reminder information
     print("随机生成拓扑边（连通图）...")
 
-    # 调用方法生成连通拓扑边
+    # Call method to generate connected topological edges
     topo_edges = toolbox.generate_connected_edges(topo_poss)
 
     return copy.deepcopy(topo_edges)
@@ -163,16 +163,16 @@ def cp_lines_update_topo_edges(coupling_lines, topo_edges):
         new_topo_edges: Updated topology edge information
     """
 
-    # 接口
+    # interface
     coupling_lines = copy.deepcopy(coupling_lines)
     topo_edges = copy.deepcopy(topo_edges)
 
-    # 新拓扑边
+    # New topological edge
     new_topo_edges = []
     for cp_name, cp_op in coupling_lines.items():
         new_topo_edges.append(cp_op.qubits)
 
-    # 更新新拓扑边
+    # Update new topology edges
     for edge in new_topo_edges:
         if edge not in topo_edges:
             print("自动删除边{}...".format(edge))
@@ -192,7 +192,7 @@ def generate_hex_pos(num):
     Return:
     positions: A dictionary where each key is 'q' followed by the index, and the value is the corresponding coordinate tuple (x, y)
     """
-    length = 1    # 节点之间的距离
+    length = 1    # Distance between nodes
     positions = Dict()
 
     if num == 0:
@@ -207,15 +207,15 @@ def generate_hex_pos(num):
     if num > 7:
         raise ValueError("num现在不能大于7")
     
-    # 六边形的中心点
+    # The center point of a hexagon
     base_poses = [(0, 0)]
     base_poses += list(
             (1*math.sqrt(3)*math.cos(angle*math.pi/180), 1*math.sqrt(3)*math.sin(angle*math.pi/180)) for angle in range(0, 361, 60))
-    # 相对于中心点，节点的角度
+    # Relative to the center point，Node perspective
     angles = [(i*60+30)*math.pi/180 for i in range(6)]
     
-    qubits_idx = 0    # 节点序号
-    base_pos_idx = 0    # 中心点序号
+    qubits_idx = 0    # Node number
+    base_pos_idx = 0    # Center point number
     while 1:
         if num == 0:
             break
@@ -274,14 +274,14 @@ def generate_hex_full_edges(positions):
     edges = []
     for q in positions.keys():
         for qq in positions.keys():
-            # 判断是否是同一点
+            # Determine if they are the same point
             if q == qq:
                 continue
-            # 判断距离是否是1
+            # Determine if the distance is1
             dist = calculate_distance(positions[q], positions[qq])
             if not are_floats_equal(1, dist):
                 continue
-            # 判断是否已经有这个边
+            # Determine if this edge already exists
             if panduan_shifou_you_zhege_bian(edges, [q, qq]):
                 continue
             edges.append([q, qq])

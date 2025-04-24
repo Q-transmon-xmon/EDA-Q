@@ -11,18 +11,18 @@ class Ui_Dialog:
         if not Dialog.objectName():
             Dialog.setObjectName("Dialog")
         Dialog.resize(650, 400)
-        # 设置整个界面的字体为微软雅黑
+        # Set the font of the entire interface to Microsoft Yahei
         Dialog.setFont(QFont("Microsoft YaHei", 10.5))
-        # 创建主垂直布局
+        # Create main vertical layout
         self.mainLayout = QVBoxLayout(Dialog)
-        self.mainLayout.setContentsMargins(20, 20, 20, 20)  # 设置主布局的边距
-        self.mainLayout.setSpacing(15)  # 设置布局内控件之间的间距
+        self.mainLayout.setContentsMargins(20, 20, 20, 20)  # Set the margins for the main layout
+        self.mainLayout.setSpacing(15)  # Set the spacing between controls within the layout
 
-        # 创建一个布局用于输入框
+        # Create a layout for input boxes
         self.inputLayout = QVBoxLayout()
-        self.inputLayout.setSpacing(20)  # 设置输入框布局内控件之间的间距
+        self.inputLayout.setSpacing(20)  # Set the spacing between controls within the input box layout
 
-        # 创建标签和输入框
+        # Create tags and input boxes
         self.createLabeledInput("Name:")
         self.createLabeledInput("Type:")
         self.createLabeledInput("Chip:")
@@ -32,21 +32,21 @@ class Ui_Dialog:
         self.createLabeledInput("Buffer Length:")
         self.createLabeledInput("Corner Radius:")
 
-        # 将输入框布局添加到主布局中
+        # Add input box layout to the main layout
         self.mainLayout.addLayout(self.inputLayout)
 
-        # 创建按钮框
+        # Create button box
         self.buttonBox = QDialogButtonBox(Dialog)
         self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
         self.mainLayout.addWidget(self.buttonBox)
 
         self.retranslateUi(Dialog)
 
-        # 连接信号与槽
+        # Connect signal and slot
         QMetaObject.connectSlotsByName(Dialog)
 
     def createLabeledInput(self, label_text):
-        """创建一个标签和相应的输入框，并将它们添加到布局中"""
+        """Create a label and corresponding input box，And add them to the layout"""
         horizontalLayout = QHBoxLayout()
         label = QLabel(label_text)
         line_edit = QLineEdit()
@@ -55,7 +55,7 @@ class Ui_Dialog:
         horizontalLayout.addWidget(line_edit)
         self.inputLayout.addLayout(horizontalLayout)
 
-        # 将输入框添加到实例变量中，以便后续访问
+        # Add input box to instance variable，For future visits
         if not hasattr(self, 'lineEdits'):
             self.lineEdits = []
         self.lineEdits.append(line_edit)
@@ -70,18 +70,18 @@ class Dialog_ctls(QDialog, Ui_Dialog):
         super(Dialog_ctls, self).__init__()
         self.setupUi(self)
         self.design = design
-        # QSettings 用于保存和加载输入的数据
+        # QSettings Used to save and load input data
         self.settings = QSettings("MyCompany", "MyApp")
 
-        # 读取默认值并显示
+        # Read default values and display them
         self.loadPreviousInputs()
 
-        # 连接按钮的信号
+        # Signal for connecting button
         self.buttonBox.accepted.connect(self.processInputs)
-        self.buttonBox.rejected.connect(self.reject)  # 连接取消按钮到 QDialog 的 reject 方法
+        self.buttonBox.rejected.connect(self.reject)  # Cancel connection button to QDialog of reject method
 
     def loadPreviousInputs(self):
-        """加载默认值"""
+        """Load default values"""
         defaults = {
             "name": "ControlLineWidthDiff0",
             "type": "ChargeLine",
@@ -94,25 +94,25 @@ class Dialog_ctls(QDialog, Ui_Dialog):
         }
         keys = ["name", "type", "chip", "path", "width", "gap", "buffer_length", "corner_radius"]
         for i, key in enumerate(keys):
-            self.lineEdits[i].setText(defaults[key])  # 直接设置默认值
+            self.lineEdits[i].setText(defaults[key])  # Directly set default values
 
     def processInputs(self):
-        """保存输入框的文本到 QSettings并转换为适当的类型"""
+        """Save the text of the input box to QSettingsAnd convert to the appropriate type"""
         keys = ["name", "type", "chip", "path", "width", "gap", "buffer_length", "corner_radius"]
         for i, key in enumerate(keys):
             self.settings.setValue(key, self.lineEdits[i].text())
 
-        # 将输入的参数保存为不同类型的变量
+        # Save the input parameters as variables of different types
         name = self.settings.value("name", "", type=str)
         type_name = self.settings.value("type", "", type=str)
         chip = self.settings.value("chip", "", type=str)
-        path = eval(self.settings.value("path", "[]", type=str))  # 使用 eval 将字符串转换为列表
+        path = eval(self.settings.value("path", "[]", type=str))  # use eval Convert a string to a list
         width = eval(self.settings.value("width", "[]", type=str))
         gap = eval(self.settings.value("gap", "[]", type=str))
         buffer_length = int(self.settings.value("buffer_length", "0", type=str))
         corner_radius = int(self.settings.value("corner_radius", "0", type=str))
 
-        # 打印输入的值
+        # Print the input value
         print(f"Name: {name}")
         print(f"Type: {type_name}")
         print(f"Chip: {chip}")
@@ -123,29 +123,29 @@ class Dialog_ctls(QDialog, Ui_Dialog):
         print(f"Corner Radius: {corner_radius}")
 
         options = Dict(
-            name=name,  # 控线名称
-            type=type_name,  # 控制线类型
-            chip=chip,  # 所在芯片层
+            name=name,  # Control line name
+            type=type_name,  # Control line type
+            chip=chip,  # The chip layer where it is located
             path=path,
-            # 控制线路径的坐标点集合
+            # Set of coordinate points for the control line path
             width=width,  #
             gap=gap,
             buffer_length=buffer_length,
-            corner_radius=corner_radius  # 拐角半径
+            corner_radius=corner_radius  # corner radius
         )
         self.design.gds.control_lines.add(options)
         self.designUpdated.emit(self.design)
-        # 关闭对话框
-        self.accept()  # 关闭对话框
+        # close dialog boxes
+        self.accept()  # close dialog boxes
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     dialog = Dialog_ctls(design=Design())
 
-    # 如果对话框接受，显示输入内容
+    # If the dialog box accepts，Display input content
     if dialog.exec() == QDialog.Accepted:
         print("Dialog accepted")
 
-    # 退出应用程序
+    # exit from application program
     sys.exit(app.exec())

@@ -36,7 +36,7 @@ class MenuBarManager(QObject):
         """Create the complete menu structure (fixed version)"""
         menu_bar = QMenuBar()
 
-        # 修正后的菜单结构
+        # Revised menu structure
         menus = {
             "File": [
                 ("Open", "Ctrl+O", self._handle_import),
@@ -58,7 +58,7 @@ class MenuBarManager(QObject):
                 self._create_checkable_action("Show Component Library", True, self._toggle_component_lib)
             ],
             "Tools": [
-                # 添加物理计算子菜单
+                # Add Physical Calculation submenu
                 self._create_physical_calculation_submenu(),
                 ("Settings", None, self._handle_settings),
                 ("Options", None, self._handle_options)
@@ -69,7 +69,7 @@ class MenuBarManager(QObject):
             ]
         }
 
-        # 动态创建菜单项
+        # Dynamically create menu items
         for menu_name, actions in menus.items():
             menu = menu_bar.addMenu(menu_name)
             for action_config in actions:
@@ -77,12 +77,12 @@ class MenuBarManager(QObject):
                     menu.addSeparator()
                     continue
 
-                if isinstance(action_config, QMenu):  # 处理子菜单
+                if isinstance(action_config, QMenu):  # Processing submenus
                     menu.addMenu(action_config)
-                elif isinstance(action_config, QAction):  # 处理预设动作
+                elif isinstance(action_config, QAction):  # Process preset actions
                     menu.addAction(action_config)
                 else:
-                    # 标准菜单项 (文本, 快捷键, 处理函数)
+                    # Standard menu items (text, Shortcut keys, Handler)
                     text, shortcut, handler = action_config
                     action = QAction(text, menu_bar)
                     if shortcut:
@@ -93,10 +93,10 @@ class MenuBarManager(QObject):
         return menu_bar
 
     def _create_physical_calculation_submenu(self):
-        """创建物理计算子菜单"""
+        """Create Physical Calculation submenu"""
         submenu = QMenu("Physical calculation", self.parent)
 
-        # 添加新的计算功能
+        # Add new computing functions
         lambda4_action = QAction("λ/4 CPW Frequency", submenu)
         lambda4_action.triggered.connect(self._handle_lambda4_frequency)
         submenu.addAction(lambda4_action)
@@ -373,7 +373,7 @@ class MenuBarManager(QObject):
         if not path:
             return
 
-        # 添加组件类型输入对话框
+        # Add Component Type Input Dialogue Box
         from PyQt5.QtWidgets import QInputDialog
         component_type, ok = QInputDialog.getText(
             self.parent,
@@ -386,7 +386,7 @@ class MenuBarManager(QObject):
             return
 
         try:
-            # 使用新的GDS处理器
+            # Use a new oneGDSprocessor
             result = GDSProcessor.parse_gds(path, component_type)
             if result:
                 QMessageBox.information(
@@ -407,6 +407,6 @@ class MenuBarManager(QObject):
                 f"导入失败: {str(e)}"
             )
     def _handle_lambda4_frequency(self):
-        """处理λ/4频率计算"""
+        """handleλ/4Frequency calculation"""
         dialog = LambdaQuarterFrequencyDialog(self.parent)
         dialog.exec_()

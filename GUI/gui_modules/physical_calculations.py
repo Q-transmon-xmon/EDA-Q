@@ -4,8 +4,8 @@ from PyQt5.QtWidgets import (QDialog, QVBoxLayout, QLabel,
                              QHBoxLayout, QDoubleSpinBox)
 from PyQt5.QtCore import Qt
 import numpy as np
-from simulation.rdls_tmls import CPW_frequency_4  # 导入计算函数
-from scipy.constants import c  # 获取标准光速值
+from simulation.rdls_tmls import CPW_frequency_4  # Import calculation function
+from scipy.constants import c  # Obtain the standard speed of light value
 
 
 class LambdaQuarterFrequencyDialog(QDialog):
@@ -15,7 +15,7 @@ class LambdaQuarterFrequencyDialog(QDialog):
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
         self.setMinimumWidth(300)
 
-        # 创建界面元素
+        # Create interface elements
         self.length_input = QDoubleSpinBox()
         self.length_input.setRange(0.1, 1000000)
         self.length_input.setSuffix(" μm")
@@ -30,16 +30,16 @@ class LambdaQuarterFrequencyDialog(QDialog):
         self.result_label = QLabel("Frequency will be shown here")
         self.result_label.setWordWrap(True)
 
-        # 设置布局
+        # Set layout
         layout = QVBoxLayout()
 
-        # 长度输入行
+        # Length input line
         length_layout = QHBoxLayout()
         length_layout.addWidget(QLabel("CPW Length:"))
         length_layout.addWidget(self.length_input)
         layout.addLayout(length_layout)
 
-        # 介电常数输入行
+        # Dielectric constant input line
         k_layout = QHBoxLayout()
         k_layout.addWidget(QLabel("Relative Permittivity (ε):"))
         k_layout.addWidget(self.k_input)
@@ -50,13 +50,13 @@ class LambdaQuarterFrequencyDialog(QDialog):
         layout.addWidget(self.result_label)
         self.setLayout(layout)
 
-        # 连接信号
+        # joining signal
         self.calculate_btn.clicked.connect(self.calculate_frequency)
 
     def calculate_frequency(self):
         try:
-            # 获取输入值并验证
-            length_um = self.length_input.value()  # 单位：微米
+            # Retrieve input values and validate them
+            length_um = self.length_input.value()  # unit：micron
             k = self.k_input.value()
 
             if length_um <= 0:
@@ -64,17 +64,17 @@ class LambdaQuarterFrequencyDialog(QDialog):
             if k < 1:
                 raise ValueError("Relative permittivity must be ≥1")
 
-            # 转换单位：微米 -> 米
+            # conversion units：micron -> rice
             length_m = length_um * 1e-6
 
-            # 调用计算函数
+            # Call calculation function
             freq_ghz = CPW_frequency_4(length_m, k)
 
-            # 转换其他单位
+            # Convert to other units
             freq_mhz = freq_ghz * 1000
             wavelength_m = c / (freq_ghz * 1e9)
 
-            # 显示结果
+            # Display results
             result_text = (
                 f"λ/4 Frequency: {freq_ghz:.3f} GHz\n"
                 f"({freq_mhz:,.0f} MHz)\n\n"

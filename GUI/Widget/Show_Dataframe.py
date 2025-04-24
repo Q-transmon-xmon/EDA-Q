@@ -15,18 +15,18 @@ class DataFrameDisplay(QMainWindow):
         self.setWindowTitle("Matrix Display")
         self.resize(1200, 800)
 
-        # 设置全局字体
+        # Set global font
         font = QFont("Microsoft YaHei", 10)
         QApplication.instance().setFont(font)
 
-        # 创建中心部件和主布局
+        # Create central components and main layout
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
         main_layout = QVBoxLayout(central_widget)
-        main_layout.setContentsMargins(20, 20, 20, 20)  # 设置边距
-        main_layout.setSpacing(20)  # 设置组件间距
+        main_layout.setContentsMargins(20, 20, 20, 20)  # Set Margins
+        main_layout.setSpacing(20)  # Set component spacing
 
-        # 下拉菜单
+        # drop-down menu
         self.matrix_selector = QComboBox()
         self.matrix_selector.setStyleSheet("""  
             QComboBox {  
@@ -42,7 +42,7 @@ class DataFrameDisplay(QMainWindow):
         selector_layout.addWidget(self.matrix_selector, alignment=Qt.AlignCenter)
         main_layout.addWidget(selector_container)
 
-        # 元数据标签
+        # metadata tag
         self.metadata_label = QLabel()
         self.metadata_label.setStyleSheet("""  
             QLabel {  
@@ -57,9 +57,9 @@ class DataFrameDisplay(QMainWindow):
         self.metadata_label.setAlignment(Qt.AlignCenter)
         self.metadata_label.setWordWrap(True)
         self.metadata_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
-        main_layout.addWidget(self.metadata_label, 1)  # 1表示伸展因子
+        main_layout.addWidget(self.metadata_label, 1)  # 1Expressing the stretching factor
 
-        # 表格控件
+        # grid control
         self.table_widget = QTableWidget()
         self.table_widget.setStyleSheet("""  
             QTableWidget {  
@@ -75,14 +75,14 @@ class DataFrameDisplay(QMainWindow):
             }  
         """)
         self.table_widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        main_layout.addWidget(self.table_widget, 4)  # 4表示伸展因子，使表格占据更多空间
+        main_layout.addWidget(self.table_widget, 4)  # 4Expressing the stretching factor，Make the table occupy more space
 
-        # 加载文件
+        # load file
         self.matrices = {}
         self.load_file(file_path)
 
     def load_file(self, file_path):
-        """加载文件并显示内容"""
+        """Load file and display content"""
         if os.path.exists(file_path):
             try:
                 metadata, matrices = self.parse_file(file_path)
@@ -153,11 +153,11 @@ class DataFrameDisplay(QMainWindow):
         self.table_widget.setRowCount(dataframe.shape[0])
         self.table_widget.setColumnCount(dataframe.shape[1])
 
-        # 设置表头
+        # Set header
         self.table_widget.setHorizontalHeaderLabels(dataframe.columns.tolist())
         self.table_widget.setVerticalHeaderLabels(dataframe.index.tolist())
 
-        # 填充数据
+        # Fill in data
         for i in range(dataframe.shape[0]):
             for j in range(dataframe.shape[1]):
                 value = round(float(dataframe.iat[i, j]), 3)
@@ -165,17 +165,17 @@ class DataFrameDisplay(QMainWindow):
                 item.setTextAlignment(Qt.AlignCenter)
                 self.table_widget.setItem(i, j, item)
 
-        # 调整表格大小
+        # Adjust table size
         self.table_widget.resizeColumnsToContents()
         self.table_widget.resizeRowsToContents()
 
-        # 确保表格填充可用空间
+        # Ensure that the table is filled with available space
         header_width = self.table_widget.verticalHeader().width()
         header_height = self.table_widget.horizontalHeader().height()
         table_width = self.table_widget.contentsRect().width()
         table_height = self.table_widget.contentsRect().height()
 
-        # 计算并设置列宽
+        # Calculate and set column width
         available_width = table_width - header_width
         column_count = self.table_widget.columnCount()
         if column_count > 0:

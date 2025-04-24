@@ -1,4 +1,4 @@
-# EDA-Q v0.7.0
+# EDA-Q v0.7.1
 
 [![](https://img.shields.io/badge/homepage-EDA_Q-orange)](https://github.com/Q-transmon-xmon/EDA-Q)
 
@@ -31,7 +31,7 @@ We provide an installment-free version in **Releases** that allows you to run th
 
 To simplify the installation process of the **EDA-Q** tool, we provide a pre-configured `environment.yml` file, which includes all the necessary dependencies and environment settings. Using this file, you can quickly create a Python environment that matches our development setup, ensuring the tool functions seamlessly.
 
-## installation procedure：
+## installation procedure:
 
 1. **Install Anaconda or Miniconda**  
    Make sure that Anaconda or Miniconda is installed on your system, as they are the best tools for managing Python environments and dependencies. If not installed, please visit the [Anaconda official website](https://www.anaconda.com/products/distribution) or the [Miniconda official website](https://docs.conda.io/en/latest/miniconda.html) to download and install.

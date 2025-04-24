@@ -126,7 +126,7 @@ class ToolBarManager(QToolBar):
                 action.triggered.connect(lambda checked, name=object_name: self.handle_action(name))
                 self.addAction(action)
 
-            # 新增处理等效电路选项的函数
+            # Add a function for handling equivalent circuit options
 
     def get_current_design(self) -> Optional[Design]:
         current_name = global_state.get_current_design_name()
@@ -296,11 +296,11 @@ class ToolBarManager(QToolBar):
                 print("Unable to update design")
 
     def handle_circuit_option(self, option_name):
-        """处理电路参数修改操作（对话框集成版）"""
+        """Process circuit parameter modification operations（Integrated dialog box version）"""
         if current_design := self.get_current_design():
             try:
                 if option_name == "Generate Equivalent Circuit":
-                    # 生成等效电路（保留原有逻辑）
+                    # Generate equivalent circuit（Keep the original logic）
                     current_design.generate_equivalent_circuit()
                     current_design.equivalent_circuit.show()
 

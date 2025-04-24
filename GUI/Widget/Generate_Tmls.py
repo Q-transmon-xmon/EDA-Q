@@ -7,7 +7,7 @@ from addict import Dict
 from api.design import Design
 
 class Dialog_tmls(QDialog):
-    # 定义一个信号用于设计更新
+    # Define a signal for design updates
     designUpdated = QtCore.Signal(object)
     def __init__(self, design,parent=None):
         super().__init__(parent)
@@ -15,7 +15,7 @@ class Dialog_tmls(QDialog):
         self.setFont(QFont("Microsoft YaHei", 10.5))
         self.resize(600, 400)
         self.design = design
-        # 预定义的字典模板
+        # Pre-defined dictionary templates
         self.tml_ops_template = Dict(
             name="tmls0",
             type="TransmissionPath",
@@ -24,7 +24,7 @@ class Dialog_tmls(QDialog):
             corner_radius=90
         )
 
-        # 友好的标签映射
+        # Friendly label mapping
         self.labels = {
             "name": "名称",
             "type": "类型",
@@ -33,58 +33,58 @@ class Dialog_tmls(QDialog):
             "corner_radius": "半径"
         }
 
-        self.process_function = self.default_process_function  # 默认处理函数
-        self.lineEdits = {}  # 存储每个键对应的输入框
-        self.input_types = {}  # 存储每个键的类型
+        self.process_function = self.default_process_function  # Default processing function
+        self.lineEdits = {}  # Store the input box corresponding to each key
+        self.input_types = {}  # Store the type of each key
 
-        # 主布局
+        # Main layout
         self.mainLayout = QVBoxLayout(self)
 
-        # 动态加载字典模板
+        # Dynamically load dictionary template
         self.loadDictionary()
 
-        # 添加按钮
+        # add button
         self.buttonLayout = QHBoxLayout()
         self.processButton = QPushButton("添加")
         self.cancelButton = QPushButton("取消")
 
-        # 设置按钮大小
+        # Set button size
         self.processButton.setFixedSize(80, 30)
         self.cancelButton.setFixedSize(80, 30)
 
         self.buttonLayout.addWidget(self.processButton)
         self.buttonLayout.addWidget(self.cancelButton)
-        self.buttonLayout.setAlignment(Qt.AlignRight)  # 右对齐
+        self.buttonLayout.setAlignment(Qt.AlignRight)  # right alignment
         self.mainLayout.addLayout(self.buttonLayout)
 
-        # 连接按钮事件
+        # Connection button event
         self.processButton.clicked.connect(self.processDictionary)
         self.cancelButton.clicked.connect(self.reject)
 
     def loadDictionary(self):
-        """动态加载字典模板并生成输入框"""
+        """Dynamically load dictionary template and generate input box"""
         for key, value in self.tml_ops_template.items():
-            # 创建水平布局
+            # Create horizontal layout
             layout = QHBoxLayout()
 
-            # 创建标签
-            label = QLabel(f"{self.labels[key]}：")  # 使用友好的标签
+            # create label
+            label = QLabel(f"{self.labels[key]}：")  # Use friendly tags
             layout.addWidget(label)
 
-            # 创建输入框
+            # Create input box
             line_edit = QLineEdit()
-            line_edit.setText(str(value))  # 设置默认值
+            line_edit.setText(str(value))  # Set default values
             layout.addWidget(line_edit)
 
-            # 保存输入框和类型
+            # Save input box and type
             self.lineEdits[key] = line_edit
             self.input_types[key] = type(value)
 
-            # 添加到主布局
+            # Add to main layout
             self.mainLayout.addLayout(layout)
 
     def processDictionary(self):
-        """处理用户输入并调用处理函数"""
+        """Process user input and call processing functions"""
         valid_input = True
         updated_dict = Dict()
 
@@ -93,42 +93,42 @@ class Dialog_tmls(QDialog):
             expected_type = self.input_types[key]
 
             try:
-                # 根据类型转换输入值
+                # Convert input values based on type
                 if expected_type == list:
-                    # 如果是列表类型，尝试解析为 Python 列表
+                    # If it is a list type，Attempt to parse as Python list
                     converted_value = eval(value_str)
                     if not isinstance(converted_value, list):
                         raise ValueError("输入值不是有效的列表")
                 elif expected_type == tuple:
-                    # 如果是元组类型，尝试解析为 Python 元组
+                    # If it is a tuple type，Attempt to parse as Python tuple
                     converted_value = eval(value_str)
                     if not isinstance(converted_value, tuple):
                         raise ValueError("输入值不是有效的元组")
                 else:
                     converted_value = expected_type(value_str)
 
-                updated_dict[key] = converted_value  # 保存到更新后的字典
+                updated_dict[key] = converted_value  # Save to the updated dictionary
             except (ValueError, SyntaxError) as e:
                 QMessageBox.warning(self, "无效输入", f"{self.labels[key]} 的输入无效: {e}")
                 valid_input = False
                 break
 
         if valid_input:
-            # 调用处理函数
+            # Call processing function
             self.process_function(updated_dict)
-            self.accept()  # 关闭对话框
+            self.accept()  # close dialog boxes
 
     def default_process_function(self, tml_ops):
         """
-        默认处理函数，接收用户输入的字典作为参数
-        :param tml_ops: 用户输入的字典
+        Default processing function，Receive the dictionary input by the user as a parameter
+        :param tml_ops: Dictionary inputted by the user
         """
         print("处理后的字典：", tml_ops)
         self.design.gds.transmission_lines.add(options=tml_ops)
-        self.designUpdated.emit(self.design)  # 发出设计更新信号
+        self.designUpdated.emit(self.design)  # Send design update signal
 
-        # 在这里添加你的处理逻辑
-        # QMessageBox.information(None, "处理完成", f"字典已处理：\n{tml_ops}")
+        # Add your processing logic here
+        # QMessageBox.information(None, "Processing completed", f"Dictionary processed：\n{tml_ops}")
 
 
 if __name__ == "__main__":
@@ -136,7 +136,7 @@ if __name__ == "__main__":
     design = Design()
     design.generate_topology(topo_col=4, topo_row=4)
     design.generate_qubits(topology=True, qubits_type='Xmon')
-    # 创建并显示对话框
+    # Create and display a dialog box
     dialog = Dialog_tmls(design=design)
     dialog.exec()
 

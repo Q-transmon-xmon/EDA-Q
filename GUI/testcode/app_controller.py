@@ -2,12 +2,12 @@
 import sys
 import os
 
-# 获取当前脚本所在的目录
+# Retrieve the directory where the current script is located
 current_path = os.path.dirname(os.path.abspath(__file__))
 GUI_PATH = os.path.dirname(current_path)
 PROJ_PATH = os.path.dirname(GUI_PATH)
 
-# 添加路径
+# Add path
 sys.path.append(GUI_PATH)
 sys.path.append(PROJ_PATH)
 
@@ -18,7 +18,7 @@ from GUI.gui_modules.Design_options import DesignOptions
 from GUI.gui_modules.global_state import global_state
 from GUI.gui_modules.styles import set_stylesheet
 class AppController:
-    """业务逻辑控制器，处理数据操作和复杂交互"""
+    """Business logic controller，Handling data operations and complex interactions"""
 
     def __init__(self, window):
         self.window = window
@@ -26,24 +26,24 @@ class AppController:
         self._init_global_design()
         self._connect_business_signals()
     def _init_global_design(self):
-        """初始化全局设计实例"""
+        """Initialize global design instance"""
         if not global_state.design_exists("Initial Design"):
             initial_design = Design()
             global_state.create_design("Initial Design", path=None)
             global_state.update_design("Initial Design", initial_design)
 
     def _connect_business_signals(self):
-        """连接业务相关信号"""
+        """Connect business related signals"""
         global_state.current_design_changed.connect(self._on_design_changed)
         global_state.design_updated.connect(self._update_interface)
 
     def _on_design_changed(self, design_name: str):
-        """处理设计切换事件"""
+        """Handling design switching events"""
         if design_name:
             self._update_interface()
 
     def _update_interface(self):
-        """更新所有界面元素"""
+        """Update all interface elements"""
         current_name = global_state.get_current_design_name()
         design = global_state.get_design(current_name)
 
@@ -56,12 +56,12 @@ class AppController:
                 self.window.statusBar().showMessage(f"错误: {str(e)}", 5000)
 
     def _update_component_library(self, design: Design):
-        """更新组件库内容"""
-        # 调用组件库的更新方法
+        """Update component library content"""
+        # Call the update method of the component library
         pass
 
     def _update_display(self, design: Design):
-        """更新显示区域"""
+        """Update display area"""
         try:
             design.topology.save_image('./picture/topology.png')
             design.gds.save_svg('./picture/gds.svg')

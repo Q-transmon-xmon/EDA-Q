@@ -8,9 +8,9 @@ class CrossOvers(CmpntsBase):
         return
     
     def initialization(self, **init_ops):
-        # 组件列表
+        # Component List
         self.cmpnt_name_list = []
-        # 初始化
+        # initialization
         options = func_modules.crosvs.generate_cross_overs(**init_ops)
         self.inject_options(options)
         return

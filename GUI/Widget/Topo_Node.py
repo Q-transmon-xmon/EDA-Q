@@ -12,20 +12,20 @@ class Ui_Dialog_Node:
             Dialog_Node.setObjectName("Dialog_Node")
         Dialog_Node.resize(400, 250)
 
-        # 设置整个界面的字体为微软雅黑
+        # Set the font of the entire interface to Microsoft Yahei
         Dialog_Node.setFont(QFont("Microsoft YaHei", 10.5))
-        # 创建主布局用于居中
+        # Create a main layout for centering
         self.mainLayout = QVBoxLayout(Dialog_Node)
 
-        # 占位，用来将内容在垂直方向居中
+        # reserve a seat，Used to center content vertically
         self.mainLayout.addStretch()
 
-        # 创建布局窗口组件
+        # Create layout window component
         self.layoutWidget = QWidget(Dialog_Node)
         self.verticalLayout = QVBoxLayout(self.layoutWidget)
-        self.verticalLayout.setSpacing(15)  # 设置输入框之间的间距
+        self.verticalLayout.setSpacing(15)  # Set the spacing between input boxes
 
-        # 创建标签和输入框
+        # Create tags and input boxes
         self.lineEdits = []
         # q0_ops
         #
@@ -35,28 +35,28 @@ class Ui_Dialog_Node:
         self.createLabeledInput("行数：")
         self.createLabeledInput("列数：")
 
-        # 添加中间部件到主布局中
+        # Add intermediate components to the main layout
         self.mainLayout.addWidget(self.layoutWidget)
 
-        # 创建按钮并设置对齐方式
+        # Create button and set alignment method
         self.buttonBox = QDialogButtonBox(Dialog_Node)
         self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
-        self.buttonBox.setCenterButtons(True)  # 使按钮居中
-        self.buttonBox.setMinimumSize(0, 40)  # 设置按钮的最小高度
+        self.buttonBox.setCenterButtons(True)  # Center the button
+        self.buttonBox.setMinimumSize(0, 40)  # Set the minimum height of the button
         self.mainLayout.addWidget(self.buttonBox)
 
-        # 占位，用来将内容在垂直方向居中
+        # reserve a seat，Used to center content vertically
         self.mainLayout.addStretch()
 
         self.retranslateUi(Dialog_Node)
 
-        # 连接信号与槽
+        # Connect signal and slot
         self.buttonBox.accepted.connect(lambda: Dialog_Node.Process_Node())
         self.buttonBox.accepted.connect(Dialog_Node.accept)
         self.buttonBox.rejected.connect(Dialog_Node.reject)
 
     def createLabeledInput(self, label_text):
-        """创建一个标签和相应的输入框，并将它们添加到布局中"""
+        """Create a label and corresponding input box，And add them to the layout"""
         layout = QHBoxLayout()
         label = QLabel(label_text)
         line_edit = QLineEdit()
@@ -64,7 +64,7 @@ class Ui_Dialog_Node:
         layout.addWidget(label)
         layout.addWidget(line_edit)
         self.verticalLayout.addLayout(layout)
-        self.lineEdits.append(line_edit)  # 保存对输入框的引用
+        self.lineEdits.append(line_edit)  # Save reference to input box
 
     def retranslateUi(self, Dialog_Node):
         _translate = QtCore.QCoreApplication.translate
@@ -72,7 +72,7 @@ class Ui_Dialog_Node:
 
 
 class Dialog_Node(QDialog, Ui_Dialog_Node):
-    # 定义信号
+    # Define signal
     designUpdated = Signal(object)
 
     def __init__(self, design):
@@ -81,11 +81,11 @@ class Dialog_Node(QDialog, Ui_Dialog_Node):
 
         self.design = design  # Store the design object
 
-        # QSettings 用于保存和加载输入的数据
+        # QSettings Used to save and load input data
         self.settings = QSettings("MyCompany", "MyApp")
         # self.loadPreviousInputs()
     # def loadPreviousInputs(self):
-    #     """加载上一次保存的输入内容"""
+    #     """Load the last saved input content"""
     #     self.lineEdits[0].setText(self.settings.value("quantum_bits", "", type=str))
     #     self.lineEdits[1].setText(self.settings.value("rows", "", type=str))
     #     self.lineEdits[2].setText(self.settings.value("columns", "", type=str))
@@ -93,7 +93,7 @@ class Dialog_Node(QDialog, Ui_Dialog_Node):
     def Process_Node(self):
 
 
-        """保存输入框的文本到 QSettings"""
+        """Save the text of the input box to QSettings"""
         self.settings.setValue("quantum_bits", self.lineEdits[0].text())
         self.settings.setValue("rows", self.lineEdits[1].text())
         self.settings.setValue("columns", self.lineEdits[2].text())
@@ -110,11 +110,11 @@ class Dialog_Node(QDialog, Ui_Dialog_Node):
         print(f"行数: {rows}")
         print(f"列数: {cols}")
 
-        # 使用存储的设计对象
+        # Design objects using storage
         self.design.generate_topology(topo_col=cols, topo_row=rows)
         # self.design.generate_random_edges()
         # self.design.topology.show_image()
-        # 发出设计更新后的信号
+        # Send a signal after the design update
         self.designUpdated.emit(self.design)
 
 

@@ -8,59 +8,59 @@ import copy
 
 class Chips(CmpntsBase):
     """
-    Chips类，继承自CmpntsBase，用于管理和操作多个芯片组件的集合。
+    Chipsclass，Inherited fromCmpntsBase，Used for managing and operating a collection of multiple chip components。
     """
 
     def __init__(self, **init_ops):
         """
-        初始化Chips对象。
+        initializationChipsobject。
 
-        输入：
-            init_ops: dict，初始化所需的参数。
+        input：
+            init_ops: dict，initialization所需的参数。
 
-        输出：
-            无
+        output：
+            not have
         """
-        self.initialization(**init_ops)  # 调用初始化方法
+        self.initialization(**init_ops)  # Call initialization method
         return
     
     def initialization(self, **init_ops):
         """
-        初始化芯片组件集合。
+        Initialize the set of chip components。
 
-        输入：
-            init_ops: dict，生成芯片组件集合的初始化参数。
+        input：
+            init_ops: dict，Generate initialization parameters for the set of chip components。
 
-        输出：
-            无
+        output：
+            not have
         """
-        # 初始化组件名称列表
+        # Initialize component name list
         self.cmpnt_name_list = []
-        # 调用功能模块生成芯片选项
+        # Call the function module to generate chip options
         options = func_modules.chips.generate_chips(**init_ops)
-        self.inject_options(options)  # 注入参数
+        self.inject_options(options)  # Injection Parameters
         return
     
     def draw_gds(self):
         """
-        绘制多个芯片组件的GDS版图。
+        Draw multiple chip componentsGDSterritory。
 
-        输入：
-            无
+        input：
+            not have
 
-        输出：
-            无
+        output：
+            not have
         """
         gdspy.library.use_current_library = False
-        self.lib = gdspy.GdsLibrary()  # 创建一个新的GDS库
+        self.lib = gdspy.GdsLibrary()  # Create a new oneGDSlibrary
         self.cell_Dict = Dict()
 
-        # 生成每个组件的lib
+        # Generate for each componentlib
         for cmpnt_name in self.cmpnt_name_list:
             cmpnt = getattr(self, cmpnt_name)
             cmpnt.draw_gds()
 
-        # 遍历组件，将每个组件添加到对应芯片的cell中
+        # Traverse components，Add each component to the corresponding chipcellcentre
         for cmpnt_name in self.cmpnt_name_list:
             cmpnt = getattr(self, cmpnt_name)
             chip_name = cmpnt.name
@@ -68,12 +68,12 @@ class Chips(CmpntsBase):
                 self.cell_Dict[chip_name] = self.lib.new_cell(chip_name)
             self.cell_Dict[chip_name].add(cmpnt.cell)
 
-        # 根据芯片名称分层（设置图层号）
+        # Layered by chip name（Set layer number）
         for chip_name, cell in self.cell_Dict.items():
             layer_num = toolbox.custom_hash(chip_name)
             self.cell_Dict[chip_name].flatten(single_layer=layer_num, single_datatype=0)
 
-        # 创建总的cell，并将所有芯片cell添加到总cell中
+        # Create an overallcell，And integrate all chipscellAdd to Totalcellcentre
         module_name = toolbox.convert_to_snake_case(self.__class__.__name__)
         self.cell = self.lib.new_cell(module_name)
         for chip_name, chip_cell in self.cell_Dict.items():
@@ -82,71 +82,71 @@ class Chips(CmpntsBase):
     
     def change_size_from_Flipichip_routing(self, chip_name, qubits_ops, rdls_ops):
         """
-        根据Flipchip路由调整芯片尺寸。
+        according toFlipchipRoute adjustment chip size。
 
-        输入：
-            chip_name: str，芯片名称。
-            qubits_ops: dict，量子比特的选项参数。
-            rdls_ops: dict，读出线的选项参数。
+        input：
+            chip_name: str，Chip name。
+            qubits_ops: dict，Option parameters for quantum bits。
+            rdls_ops: dict，Read the option parameters of the line。
 
-        输出：
-            无
+        output：
+            not have
 
-        当前逻辑：
-            调用routing.Flipchip的calculate_chip_size方法调整芯片尺寸（未实现具体逻辑）。
+        Current Logic：
+            callrouting.Flipchipofcalculate_chip_sizeMethod to adjust chip size（Specific logic not implemented）。
         """
-        chip_ops = copy.deepcopy(getattr(self, chip_name).options)  # 提取芯片参数
-        routing.Flipchip.calculate_chip_size()  # 调用路由模块计算芯片尺寸
+        chip_ops = copy.deepcopy(getattr(self, chip_name).options)  # Extract chip parameters
+        routing.Flipchip.calculate_chip_size()  # Call the routing module to calculate the chip size
         return
     
     def change_size_from_pins(self, chip_name, pins_ops):
         """
-        根据引脚位置调整芯片尺寸。
+        Adjust chip size based on pin position。
 
-        输入：
-            chip_name: str，芯片名称。
-            pins_ops: dict，引脚的选项参数。
+        input：
+            chip_name: str，Chip name。
+            pins_ops: dict，Option parameters for pins。
 
-        输出：
-            无
+        output：
+            not have
 
-        当前逻辑：
-            调用routing.Flipchip的calculate_chip_size方法调整芯片尺寸（未实现具体逻辑）。
+        Current Logic：
+            callrouting.Flipchipofcalculate_chip_sizeMethod to adjust chip size（Specific logic not implemented）。
         """
-        chip_ops = copy.deepcopy(getattr(self, chip_name).options)  # 提取芯片参数
-        routing.Flipchip.calculate_chip_size()  # 调用路由模块计算芯片尺寸
+        chip_ops = copy.deepcopy(getattr(self, chip_name).options)  # Extract chip parameters
+        routing.Flipchip.calculate_chip_size()  # Call the routing module to calculate the chip size
         return
     
     def generate(self, **gene_ops):
         """
-        根据生成参数添加一个新芯片组件。
+        Add a new chip component based on the generated parameters。
 
-        输入：
-            gene_ops: dict，生成芯片的参数。
+        input：
+            gene_ops: dict，Generate parameters for the chip。
 
-        输出：
-            无
+        output：
+            not have
         """
-        chip_ops = func_modules.chips.generate_chip(**gene_ops)  # 调用功能模块生成芯片选项
-        chip_name = chip_ops.name  # 获取芯片名称
-        chips_ops = copy.deepcopy(self.options)  # 获取当前芯片集合的选项
-        chips_ops[chip_name] = copy.deepcopy(chip_ops)  # 将新芯片加入选项字典
-        self.inject_options(chips_ops)  # 注入更新后的选项
+        chip_ops = func_modules.chips.generate_chip(**gene_ops)  # Call the function module to generate chip options
+        chip_name = chip_ops.name  # Get chip name
+        chips_ops = copy.deepcopy(self.options)  # Get options for the current chip set
+        chips_ops[chip_name] = copy.deepcopy(chip_ops)  # Add the new chip to the option dictionary
+        self.inject_options(chips_ops)  # Inject updated options
         return
     
     def copy_chip(self, old_chip_name, new_chip_name):
         """
-        复制一个现有的芯片组件。
+        Copy an existing chip component。
 
-        输入：
-            old_chip_name: str，要复制的原芯片名称。
-            new_chip_name: str，新芯片的名称。
+        input：
+            old_chip_name: str，Original chip name to be copied。
+            new_chip_name: str，The name of the new chip。
 
-        输出：
-            无
+        output：
+            not have
         """
-        chips_ops = self.extract_options()  # 提取当前芯片集合的参数
-        chips_ops[new_chip_name] = copy.deepcopy(chips_ops[old_chip_name])  # 复制原芯片参数
-        chips_ops[new_chip_name].name = new_chip_name  # 更新新芯片的名称
-        self.inject_options(chips_ops)  # 注入更新后的参数
+        chips_ops = self.extract_options()  # Extract parameters of the current chip set
+        chips_ops[new_chip_name] = copy.deepcopy(chips_ops[old_chip_name])  # Copy the original chip parameters
+        chips_ops[new_chip_name].name = new_chip_name  # Update the name of the new chip
+        self.inject_options(chips_ops)  # Inject updated parameters
         return

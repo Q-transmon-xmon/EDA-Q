@@ -1,41 +1,41 @@
 """
-图标颜色转换工具 (PyQt5 实现)
-运行前安装依赖：pip install pyqt5
+Icon color conversion tool (PyQt5 achieve)
+Install dependencies before running：pip install pyqt5
 """
 
 import os
 import sys
 from PyQt5.QtGui import QColor, QPainter, QPixmap
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication  # 添加QApplication
+from PyQt5.QtWidgets import QApplication  # addQApplication
 
 
 def convert_icon_color(input_path, output_path, target_color):
     """
-    转换图标颜色
-    :param input_path:  输入文件路径（PNG格式，白色图标）
-    :param output_path: 输出文件路径
-    :param target_color: 目标颜色（支持Qt颜色常量/QColor/十六进制）
+    Convert icon color
+    :param input_path:  Enter file path（PNGformat，White Icon）
+    :param output_path: Output file path
+    :param target_color: Target Color（supportQtcolor constant/QColor/hexadecimal）
     """
-    # 加载原始图标
+    # Load original icon
     pixmap = QPixmap(input_path)
     if pixmap.isNull():
         raise ValueError(f"无法加载输入文件，路径：{input_path}，请检查路径是否正确")
 
-    # 创建临时画布
+    # Create a temporary canvas
     colored_pixmap = QPixmap(pixmap.size())
     colored_pixmap.fill(Qt.transparent)
 
-    # 颜色处理
+    # color processing
     painter = QPainter(colored_pixmap)
     painter.drawPixmap(0, 0, pixmap)
     painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
 
-    # 解析颜色参数
+    # Analyze color parameters
     if isinstance(target_color, str):
-        if target_color.startswith("#"):  # 十六进制格式
+        if target_color.startswith("#"):  # hexadecimal format
             color = QColor(target_color)
-        else:  # Qt颜色常量名
+        else:  # QtColor constant name
             color = getattr(Qt, target_color, Qt.black)
     elif isinstance(target_color, QColor):
         color = target_color
@@ -45,26 +45,26 @@ def convert_icon_color(input_path, output_path, target_color):
     painter.fillRect(colored_pixmap.rect(), color)
     painter.end()
 
-    # 保存文件
+    # save the file
     if not colored_pixmap.save(output_path):
         raise RuntimeError(f"文件保存失败，路径：{output_path}，请检查输出路径是否有写入权限")
 
 
 def convert_folder_icons(input_folder, output_folder, target_color):
     """
-    批量转换文件夹中的所有PNG图标颜色
-    :param input_folder: 输入文件夹路径
-    :param output_folder: 输出文件夹路径
-    :param target_color: 目标颜色（支持Qt颜色常量/QColor/十六进制）
+    Batch convert all files in the folderPNGIcon color
+    :param input_folder: Enter folder path
+    :param output_folder: Output folder path
+    :param target_color: Target Color（supportQtcolor constant/QColor/hexadecimal）
     """
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
-    # 遍历输入文件夹中的所有文件
+    # Traverse all files in the input folder
     for filename in os.listdir(input_folder):
         if filename.endswith('.png'):
             input_file = os.path.join(input_folder, filename)
-            output_file = os.path.join(output_folder, filename)  # 输出同名文件
+            output_file = os.path.join(output_folder, filename)  # Output file with the same name
             try:
                 convert_icon_color(input_file, output_file, target_color)
                 print(f"成功转换：{input_file} --> {output_file}")
@@ -73,17 +73,17 @@ def convert_folder_icons(input_folder, output_folder, target_color):
 
 
 def main():
-    app = QApplication(sys.argv)  # 创建QApplication实例
+    app = QApplication(sys.argv)  # createQApplicationexample
 
-    # 用户输入参数（可修改以下值）
-    input_folder = "D:/work/QEDA_3/icons/toolbar"  # 输入文件夹路径
-    output_folder = "D:/work/QEDA_3/icons/toolbar/output/"  # 输出文件夹路径
-    target_color = "#00BFFF"  # 目标颜色（这里使用浅蓝色）
+    # User input parameters（The following values can be modified）
+    input_folder = "D:/work/QEDA_3/icons/toolbar"  # Enter folder path
+    output_folder = "D:/work/QEDA_3/icons/toolbar/output/"  # Output folder path
+    target_color = "#00BFFF"  # Target Color（We use light blue here）
 
-    # 执行转换
+    # Perform conversion
     convert_folder_icons(input_folder, output_folder, target_color)
 
-    sys.exit(app.exec_())  # 完成后退出应用程序
+    sys.exit(app.exec_())  # Exit the application after completion
 
 
 if __name__ == "__main__":

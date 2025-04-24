@@ -4,48 +4,48 @@ import func_modules
 
 class AirBridges(CmpntsBase):
     """
-    AirBridges类，继承自CmpntsBase，用于管理和操作空气桥组件（AirBridge）。
+    AirBridgesclass，Inherited fromCmpntsBase，Used for managing and operating air bridge components（AirBridge）。
     """
 
     def __init__(self, **init_ops):
         """
-        初始化AirBridges对象。
+        initializationAirBridgesobject。
 
-        输入：
-            init_ops: dict，初始化所需的参数。
+        input：
+            init_ops: dict，initialization所需的参数。
 
-        输出：
-            无
+        output：
+            not have
         """
-        self.initialization(**init_ops)  # 调用初始化方法
+        self.initialization(**init_ops)  # Call initialization method
         return
     
     def initialization(self, **init_ops):
         """
-        初始化空气桥组件集合。
+        Initialize the collection of air bridge components。
 
-        输入：
-            init_ops: dict，生成空气桥组件的初始化参数。
+        input：
+            init_ops: dict，Generate initialization parameters for air bridge components。
 
-        输出：
-            无
+        output：
+            not have
         """
-        # 初始化组件名称列表
+        # Initialize component name list
         self.cmpnt_name_list = []
-        # 调用功能模块生成空气桥组件的参数
+        # Call the function module to generate parameters for the air bridge component
         options = func_modules.tmls.generate_transmission_lines(**init_ops)
-        self.inject_options(options)  # 注入生成的参数
+        self.inject_options(options)  # Inject generated parameters
         return
     
     def counts(self):
         """
-        统计当前空气桥组件的数量。
+        Count the current number of air bridge components。
 
-        输入：
-            无
+        input：
+            not have
 
-        输出：
-            count: int，当前空气桥组件的数量。
+        output：
+            count: int，The current quantity of air bridge components。
         """
-        ops = self.options  # 提取当前组件参数
-        return len(ops)  # 返回组件数量
+        ops = self.options  # Extract current component parameters
+        return len(ops)  # Return the number of components

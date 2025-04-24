@@ -16,11 +16,11 @@ class Dialog_Others(QDialog):
         self.setFont(QFont("Microsoft YaHei", 10))
         self.resize(400, 200)
         self.design = design
-        # 更新后的默认值配置
+        # Updated default value configuration
         self.default_values = {
-            "name": "In0",  # 默认线路名称
-            "type": "IndiumBump",  # 默认元件类型
-            "chip": "chip0"  # 默认芯片名称
+            "name": "In0",  # Default Line Name
+            "type": "IndiumBump",  # Default component type
+            "chip": "chip0"  # Default chip name
         }
         self.lineEdits = {}
         self.input_types = {}
@@ -56,25 +56,25 @@ class Dialog_Others(QDialog):
             layout.addWidget(label)
 
             line_edit = QLineEdit()
-            line_edit.setPlaceholderText(f"{value}")  # 设置悬浮提示
+            line_edit.setPlaceholderText(f"{value}")  # Set floating prompt
             layout.addWidget(line_edit)
 
             self.lineEdits[key] = line_edit
             self.input_types[key] = type(value)
             self.mainLayout.addLayout(layout)
 
-            # 安装事件过滤器以处理 Tab 键事件
+            # Install event filters to handle Tab Key events
             line_edit.installEventFilter(self)
 
     def eventFilter(self, source, event):
-        """处理 Tab 键事件"""
+        """handle Tab Key events"""
         if event.type() == QEvent.KeyPress and event.key() == Qt.Key_Tab:
             for key, line_edit in self.lineEdits.items():
                 if line_edit.hasFocus():
-                    # 如果输入框为空，则填充默认值
+                    # If the input box is empty，Fill in default values
                     if line_edit.text().strip() == "":
                         line_edit.setText(line_edit.placeholderText())
-                    # 跳转到下一个输入框
+                    # Jump to the next input box
                     next_index = list(self.lineEdits.keys()).index(key) + 1
                     if next_index < len(self.lineEdits):
                         next_line_edit = self.lineEdits[list(self.lineEdits.keys())[next_index]]
@@ -83,7 +83,7 @@ class Dialog_Others(QDialog):
         return super().eventFilter(source, event)
 
     def submitValues(self):
-        options = Dict()  # 使用addict创建支持属性访问的字典
+        options = Dict()  # useaddictCreate a dictionary that supports attribute access
         valid_input = True
 
         for key, line_edit in self.lineEdits.items():
@@ -100,11 +100,11 @@ class Dialog_Others(QDialog):
                     valid_input = False
                     break
 
-            options[key] = converted_value  # 自动支持属性访问
+            options[key] = converted_value  # Automatically support attribute access
 
         if valid_input:
             print("User input values:", options)
-            self.design.gds.others.add(options)  # 确保此处add方法存在
+            self.design.gds.others.add(options)  # Ensure hereaddThe method exists
             self.designUpdated.emit(self.design)
             self.accept()
 

@@ -6,7 +6,7 @@ from func_modules.pins import gene_pins_ops
 from func_modules.pins import primitives
 
 ############################################################################################
-# 修改pins的参数
+# modifypinsParameters for
 ############################################################################################
 
 from addict import Dict
@@ -15,26 +15,26 @@ from func_modules.pins import primitives
 from cmpnt_frame.pin import Pin as Pin_frame
 
 def soak_pins(pins_ops):
-    """使用pin的类将pin的参数补充完整
+    """usepinThe class willpinComplete parameter supplementation
 
-    输入：
-        pins: 原来pins的参数
+    input：
+        pins: originallypinsParameters for
 
-    输出：
-        pins: 补充之后pins的参数
+    output：
+        pins: After supplementationpinsParameters for
     """
     pins_ops = primitives.soak_pins(pins_ops=pins_ops)
     return copy.deepcopy(pins_ops)
 
 def set_chips(pins_ops, chip_name: str = None):
-    """设置pins中的芯片信息
+    """set uppinsChip information in
     
-    输入：
-        pins_ops: pins的参数
-        chip_name: 所设置的chip的名字
+    input：
+        pins_ops: pinsParameters for
+        chip_name: 所set up的chipthe name of
 
-    输出：
-        pins: 设置芯片信息后的pins的参数
+    output：
+        pins: set up芯片信息后的pinsParameters for
     """
     pins_ops = primitives.set_chips(pins_ops=pins_ops, chip_name=chip_name)
     return copy.deepcopy(pins_ops)

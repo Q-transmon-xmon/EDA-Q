@@ -14,24 +14,24 @@ def get_module_Dict(dirpath, pre_path, exclusions: list = None):
         module_Dict: A dictionary of the exported modules
     """
         
-    # 接口
+    # interface
     copy.deepcopy(exclusions)
 
-    # 输入检测，__init__.py永远不在考虑范围内。
+    # Input detection，__init__.pyNever within the scope of consideration。
     if exclusions == None:
         exclusions = ["__init__.py"]
     else:
         exclusions.append("__init__.py")
 
     module_Dict = Dict()
-    # 遍历目录下所有文件
+    # Traverse all files in the directory
     for filename in os.listdir(dirpath):
         if (filename.endswith(".py") or filename.endswith(".pyd")) and filename not in exclusions:
-            # 构造模块名
+            # Construct module name
             if filename.endswith(".py"):
-                module_name = filename[:-3]  # 去掉文件扩展名 ".py"
+                module_name = filename[:-3]  # drop file extension ".py"
             if filename.endswith(".pyd"):
-                module_name = filename[:-4]  # 去掉文件扩展名 ".pyd"
+                module_name = filename[:-4]  # drop file extension ".pyd"
             module = importlib.import_module(pre_path+module_name)
             module_Dict[module_name] = module
 
@@ -50,11 +50,11 @@ def get_pack_Dict(dirpath, pre_path, exclusions: list = None):
     """
 
     
-    # 接口
+    # interface
     copy.deepcopy(exclusions)
 
     pack_Dict = Dict()
-    # 遍历目录下所有文件
+    # Traverse all files in the directory
     for pack_name in os.listdir(dirpath):
         pack_path = os.path.join(dirpath, pack_name)
         if is_package(pack_path):
@@ -69,10 +69,10 @@ def convert_to_camel_case(input_str):
     return camel_case_str
 
 def convert_to_snake_case(input_str):
-    # 将字符串首字母小写
+    # Lowercase the first letter of the string
     input_str = input_str[0].lower() + input_str[1:]
     
-    # 在大写字母前插入下划线，并转换为小写
+    # Insert an underline before uppercase letters，And convert to lowercase
     snake_case_str = ''.join(['_' + char.lower() if char.isupper() else char for char in input_str])
     
     return snake_case_str.lstrip('_')
@@ -128,7 +128,7 @@ def is_number(var):
     return isinstance(var, (int, float, complex))
 
 def get_filename_extension_from_path(path):
-    # 使用os.path.splitext()拆分文件名和扩展名
+    # useos.path.splitext()Split file names and extensions
     file_name, file_extension = os.path.splitext(os.path.basename(path))
     return file_name, file_extension
 
@@ -142,14 +142,14 @@ def get_extension(path):
 
 # svg
 def save_svg(cell, width: float = 500, path: str = "./svg/temp/svg"):
-    """将一个cell以某个宽度保存为svg
+    """Take onecellSave as a certain widthsvg
 
-    输入：
-        cell: gdspy的cell
-        width: 要保存的svg的宽度
+    input：
+        cell: gdspyofcell
+        width: 要保存ofsvgof宽度
     
-    输入：
-        无
+    input：
+        not have
     """
     jg_and_create_path(path)
     cell_width = get_width(cell)
@@ -176,15 +176,15 @@ def get_width(cell):
 
     return width
 
-# 目录
+# catalogue
 def jg_and_create_path(path):
-    """判断该路径中的目录是否都存在，如果不存在则创建
+    """Determine if all directories in the path exist，If it does not exist, create it
 
-    输入：
-        path: 是否存在某个目录
+    input：
+        path: Does a directory exist
 
-    输出：
-        无
+    output：
+        not have
     """
     dirname = os.path.dirname(path)
     if not os.path.exists(dirname):
@@ -194,16 +194,16 @@ def jg_and_create_path(path):
 def create_xlsx(file_path):
     import os
     from openpyxl import Workbook
-    # 确保目录存在
+    # Ensure that the directory exists
     directory = os.path.dirname(file_path)
     if not os.path.exists(directory):
         os.makedirs(directory)
     
-    # 创建工作簿和工作表
+    # Create workbook and worksheet
     workbook = Workbook()
     sheet = workbook.active
     
-    # 保存文件
+    # save the file
     workbook.save(file_path)
     print(f'Excel file created at: {file_path}')
 def get_file_info(file_path):
@@ -216,11 +216,11 @@ def get_file_info(file_path):
     }
 def jg_and_create_path_plus(path):
     if not os.path.exists(path):
-        # 如果路径不存在，创建目录或文件
-        if path.endswith('/'):  # 如果是目录
+        # If the path does not exist，Create a directory or file
+        if path.endswith('/'):  # If it is a directory
             os.makedirs(path)
             print(f"目录 '{path}' 已创建。")
-        else:  # 如果是文件
+        else:  # If it is a file
             directory = os.path.dirname(path)
             if not os.path.exists(directory):
                 os.makedirs(directory)
@@ -230,7 +230,7 @@ def jg_and_create_path_plus(path):
                 create_xlsx(path)
             else:
                 with open(path, 'w') as file:
-                    file.write('')  # 创建一个空文件
+                    file.write('')  # Create an empty file
                 print(f"文件 '{path}' 已创建。")
 
 def change_layer_of_entire_cell(cell, layer, datatype=None):
@@ -256,36 +256,36 @@ def change_layer_of_entire_cell(cell, layer, datatype=None):
 
 def custom_hash(s):
     """
-    字符串哈希为数字
+    Hash a string to a number
     """
     result = 0
-    prime = 31  # 选择一个质数作为乘法因子，可以减小冲突概率
+    prime = 31  # Choose a prime number as the multiplication factor，Can reduce the probability of conflict
 
     for char in s:
-        result = (result * prime + ord(char)) % (255)  # 防止溢出，取模
+        result = (result * prime + ord(char)) % (255)  # Prevent overflow，modulo
     return result
 
 def jg_dir(topo_pos0, topo_pos1):
     """
-    根据两个拓扑坐标判断topo_pos0在topo_pos1的方位
+    Judging based on two topological coordinatestopo_pos0existtopo_pos1The orientation
     """
     
     edge_sub = [topo_pos0[0] - topo_pos1[0], topo_pos0[1] - topo_pos1[1]]
-    if edge_sub == [-1, 0]:    # q0在q1的左边
+    if edge_sub == [-1, 0]:    # q0existq1On the left side
         return "left"
-    elif edge_sub == [1, 0]:    # q0在q1的右边
+    elif edge_sub == [1, 0]:    # q0existq1On the right side
         return "right"
-    elif edge_sub == [0, 1]:    # q0在q1的上边
+    elif edge_sub == [0, 1]:    # q0existq1Above it
         return "top"
-    elif edge_sub == [0, -1]:    # q0在q1的下边
+    elif edge_sub == [0, -1]:    # q0existq1Below
         return "bot"
     else:
         raise ValueError("两个拓扑坐标不相邻！")
     
 def delete_file_if_exists(path):
     """
-    判断文件是否存在，如果存在则删除
-    :param file_path: 文件路径
+    Determine if the file exists，If it exists, delete it
+    :param file_path: File Path
     """
     if os.path.exists(path):
         os.remove(path)
@@ -383,7 +383,7 @@ def import_options(path):
         return None
     
 def get_file_name_from_path(path):
-    # 使用os.path.splitext()拆分文件名和扩展名
+    # useos.path.splitext()Split file names and extensions
     file_name, file_extension = os.path.splitext(os.path.basename(path))
     return file_name, file_extension
 
@@ -425,11 +425,11 @@ def calculate_direction_angle(coord1, coord2):
     x1, y1 = coord1
     x2, y2 = coord2
 
-    # 计算坐标差值
+    # Calculate coordinate difference
     dx = x2 - x1
     dy = y2 - y1
 
-    # 使用math.atan2计算方向角
+    # usemath.atan2Calculate direction angle
     angle_rad = math.atan2(dy, dx)
     return angle_rad
 
@@ -507,14 +507,14 @@ def find_itsct(segment1, segment2):
         return None
     
 def rotate_point(point, center, angle):
-    # 将角度转换为弧度
+    # Convert angles to radians
     angle_rad = math.radians(angle)
 
-    # 计算旋转后的点的坐标
+    # Calculate the coordinates of the rotated point
     x = center[0] + (point[0] - center[0]) * math.cos(angle_rad) - (point[1] - center[1]) * math.sin(angle_rad)
     y = center[1] + (point[0] - center[0]) * math.sin(angle_rad) + (point[1] - center[1]) * math.cos(angle_rad)
 
-    # 返回旋转后的点的坐标
+    # Return the coordinates of the rotated point
     return (x, y)
 
 def clear_file(file_path):
@@ -568,7 +568,7 @@ def import_list_from_txt(file_path):
     try:
         with open(file_path, 'r') as file:
             content = file.read()
-            # 使用eval函数将字符串转换为列表
+            # useevalFunction to convert a string into a list
             my_list = eval(content)
             return my_list
     except FileNotFoundError:
@@ -711,13 +711,13 @@ def generate_gds_pos2(topo_positions, dist):
 
 def get_cell_bounding_box(cell):
     if not cell.polygons and not cell.references:
-        return None  # 如果 Cell 为空，返回 None
+        return None  # if Cell For empty，return None
 
-    # 初始化最小和最大坐标
+    # Initialize minimum and maximum coordinates
     min_x, min_y = float('inf'), float('inf')
     max_x, max_y = -float('inf'), -float('inf')
 
-    # 遍历所有多边形
+    # Traverse all polygons
     for polygon in cell.polygons:
         bbox = polygon.get_bounding_box()
         if bbox.any():
@@ -726,7 +726,7 @@ def get_cell_bounding_box(cell):
             max_x = max(max_x, bbox[1][0])
             max_y = max(max_y, bbox[1][1])
 
-    # 遍历所有引用（CellReference 和 CellArray）
+    # Traverse all references（CellReference and CellArray）
     for ref in cell.references:
         bbox = ref.get_bounding_box()
         if bbox.any():
@@ -735,7 +735,7 @@ def get_cell_bounding_box(cell):
             max_x = max(max_x, bbox[1][0])
             max_y = max(max_y, bbox[1][1])
 
-    # 如果没有有效的包围盒，返回 None
+    # If there is no effective enclosure box，return None
     if min_x == float('inf'):
         return None
 

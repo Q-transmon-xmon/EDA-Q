@@ -9,15 +9,15 @@ class Pins(CmpntsBase):
         return
     
     def initialization(self, **init_ops):
-        # 组件列表
+        # Component List
         self.cmpnt_name_list = []
-        # 初始化
+        # initialization
         options = func_modules.pins.generate_pins(**init_ops)
         self.inject_options(options)
         return
     
     def mirror_LaunchPad(self, name_list):
-        # 横着做镜像
+        # Mirror horizontally
         pins_ops = self.options
         for name in name_list:
             ops = copy.deepcopy(pins_ops[name])

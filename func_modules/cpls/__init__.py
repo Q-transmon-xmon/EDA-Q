@@ -6,58 +6,58 @@ from func_modules.cpls import gene_cpls_ops
 from func_modules.cpls import primitives
 
 ############################################################################################
-# 和耦合线有关的参数处理
+# Parameter processing related to coupling lines
 ############################################################################################
 from func_modules.cpls import primitives
 from addict import Dict
 
 def generate_coupling_lines(**gene_ops):
-    """根据拓扑信息和qubits给出的cp_pins生成耦合线
+    """Based on topology information andqubitsgivencp_pinsGenerate coupling lines
     
-    输入：
-        qubits: qubits参数
-        topology: 拓扑信息
-        cp_type: 生成的耦合类型
-        chip: 生成耦合的层
-    输出： 
-        cpls_ops: 耦合线参数
+    input：
+        qubits: qubitsparameter
+        topology: Topology information
+        cp_type: Generated coupling types
+        chip: Generate coupled layers
+    output： 
+        cpls_ops: 耦合线parameter
     """
     return copy.deepcopy(gene_cpls_ops.gene_cpls_ops(**gene_ops))
 
 def soak_cpls(cpl_ops):
-    """用类补充参数
+    """Supplement parameters with classes
 
-    输入：
-        cpl_ops: 待补全的耦合线参数
+    input：
+        cpl_ops: Coupling line parameters to be completed
 
-    输出：
-        cpl_ops: 补全后的耦合线参数
+    output：
+        cpl_ops: Completed coupling line parameters
     """
     cpl_ops = primitives.soak_cpls(coupling_lines=cpl_ops)
     return copy.deepcopy(cpl_ops)
 
 def set_chips(cpls_ops, chip_name: str = None):
-    """设置耦合线的芯片信息
+    """Set chip information for coupling lines
 
-    输入：
-        cpls_ops: 耦合线参数
-        chip_name: 要设置的芯片名称
+    input：
+        cpls_ops: Coupling line parameters
+        chip_name: The chip name to be set
 
-    输出： 
-        cpls_ops: 设置芯片名称后的耦合线参数
+    output： 
+        cpls_ops: 设置芯片名称后的Coupling line parameters
     """
     cpls_ops = primitives.set_chips(cpls_ops=cpls_ops, chip_name=chip_name)
     return copy.deepcopy(cpls_ops)
 
 def set_types(cpls_ops, type):
-    """设置耦合线的类型
+    """Set the type of coupling line
 
-    输入： 
-        cpls: 耦合线参数
-        type: 目标类型
+    input： 
+        cpls: Coupling line parameters
+        type: target type
 
-    输出：
-        cpls: 修改类型后的耦合先参数
+    output：
+        cpls: Coupling parameters after modifying the type
     """
     cpls_ops = primitives.set_types(cpls=cpls_ops, type=type)
     return copy.deepcopy(cpls_ops)

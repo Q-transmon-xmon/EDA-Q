@@ -26,45 +26,45 @@ def add_air_bridges_czy(pos, bend_radius, spacing=120, chip_type="chip3", width=
 
     def find_nearest_segment_center(polygons, curr_point, line_width):
         """
-        寻找距离 curr_point 最近的线段的中心点，并根据线宽调整中心位置。
+        Search for distance curr_point The center point of the nearest line segment，And adjust the center position according to the line width。
         """
-        path_points = np.concatenate(polygons)  # 展开多边形点集为连续路径点
+        path_points = np.concatenate(polygons)  # Expand the polygon point set into continuous path points
         curr_x, curr_y = curr_point
 
-        # 初始化最小距离和最近中心点
+        # Initialize minimum distance and nearest center point
         min_distance = float('inf')
         nearest_center = None
 
-        # 遍历路径的每段线段
+        # Traverse each segment of the path
         for i in range(len(path_points) - 1):
-            # 计算线段两端点
+            # Calculate the endpoints of the line segment
             x1, y1 = path_points[i]
             x2, y2 = path_points[i + 1]
 
-            # 计算线段方向向量和长度
+            # Calculate the direction vector and length of the line segment
             dx, dy = x2 - x1, y2 - y1
             length = math.sqrt(dx**2 + dy**2)
 
-            # 单位方向向量
+            # Unit directional vector
             direction_x = dx / length
             direction_y = dy / length
 
-            # 正交方向向量（法向量）
+            # Orthogonal directional vector（Normal vector）
             normal_x = -direction_y
             normal_y = direction_x
 
-            # 计算线段中心点
+            # Calculate the center point of the line segment
             center_x = (x1 + x2) / 2
             center_y = (y1 + y2) / 2
 
-            # 根据线宽调整中心点
+            # Adjust the center point according to the line width
             adjusted_center_x = center_x + normal_x * (line_width / 2)
             adjusted_center_y = center_y + normal_y * (line_width / 2)
 
-            # 计算调整后中心点到 curr_point 的距离
+            # Calculate the adjusted center point to curr_point The distance
             distance = np.sqrt((adjusted_center_x - curr_x)**2 + (adjusted_center_y - curr_y)**2)
 
-            # 更新最近的中心点
+            # Update the nearest center point
             if distance < min_distance:
                 min_distance = distance
                 nearest_center = (adjusted_center_x, adjusted_center_y)
@@ -75,7 +75,7 @@ def add_air_bridges_czy(pos, bend_radius, spacing=120, chip_type="chip3", width=
 
     def adjust_air_bridge_position_for_bend(prev_point, curr_point, next_point, bend_radius,width):
         """
-        优化空气桥偏移量，精确计算圆角与路径的接触点，动态调整修正因子。
+        Optimize the offset of the air bridge，Accurately calculate the contact points between rounded corners and paths，Dynamic adjustment correction factor。
         """
 
         path_points = [prev_point, curr_point, next_point]
@@ -85,50 +85,50 @@ def add_air_bridges_czy(pos, bend_radius, spacing=120, chip_type="chip3", width=
             corners="circular bend",
             bend_radius=bend_radius
         )
-        polygons = path.to_polygonset().polygons  # 提取多边形点集
+        polygons = path.to_polygonset().polygons  # Extract polygon point set
         gds_pos = find_nearest_segment_center(polygons,curr_point,width)
 
-        # 向量计算
+        # Vector computation
         v1x, v1y = prev_point[0] - curr_point[0], prev_point[1] - curr_point[1]
         v2x, v2y = next_point[0] - curr_point[0], next_point[1] - curr_point[1]
 
-        # 归一化向量
+        # normalized vector
         v1_length = math.sqrt(v1x**2 + v1y**2)
         v2_length = math.sqrt(v2x**2 + v2y**2)
         v1x, v1y = v1x / v1_length, v1y / v1_length
         v2x, v2y = v2x / v2_length, v2y / v2_length
 
 
-        # 计算角平分线向量
+        # Calculate the vector of the angle bisector
         bisector_x = v1x + v2x
         bisector_y = v1y + v2y
         bisector_length = math.sqrt(bisector_x**2 + bisector_y**2)
         bisector_x /= bisector_length
         bisector_y /= bisector_length
 
-        # 计算切线方向的旋转角度
+        # Calculate the rotation angle in the tangent direction
         rotation_angle = math.atan2(bisector_y, bisector_x)
 
-        return gds_pos, rotation_angle + math.pi / 2  # 顺时针旋转90度
+        return gds_pos, rotation_angle + math.pi / 2  # clockwise rotation90linear measure
 
 
     def is_point_in_flexpath(point, polygons, tolerance):
         """
-        检查点是否在路径的多边形范围内，并允许一定容差。
+        Check if the checkpoint is within the polygon range of the path，And allow for a certain tolerance。
         """
         px, py = point
 
-        # 判断点是否在多边形内（严格条件）
+        # Determine whether the point is within the polygon（stringent condition）
         for poly in polygons:
             if gdspy.inside([point], [poly], short_circuit=True)[0]:
                 return True
 
-            # 判断点到多边形边界的最短距离
+            # Determine the shortest distance from a point to the polygon boundary
             for i in range(len(poly)):
                 x1, y1 = poly[i - 1]
                 x2, y2 = poly[i]
 
-                # 计算点到线段的最短距离
+                # Calculate the shortest distance from a point to a line segment
                 dx, dy = x2 - x1, y2 - y1
                 length_squared = dx**2 + dy**2
                 if length_squared == 0:
@@ -146,22 +146,22 @@ def add_air_bridges_czy(pos, bend_radius, spacing=120, chip_type="chip3", width=
     
     def do_lines_intersect(p1, p2, q1, q2):
         """
-        判断两条线段 (p1, p2) 和 (q1, q2) 是否相交。
+        Determine two line segments (p1, p2) and (q1, q2) Does it intersect。
         
-        参数:
-        p1, p2: 第一条线段的起点和终点 (x1, y1), (x2, y2)
-        q1, q2: 第二条线段的起点和终点 (x3, y3), (x4, y4)
+        parameter:
+        p1, p2: 第一条线段的起点and终点 (x1, y1), (x2, y2)
+        q1, q2: 第二条线段的起点and终点 (x3, y3), (x4, y4)
         
-        返回:
-        bool: 如果相交，则返回 True；否则返回 False。
+        return:
+        bool: If intersecting，则return True；否则return False。
         """
 
         def orientation(p, q, r):
             """
-            计算三个点的方向。
-            0 -> p, q 和 r 在同一条直线上
-            1 -> 顺时针
-            2 -> 逆时针
+            Calculate the direction of three points。
+            0 -> p, q and r On the same straight line
+            1 -> clockwise
+            2 -> anticlockwise
             """
             val = (q[1] - p[1]) * (r[0] - q[0]) - (q[0] - p[0]) * (r[1] - q[1])
             if val == 0:
@@ -172,31 +172,31 @@ def add_air_bridges_czy(pos, bend_radius, spacing=120, chip_type="chip3", width=
                 return 2  # counterclockwise
 
         def on_segment(p, q, r):
-            """检查点 q 是否在线段 pr 上"""
+            """Checkpoints q Is it on the line segment pr upper"""
             return (min(p[0], r[0]) <= q[0] <= max(p[0], r[0]) and
                     min(p[1], r[1]) <= q[1] <= max(p[1], r[1]))
 
-        # 找到四个方向
+        # Find four directions
         o1 = orientation(p1, p2, q1)
         o2 = orientation(p1, p2, q2)
         o3 = orientation(q1, q2, p1)
         o4 = orientation(q1, q2, p2)
 
-        # 普通情况
+        # general case
         if o1 != o2 and o3 != o4:
             return True
 
-        # 特殊情况
-        # p1, p2 和 q1 在同一条直线上，检查 q1 是否在线段 p1p2 上
+        # exceptional case
+        # p1, p2 and q1 On the same straight line，inspect q1 Is it on the line segment p1p2 upper
         if o1 == 0 and on_segment(p1, q1, p2):
             return True
-        # p1, p2 和 q2 在同一条直线上，检查 q2 是否在线段 p1p2 上
+        # p1, p2 and q2 On the same straight line，inspect q2 Is it on the line segment p1p2 upper
         if o2 == 0 and on_segment(p1, q2, p2):
             return True
-        # q1, q2 和 p1 在同一条直线上，检查 p1 是否在线段 q1q2 上
+        # q1, q2 and p1 On the same straight line，inspect p1 Is it on the line segment q1q2 upper
         if o3 == 0 and on_segment(q1, p1, q2):
             return True
-        # q1, q2 和 p2 在同一条直线上，检查 p2 是否在线段 q1q2 上
+        # q1, q2 and p2 On the same straight line，inspect p2 Is it on the line segment q1q2 upper
         if o4 == 0 and on_segment(q1, p2, q2):
             return True
 
@@ -205,40 +205,40 @@ def add_air_bridges_czy(pos, bend_radius, spacing=120, chip_type="chip3", width=
 
     def angle_to_path_vector(angle, length):
         """
-        根据给定的角度和长度计算路径向量。
+        Calculate the path vector based on the given angle and length。
         
-        参数:
-        angle: 以弧度表示的角度
-        length: 向量的长度
+        parameter:
+        angle: Angle expressed in radians
+        length: The length of a vector
         
-        返回:
-        path_vector: 计算得到的路径向量 (dx, dy)
+        return:
+        path_vector: Calculated path vector (dx, dy)
         """
-        dx = length * math.cos(angle)  # x 分量
-        dy = length * math.sin(angle)  # y 分量
+        dx = length * math.cos(angle)  # x weight
+        dy = length * math.sin(angle)  # y weight
         return (dx, dy)
     def is_point_intersect(point , path_vector , last_point , last_path_vector ):
         
         def get_line(point , path_vector ):
             line = []
-            # 垂线的长度
+            # The length of the vertical line
             perpendicular_length = 65
 
-            # 计算垂线方向
-            perp_dx = -path_vector[1]  # 垂线方向 x 分量
-            perp_dy = path_vector[0]   # 垂线方向 y 分量
+            # Calculate the vertical direction
+            perp_dx = -path_vector[1]  # Vertical direction x weight
+            perp_dy = path_vector[0]   # Vertical direction y weight
 
-            # 垂线的两个端点
+            # The two endpoints of the perpendicular line
             perp1 = (point[0] + (perp_dx / math.sqrt(perp_dx**2 + perp_dy**2)) * (perpendicular_length ),
                         point[1] + (perp_dy / math.sqrt(perp_dx**2 + perp_dy**2)) * (perpendicular_length))
 
             perp2 = (point[0] - (perp_dx / math.sqrt(perp_dx**2 + perp_dy**2)) * (perpendicular_length ),
                         point[1] - (perp_dy / math.sqrt(perp_dx**2 + perp_dy**2)) * (perpendicular_length ))
 
-            # 平行线的长度
+            # The length of parallel lines
             parallel_length = 50
 
-            # 平行线的两个端点
+            # The two endpoints of a parallel line
             parallel1_start = (perp1[0] + (path_vector[0] / math.sqrt(path_vector[0]**2 + path_vector[1]**2)) * (parallel_length / 2),
                             perp1[1] + (path_vector[1] / math.sqrt(path_vector[0]**2 + path_vector[1]**2)) * (parallel_length / 2))
 
@@ -282,24 +282,24 @@ def add_air_bridges_czy(pos, bend_radius, spacing=120, chip_type="chip3", width=
         
         def get_line_for_bend_2(point , path_vector ):
             line = []
-            # 垂线的长度
+            # The length of the vertical line
             perpendicular_length = 15
 
-            # 计算垂线方向
-            perp_dx = -path_vector[1]  # 垂线方向 x 分量
-            perp_dy = path_vector[0]   # 垂线方向 y 分量
+            # Calculate the vertical direction
+            perp_dx = -path_vector[1]  # Vertical direction x weight
+            perp_dy = path_vector[0]   # Vertical direction y weight
 
-            # 垂线的两个端点
+            # The two endpoints of the perpendicular line
             perp1 = (point[0] + (perp_dx / math.sqrt(perp_dx**2 + perp_dy**2)) * (perpendicular_length ),
                         point[1] + (perp_dy / math.sqrt(perp_dx**2 + perp_dy**2)) * (perpendicular_length))
 
             perp2 = (point[0] - (perp_dx / math.sqrt(perp_dx**2 + perp_dy**2)) * (perpendicular_length ),
                         point[1] - (perp_dy / math.sqrt(perp_dx**2 + perp_dy**2)) * (perpendicular_length ))
 
-            # 垂线的长度
+            # The length of the vertical line
             parallel_length = 50
 
-            # 垂线的两个端点
+            # The two endpoints of the perpendicular line
             parallel1 = (perp1[0] + (path_vector[0] / math.sqrt(path_vector[0]**2 + path_vector[1]**2)) * (parallel_length / 2),
                             perp1[1] + (path_vector[1] / math.sqrt(path_vector[0]**2 + path_vector[1]**2)) * (parallel_length / 2))
 
@@ -332,24 +332,24 @@ def add_air_bridges_czy(pos, bend_radius, spacing=120, chip_type="chip3", width=
         
         def get_line_for_bend_1(point , path_vector ):
             line = []
-            # 垂线的长度
+            # The length of the vertical line
             perpendicular_length = 65
 
-            # 计算垂线方向
-            perp_dx = -path_vector[1]  # 垂线方向 x 分量
-            perp_dy = path_vector[0]   # 垂线方向 y 分量
+            # Calculate the vertical direction
+            perp_dx = -path_vector[1]  # Vertical direction x weight
+            perp_dy = path_vector[0]   # Vertical direction y weight
 
-            # 垂线的两个端点
+            # The two endpoints of the perpendicular line
             perp1 = (point[0] + (perp_dx / math.sqrt(perp_dx**2 + perp_dy**2)) * (perpendicular_length ),
                         point[1] + (perp_dy / math.sqrt(perp_dx**2 + perp_dy**2)) * (perpendicular_length))
 
             perp2 = (point[0] - (perp_dx / math.sqrt(perp_dx**2 + perp_dy**2)) * (perpendicular_length ),
                         point[1] - (perp_dy / math.sqrt(perp_dx**2 + perp_dy**2)) * (perpendicular_length ))
 
-            # 平行线的长度
+            # The length of parallel lines
             parallel_length = 50
 
-            # 平行线的两个端点
+            # The two endpoints of a parallel line
             parallel1_start = (perp1[0] + (path_vector[0] / math.sqrt(path_vector[0]**2 + path_vector[1]**2)) * (parallel_length / 2),
                             perp1[1] + (path_vector[1] / math.sqrt(path_vector[0]**2 + path_vector[1]**2)) * (parallel_length / 2))
 
@@ -392,7 +392,7 @@ def add_air_bridges_czy(pos, bend_radius, spacing=120, chip_type="chip3", width=
 
     options = Dict()
 
-    # 创建 FlexPath 并提取多边形
+    # create FlexPath And extract polygons
     path = gdspy.FlexPath(pos, width=width, corners="circular bend", bend_radius=bend_radius)
     polygons = path.to_polygonset().polygons
 
@@ -403,25 +403,25 @@ def add_air_bridges_czy(pos, bend_radius, spacing=120, chip_type="chip3", width=
     last_num_bridges = 0 
     last_path_vector = 0
     path_vector = 0
-    # 路径中段空气桥添加
+    # Add air bridge in the middle of the path
     num_bridges = 0
-    # 路径中段空气桥添加
+    # Add air bridge in the middle of the path
     for i in range(len(pos) - 1):
         start, end = pos[i], pos[i + 1]
         last_path_vector = path_vector
-        # 计算段长度（考虑线宽调整）
+        # Calculate segment length（Consider adjusting the line width）
         path_vector = np.array([end[0] - start[0], end[1] - start[1]])
 
-        path_length = np.linalg.norm(path_vector) - bend_radius * 2  # 减去两端圆角部分
+        path_length = np.linalg.norm(path_vector) - bend_radius * 2  # Subtract the rounded corners at both ends
         flag = False
         # print('times : {} , path_verctor : {} , path_length : {} '.format(i , path_vector , path_length))
-        # 计算有效路径长度内空气桥的数量
+        # Calculate the number of air bridges within the effective path length
         if path_length > 0:
             last_num_bridges = num_bridges
             num_bridges = max(1, math.ceil(path_length / spacing))
             bridge_num_map[i] = num_bridges
             for j in range(1, num_bridges + 1):
-                # 插值计算空气桥中心位置
+                # Interpolation calculation of the center position of the air bridge
                 t = j / (num_bridges + 1)
                 center_x = (1 - t) * start[0] + t * end[0]
                 center_y = (1 - t) * start[1] + t * end[1]
@@ -431,7 +431,7 @@ def add_air_bridges_czy(pos, bend_radius, spacing=120, chip_type="chip3", width=
                 if i > 0  and j == 1:
 
                     last_point = options['air_bridge_line_{}_{}'.format(i-1 , last_num_bridges)]
-                    if is_point_in_flexpath(gds_pos, polygons, width / 2 + 5):  # 增加5个单位容差
+                    if is_point_in_flexpath(gds_pos, polygons, width / 2 + 5):  # increase5Unit tolerance
                         if is_point_intersect(gds_pos ,path_vector ,  last_point.gds_pos , last_path_vector) :
                             print('line {} , num {} intersect'.format(i, j))
                             del options[last_point.name]
@@ -452,8 +452,8 @@ def add_air_bridges_czy(pos, bend_radius, spacing=120, chip_type="chip3", width=
                             options[option.name] = option
 
                 else :
-                    # 检查中心点是否满足范围条件
-                    if is_point_in_flexpath(gds_pos, polygons, width / 2 + 5):  # 增加5个单位容差
+                    # Check if the center point meets the range conditions
+                    if is_point_in_flexpath(gds_pos, polygons, width / 2 + 5):  # increase5Unit tolerance
                         
                         angle = math.atan2(path_vector[1], path_vector[0])
                         if flag == False :
@@ -467,19 +467,19 @@ def add_air_bridges_czy(pos, bend_radius, spacing=120, chip_type="chip3", width=
                             rotation=angle
                         )
                         options[option.name] = option
-    # 路径拐角处空气桥添加
+    # Add air bridge at the corner of the path
     for i in range(1, len(pos) - 1):
         prev_point, curr_point, next_point = pos[i - 1], pos[i], pos[i + 1]
 
-        # 调整拐角位置和旋转角度
+        # Adjust the corner position and rotation angle
         adjusted_pos, rotation_angle = adjust_air_bridge_position_for_bend(
             prev_point, curr_point, next_point, bend_radius, width
         )
 
         last_point = options['air_bridge_line_{}_{}'.format(i-1 , bridge_num_map[i-1])]
         next_point1 = options['air_bridge_line_{}_{}'.format(i , first_bridge_num_map[i])]
-        # 检查中心点是否满足范围条件  这部分逻辑要继续完善
-        if is_point_in_flexpath(adjusted_pos, polygons, width / 2 + 5):  # 增加5个单位容差
+        # Check if the center point meets the range conditions  This part of the logic needs to be further improved
+        if is_point_in_flexpath(adjusted_pos, polygons, width / 2 + 5):  # increase5Unit tolerance
             path_vector_now = angle_to_path_vector(rotation_angle, 1)
             print('rotation_angle :' ,rotation_angle)
             print('last_point.angle:' , last_point.rotation)

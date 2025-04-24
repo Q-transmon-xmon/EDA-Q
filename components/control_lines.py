@@ -5,69 +5,69 @@ import copy
 
 class ControlLines(CmpntsBase):
     """
-    ControlLines类，继承自CmpntsBase，用于管理和操作控制线组件。
+    ControlLinesclass，Inherited fromCmpntsBase，Used for managing and operating control line components。
     """
 
     def __init__(self, **init_ops):
         """
-        初始化ControlLines对象。
+        initializationControlLinesobject。
 
-        输入：
-            init_ops: dict，初始化所需的参数。
+        input：
+            init_ops: dict，initialization所需的参数。
 
-        输出：
-            无
+        output：
+            not have
         """
-        self.initialization(**init_ops)  # 调用初始化方法
+        self.initialization(**init_ops)  # Call initialization method
         return
     
     def initialization(self, **init_ops):
         """
-        初始化控制线组件集合。
+        Initialize the set of control line components。
 
-        输入：
-            init_ops: dict，生成控制线组件的初始化参数。
+        input：
+            init_ops: dict，Generate initialization parameters for control line components。
 
-        输出：
-            无
+        output：
+            not have
         """
-        # 初始化组件名称列表
+        # Initialize component name list
         self.cmpnt_name_list = []
-        # 调用功能模块生成控制线组件的选项
+        # Options for calling functional modules to generate control line components
         options = func_modules.ctls.generate_control_lines(**init_ops)
-        self.inject_options(options)  # 注入生成的参数
+        self.inject_options(options)  # Inject generated parameters
         return
     
     def mirror_ControlLine(self, name_list):
         """
-        对指定控制线组件进行镜像操作（横向镜像）。
+        Mirror the specified control line components（Horizontal mirroring）。
 
-        输入：
-            name_list: list，包含需要镜像的控制线名称列表。
+        input：
+            name_list: list，Contains a list of control line names that need to be mirrored。
 
-        输出：
-            无
+        output：
+            not have
         """
-        # 获取当前控制线组件的参数
+        # Get the parameters of the current control line component
         ctls_ops = self.options
         for name in name_list:
-            # 为镜像后的控制线生成新名称
+            # Generate new names for the mirrored control lines
             new_name = name + "_mirror"
-            ctl_ops = copy.deepcopy(ctls_ops[name])  # 获取原控制线的参数
-            new_ctl_ops = copy.deepcopy(ctl_ops)  # 创建镜像控制线的参数副本
-            new_ctl_ops.name = new_name  # 设置镜像控制线的新名称
+            ctl_ops = copy.deepcopy(ctls_ops[name])  # Obtain the parameters of the original control line
+            new_ctl_ops = copy.deepcopy(ctl_ops)  # Create a parameter copy of the mirror control line
+            new_ctl_ops.name = new_name  # Set a new name for the mirror control line
 
-            # 对控制线的路径进行镜像操作
+            # Mirror the path of the control line
             path = copy.deepcopy(ctl_ops.path)
             new_path = []
             for pos in path:
-                new_pos = (-pos[0], pos[1])  # 横向镜像操作
+                new_pos = (-pos[0], pos[1])  # Horizontal mirror operation
                 new_path.append(copy.deepcopy(new_pos))
-            new_ctl_ops.path = copy.deepcopy(new_path)  # 更新镜像后的路径
+            new_ctl_ops.path = copy.deepcopy(new_path)  # Update the path of the image
 
-            # 将镜像后的控制线参数添加到组件集合中
+            # Add the mirrored control line parameters to the component collection
             ctls_ops[new_name] = copy.deepcopy(new_ctl_ops)
 
-        # 注入更新后的控制线组件参数
+        # Inject updated control line component parameters
         self.inject_options(ctls_ops)
         return

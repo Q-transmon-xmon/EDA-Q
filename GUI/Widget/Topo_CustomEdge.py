@@ -9,7 +9,7 @@ class Ui_Dialog:
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(411, 251)
-        # 设置整个界面的字体为微软雅黑
+        # Set the font of the entire interface to Microsoft Yahei
         Dialog.setFont(QFont("Microsoft YaHei", 10.5))
         # Main layout to hold all components
         self.mainLayout = QVBoxLayout(Dialog)
@@ -50,7 +50,7 @@ class Ui_Dialog:
 
 
 class CustomEdge_Dialog(QDialog, Ui_Dialog):
-    # 定义一个信号，用于在设计更新后通知外部
+    # Define a signal，Used to notify external parties after design updates
     designUpdated = QtCore.Signal(object)
 
     def __init__(self, design, parent=None):
@@ -74,7 +74,7 @@ class CustomEdge_Dialog(QDialog, Ui_Dialog):
         print(f"Adding edge between {q0_name} and {q1_name}")
         self.design.topology.add_edge(q0_name, q1_name)
 
-        # 发出设计更新后的信号
+        # Send a signal after the design update
         self.designUpdated.emit(self.design)
 
     def delete_edge(self):
@@ -89,7 +89,7 @@ class CustomEdge_Dialog(QDialog, Ui_Dialog):
         print(f"Deleting edge between {q0_name} and {q1_name}")
         self.design.topology.remove_edge([q0_name, q1_name])
 
-        # 发出设计更新后的信号
+        # Send a signal after the design update
         self.designUpdated.emit(self.design)
 
     def validate_qubit_names(self, q0_name, q1_name):
@@ -106,7 +106,7 @@ if __name__ == "__main__":
     design = Design()  # Instantiate the Design object
     dialog = CustomEdge_Dialog(design=design)
 
-    # 连接信号到一个函数以处理设计更新
+    # Connect signals to a function to handle design updates
     def updateMainDesign(updated_design):
         print("主函数设计已更新")
 

@@ -6,7 +6,7 @@ from func_modules.ctls import gene_ctls_ops
 from func_modules.ctls import primitives
 
 ############################################################################################
-# 修改控制线的参数
+# Modify the parameters of the control line
 ############################################################################################
 
 from addict import Dict
@@ -15,40 +15,40 @@ import copy
 from library import control_lines as ctls_lib
 
 def set_types(ctls_ops, ctls_type):
-    """修改控制线类型
+    """Modify control line type
 
-    输入：
-        ctls: 控制线参数
-        type: 要修改的控制线的类型
+    input：
+        ctls: Control line parameters
+        type: The type of control line to be modified
     
-    输出:
-        ctls: 修改控制线类型后的参数
+    output:
+        ctls: Modify control line type后的参数
     """
 
-    # 接口
+    # interface
     ctls_ops = copy.deepcopy(ctls_ops)
 
-    # 逐个修改控制线类型
+    # Modify control line types one by one
     for k, v in ctls_ops.items():
         ctls_ops[k].type = ctls_type
     
     return copy.deepcopy(ctls_ops)
 
 def set_chips(ctls_ops, chip_name: str = None):
-    """设置每个控制线的芯片信息
+    """Set the chip information for each control line
 
-    输入：
-        ctls_ops: 控制线的参数
-        chip_name: 控制线所在芯片的名称
+    input：
+        ctls_ops: Parameters of control lines
+        chip_name: Name of the chip where the control line is located
     
-    输出：
-        ctls_ops: 设置芯片信息后的控制线参数
+    output：
+        ctls_ops: Control line parameters after setting chip information
     """
 
-    # 接口
+    # interface
     ctls_ops = Dict(ctls_ops)
     
-    # 逐个设置芯片信息
+    # Set chip information one by one
     for ctl_name, ctl_ops in ctls_ops.items():
         ctls_ops[ctl_name].chip = chip_name
 

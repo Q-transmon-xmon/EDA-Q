@@ -11,31 +11,31 @@ from api.design import Design
 class Ui_Dialog:
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.setMinimumSize(850, 420)  # 设置对话框的最小大小
+        Dialog.setMinimumSize(850, 420)  # Set the minimum size of the dialog box
         Dialog.setFont(QFont("Microsoft YaHei", 10))
 
-        # 主布局
+        # Main layout
         self.mainLayout = QVBoxLayout(Dialog)
         self.mainLayout.addStretch(1)
 
-        # 标题标签
+        # title tag
         titleLabel = QLabel("Xmon Parameter Configuration")
         titleLabel.setFont(QFont("Microsoft YaHei", 14, QFont.Bold))
         titleLabel.setAlignment(Qt.AlignCenter)
         self.mainLayout.addWidget(titleLabel)
 
-        # 指导信息标签
+        # Guidance information label
         instructionsLabel = QLabel("Please enter the simulation parameters below:")
         instructionsLabel.setAlignment(Qt.AlignCenter)
         self.mainLayout.addWidget(instructionsLabel)
 
-        # 输入部分
+        # input section
         self.layoutWidget = QWidget(Dialog)
         self.verticalLayout = QVBoxLayout(self.layoutWidget)
         self.verticalLayout.setSpacing(20)
         self.verticalLayout.setContentsMargins(20, 20, 20, 20)
 
-        self.defaults = ["control_lines_upper_0", "q0", "C:/sim_proj/PlaneXmon_sim/Xmon_random_capacity_{}.txt"]  # 默认值
+        self.defaults = ["control_lines_upper_0", "q0", "C:/sim_proj/PlaneXmon_sim/Xmon_random_capacity_{}.txt"]  # Default value
         self.lineEdits = []
 
         self.createLabeledInput("Control Line Name:", self.defaults[0])
@@ -44,7 +44,7 @@ class Ui_Dialog:
 
         self.mainLayout.addWidget(self.layoutWidget)
 
-        # 按钮框
+        # button box
         self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
         self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
         self.buttonBox.setCenterButtons(True)
@@ -58,26 +58,26 @@ class Ui_Dialog:
         self.mainLayout.addStretch(1)
 
     def createLabeledInput(self, label_text, default_value):
-        """创建带标签的输入框"""
-        layout = QHBoxLayout()  # 为每个输入项创建布局
+        """Create a labeled input box"""
+        layout = QHBoxLayout()  # Create a layout for each input item
         label = QLabel(label_text)
-        label.setFixedWidth(180)  # 设置标签宽度
+        label.setFixedWidth(180)  # Set label width
         line_edit = QLineEdit()
         line_edit.setMinimumWidth(300)
 
-        # 设置默认值
+        # Set default values
         line_edit.setPlaceholderText(default_value)
         layout.addWidget(label)
         layout.addWidget(line_edit)
-        self.verticalLayout.addLayout(layout)  # 添加到垂直布局
-        self.lineEdits.append(line_edit)  # 保存输入框
+        self.verticalLayout.addLayout(layout)  # Add to Vertical Layout
+        self.lineEdits.append(line_edit)  # Save input box
 
     def get_line_edits(self):
         return self.lineEdits
 
 
 class Dialog_Xmon(QDialog):
-    designUpdated = pyqtSignal(object)  # 定义信号以通知设计更新
+    designUpdated = pyqtSignal(object)  # Define signals to notify design updates
 
     def __init__(self, design):
         super().__init__()
@@ -87,43 +87,43 @@ class Dialog_Xmon(QDialog):
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
 
-        # 连接信号
-        self.ui.buttonBox.accepted.connect(self.checkInputs)  # OK按钮
-        self.ui.buttonBox.rejected.connect(self.reject)  # 取消按钮
+        # joining signal
+        self.ui.buttonBox.accepted.connect(self.checkInputs)  # OKbutton
+        self.ui.buttonBox.rejected.connect(self.reject)  # cancel button
 
-        # 为输入框设置事件过滤器
+        # Set event filters for input boxes
         for line_edit in self.ui.get_line_edits():
             line_edit.installEventFilter(self)
 
     def eventFilter(self, source, event):
-        """处理Tab键事件以设置默认值"""
+        """handleTabKey events to set default values"""
         if event.type() == QtCore.QEvent.KeyPress and event.key() == Qt.Key_Tab:
             for line_edit in self.ui.get_line_edits():
                 if line_edit.hasFocus():
-                    # 如果输入框为空，则设置为默认值
+                    # If the input box is empty，Set as default value
                     if line_edit.text().strip() == "":
                         line_edit.setText(line_edit.placeholderText())
-                        # 转到下一个输入框
+                        # Go to the next input box
                     next_index = self.ui.get_line_edits().index(line_edit) + 1
                     if next_index < len(self.ui.get_line_edits()):
                         self.ui.get_line_edits()[next_index].setFocus()
-                    return True  # 阻止进一步处理
+                    return True  # Prevent further processing
         return super().eventFilter(source, event)
 
     def checkInputs(self):
         inputs = []
         for i, line_edit in enumerate(self.ui.get_line_edits()):
-            # 如果为空，使用默认值
+            # If it is empty，Use default values
             value = line_edit.text().strip() or self.ui.defaults[i]
-            # 检查值
+            # Check value
             if not value:
                 QMessageBox.critical(self, "Input Error", "All fields must be filled out. Please enter valid values.")
                 return
 
-                # 尝试转换为字符串
+                # Attempt to convert to a string
             inputs.append(value)
 
-            # 处理节点输入
+            # Processing node inputs
         self.processNode(inputs)
 
     def processNode(self, inputs):
@@ -135,20 +135,20 @@ class Dialog_Xmon(QDialog):
         print(f"Qubit Name: {inputs[1]}")
         print(f"Save Path: {inputs[2]}")
 
-        # 生成拓扑并发出更新信号
+        # Generate topology and send update signals
         self.design.simulation(sim_module="PlaneXmonSim", qubit_name=inputs[1], gds_ops=True)
         # self.design.generate_topology(control_line=inputs[0], bit_name=inputs[1], save_path=inputs[2])
-        self.designUpdated.emit(self.design)  # 发出设计更新信号
-        self.accept()  # 关闭对话框
+        self.designUpdated.emit(self.design)  # Send design update signal
+        self.accept()  # close dialog boxes
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    design = Design()  # 实例化设计对象
-    dialog = Dialog_Xmon(design=design)  # 创建对话框
+    design = Design()  # Instantiate design object
+    dialog = Dialog_Xmon(design=design)  # create a dialog box
 
     dialog.designUpdated.connect(
-        lambda updated_design: print("Design Updated Back to Main Window!"))  # 连接信号
-    dialog.exec_()  # 显示对话框
+        lambda updated_design: print("Design Updated Back to Main Window!"))  # joining signal
+    dialog.exec_()  # display a dialog box
 
     sys.exit(app.exec_())

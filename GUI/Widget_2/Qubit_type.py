@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import (QApplication, QDialog, QHBoxLayout, QVBoxLayout,
 from GUI.gui_modules.design_validator import design_validator
 from api.design import Design
 
-# 新增导入
+# Add Import
 import toolbox
 from library.qubits import module_name_list
 
@@ -21,56 +21,56 @@ class Dialog_Selection(QDialog):
         self.setWindowTitle("Select Qubit Type")
         self.setGeometry(100, 100, 400, 250)  # Set window size and initial position
 
-        # 设置字体
+        # set font
         font = QFont("Arial", 10)
         self.setFont(font)
 
-        # 创建主布局
+        # Create main layout
         main_layout = QVBoxLayout()
         main_layout.setContentsMargins(20, 40, 20, 20)
 
-        # 标题标签
+        # title tag
         title_label = QLabel("Please select the type of qubit you want to generate:")
         title_label.setStyleSheet("font-size: 22px; font-weight: bold; color: black;")
         title_label.setAlignment(QtCore.Qt.AlignCenter)
         title_label.setWordWrap(True)
         main_layout.addWidget(title_label)
 
-        # 添加固定间隔
+        # Add fixed intervals
         main_layout.addSpacerItem(QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
-        # 创建下拉框布局
+        # Create dropdown layout
         combo_layout = QHBoxLayout()
 
-        # 生成动态选项列表
+        # Generate a dynamic option list
         try:
-            # 转换为驼峰命名
+            # Convert to camel hump naming
             class_names = [toolbox.convert_to_camel_case(name) for name in module_name_list]
-            # 过滤无效值并确保非空
+            # Filter invalid values and ensure they are not empty
             valid_names = [name for name in class_names if isinstance(name, str) and name]
             if not valid_names:
                 valid_names = ["DefaultQubitType"]
         except Exception as e:
             print(f"Error generating options: {str(e)}")
-            valid_names = ["Xmon", "Transmon"]  # 备选选项
+            valid_names = ["Xmon", "Transmon"]  # Alternative options
 
-        # 创建下拉框
+        # Create dropdown menu
         self.type_combo = QComboBox()
         self.type_combo.addItems(valid_names)
-        self.type_combo.setFixedWidth(250)  # 设置固定宽度为250px
-        self.type_combo.setFixedHeight(25)  # 设置固定高度为40px
-        # 将下拉框居中
+        self.type_combo.setFixedWidth(250)  # Set the fixed width to250px
+        self.type_combo.setFixedHeight(25)  # Set the fixed height to40px
+        # Center the dropdown menu
         combo_layout.addStretch(1)
         combo_layout.addWidget(self.type_combo)
         combo_layout.addStretch(1)
 
-        # 添加到主布局
+        # Add to main layout
         main_layout.addLayout(combo_layout)
 
-        # 添加底部间隔
+        # Add bottom spacing
         main_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
-        # 添加按钮框
+        # Add button box
         self.button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
         self.button_box.accepted.connect(self.on_confirm)
         self.button_box.rejected.connect(self.reject)
@@ -80,17 +80,17 @@ class Dialog_Selection(QDialog):
         self.move(400, 400)
 
     def on_confirm(self):
-        """处理确认按钮点击事件"""
+        """Process confirmation button click event"""
         selected_type = self.type_combo.currentText()
         print(f"You selected: {selected_type}")
 
-        # 检查topology是否存在
+        # inspecttopologyDoes it exist
         if design_validator.is_component_empty(self.design, 'topology'):
             QMessageBox.warning(self, "Warning", "Topology does not exist or is not initialized.")
             return
 
         try:
-            # 生成量子比特
+            # Generate quantum bits
             self.design.generate_qubits(
                 topology=True,
                 qubits_type=selected_type
@@ -102,7 +102,7 @@ class Dialog_Selection(QDialog):
             self.reject()
 
     def on_qubit_selected(self):
-        """处理下拉框选项变化事件"""
+        """Handling dropdown menu option change events"""
         selected_type = self.type_combo.currentText()
         print(f"You selected: {selected_type}")
 

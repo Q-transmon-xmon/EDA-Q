@@ -157,7 +157,7 @@ class BaseModifierDialog(QDialog):
         """Load settings with class-specific and field-specific keys"""
         class_name = self.__class__.__name__
         for i, le in enumerate(self.line_edits):
-            # 生成带标签的键名 示例: "CapacitanceModifier/Qubit Name"
+            # Generate labeled key names Example: "CapacitanceModifier/Qubit Name"
             field_key = self.input_labels[i].replace(':', '').strip()
             key = f"{class_name}/{field_key}"
             le.setText(self.settings.value(key, ""))
@@ -169,7 +169,7 @@ class BaseModifierDialog(QDialog):
             field_key = self.input_labels[i].replace(':', '').strip()
             key = f"{class_name}/{field_key}"
 
-            # 仅保存有效输入
+            # Only save valid inputs
             value = le.text().strip()
             default = str(le.property("default_value"))
             self.settings.setValue(key, value if value != default else "")

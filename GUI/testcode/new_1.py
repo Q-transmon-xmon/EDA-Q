@@ -18,7 +18,7 @@ class GdspyIntegration(QMainWindow):
         self.plot_structure()
 
     def initUI(self):
-        """初始化用户界面"""
+        """Initialize user interface"""
         self.setWindowTitle('Gdspy集成到PyQt5')
         self.setGeometry(100, 100, 800, 600)
 
@@ -26,36 +26,36 @@ class GdspyIntegration(QMainWindow):
         self.setCentralWidget(central_widget)
         layout = QVBoxLayout(central_widget)
 
-        # 创建Matplotlib画布
+        # createMatplotlibcanvas
         self.figure, self.ax = plt.subplots()
         self.canvas = FigureCanvas(self.figure)
         layout.addWidget(self.canvas)
 
-        # 添加工具栏
+        # Add Tool Bar
         self.toolbar = NavigationToolbar(self.canvas, self)
         layout.addWidget(self.toolbar)
 
     def create_sample_structure(self):
-        """创建示例GDSII结构"""
+        """Create an exampleGDSIIstructure"""
         self.cell = gdspy.Cell('MAIN')
 
-        # 添加矩形
+        # Add rectangle
         rect = gdspy.Rectangle((0, 0), (10, 5))
         self.cell.add(rect)
 
-        # 添加圆形
+        # Add Circle
         circle = gdspy.Round((3, 2), 1.5, number_of_points=32)
         self.cell.add(circle)
 
     def plot_structure(self):
-        """手动绘制GDS结构到Matplotlib"""
+        """Manual drawingGDSStructure toMatplotlib"""
         self.ax.clear()
 
-        # 遍历所有多边形
+        # Traverse all polygons
         for polygon in self.cell.polygons:
-            # 提取多边形顶点坐标
+            # Extract polygon vertex coordinates
             points = polygon.polygons[0]
-            # 创建matplotlib多边形对象
+            # creatematplotlibPolygon Object
             patch = Polygon(
                 points,
                 closed=True,
@@ -65,7 +65,7 @@ class GdspyIntegration(QMainWindow):
             )
             self.ax.add_patch(patch)
 
-        # 设置坐标轴比例
+        # Set coordinate axis scale
         self.ax.autoscale_view()
         self.ax.set_aspect('equal')
         self.canvas.draw()

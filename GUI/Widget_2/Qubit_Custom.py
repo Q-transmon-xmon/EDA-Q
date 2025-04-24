@@ -7,12 +7,12 @@ from PyQt5.QtCore import QSettings, pyqtSignal, Qt
 
 import toolbox
 from api.design import Design
-# 新增导入（放在其他导入语句之后）
-from library.qubits import module_name_list  # 动态获取量子比特类型列表
+# Add Import（Placed after other import statements）
+from library.qubits import module_name_list  # Dynamically obtain a list of quantum bit types
 import math
 
 
-# 修改后的完整 setupUi 方法（仅展示关键部分）
+# The complete version after modification setupUi method（Only display key parts）
 class Ui_Dialog_Qubit_Custom:
     def setupUi(self, dialog):
         dialog.setObjectName("Dialog_Qubit_Custom")
@@ -21,7 +21,7 @@ class Ui_Dialog_Qubit_Custom:
         font = QFont("Arial", 10)
         dialog.setFont(font)
 
-        # 统一管理默认值
+        # Unified management default values
         self.defaults = ["16", "2000", "chip0"]
 
         # Main layout
@@ -50,15 +50,15 @@ class Ui_Dialog_Qubit_Custom:
         self.createLabeledInput("Margin (mm):", self.defaults[1])
         self.createLabeledInput("Chip name:", self.defaults[2])
 
-        # 新增驼峰式转换逻辑
+        # Add camel hump conversion logic
         try:
-            # 生成转换后的类名列表
+            # Generate a list of converted class names
             class_name_list = [toolbox.convert_to_camel_case(name) for name in module_name_list]
         except Exception as e:
             print(f"Name conversion failed: {str(e)}")
-            class_name_list = ["Transmon", "Xmon"]  # 异常时使用备选列表
+            class_name_list = ["Transmon", "Xmon"]  # Use alternative list when abnormal
 
-        # 创建下拉框
+        # Create dropdown menu
         self.combo_box = QComboBox()
         self.createComboBox("Quantum Bit Type:", class_name_list)
 
@@ -76,7 +76,7 @@ class Ui_Dialog_Qubit_Custom:
         self.mainLayout.addLayout(buttonLayout)
         self.mainLayout.addStretch(1)
 
-        # 初始化信号连接
+        # Initialize signal connection
         self.retranslateUi(dialog)
         self.buttonBox.accepted.connect(lambda: self.checkInputs(dialog))
         self.buttonBox.rejected.connect(dialog.reject)
@@ -89,7 +89,7 @@ class Ui_Dialog_Qubit_Custom:
         line_edit = QLineEdit()
         line_edit.setMinimumWidth(300)
         line_edit.setPlaceholderText(default_value)
-        line_edit.setProperty("default", default_value)  # 存储默认值
+        line_edit.setProperty("default", default_value)  # Store default values
 
         layout.addWidget(label)
         layout.addWidget(line_edit)
@@ -117,41 +117,41 @@ class Dialog_Qubit_Custom(QDialog, Ui_Dialog_Qubit_Custom):
         self.setupUi(self)
         self.design = design
 
-        # 安装事件过滤器
+        # Install event filter
         for line_edit in self.lineEdits:
             line_edit.installEventFilter(self)
 
-        # 设置Tab顺序
+        # set upTaborder
         self.setTabOrder(self.lineEdits[0], self.lineEdits[1])
         self.setTabOrder(self.lineEdits[1], self.lineEdits[2])
         self.setTabOrder(self.lineEdits[2], self.combo_box)
 
     def eventFilter(self, source, event):
-        """处理Tab键自动填充和焦点切换"""
+        """handleTabKey auto fill and focus switching"""
         if event.type() == QtCore.QEvent.KeyPress and event.key() == Qt.Key_Tab:
             if source in self.lineEdits:
-                # 自动填充空字段
+                # Automatically fill empty fields
                 if source.text().strip() == "":
                     source.setText(source.property("default"))
 
-                # 焦点切换逻辑
+                # Focus switching logic
                 current_index = self.lineEdits.index(source)
                 if current_index < len(self.lineEdits) - 1:
                     self.lineEdits[current_index + 1].setFocus()
-                else:  # 最后一个输入框跳转到组合框
+                else:  # The last input box jumps to the combo box
                     self.combo_box.setFocus()
-                return True  # 阻止默认处理
+                return True  # Prevent default processing
         return super().eventFilter(source, event)
 
     def checkInputs(self, dialog):
-        """增强的输入验证逻辑"""
+        """Enhanced input validation logic"""
         try:
-            # 自动填充空值并转换类型
+            # Automatically fill in empty values and convert types
             qubit_num = int(self.lineEdits[0].text() or self.defaults[0])
             margin = float(self.lineEdits[1].text() or self.defaults[1])
             chip_name = self.lineEdits[2].text() or self.defaults[2]
 
-            # 数值有效性验证
+            # Numerical validity verification
             if qubit_num <= 0:
                 raise ValueError("Number of qubits must be positive")
             if margin <= 0:
@@ -163,12 +163,12 @@ class Dialog_Qubit_Custom(QDialog, Ui_Dialog_Qubit_Custom):
             QMessageBox.critical(dialog, "Input Error", f"Invalid input: {str(e)}")
             return
 
-        # 处理成功逻辑
+        # Successfully processed logic
         self.processInputs(qubit_num, margin, chip_name)
         dialog.accept()
 
     def processInputs(self, qubit_num, margin, chip_name):
-        """更新后的处理逻辑"""
+        """Updated processing logic"""
         print(f"Number of qubit: {qubit_num}")
         print(f"Margin: {margin} μm")
         print(f"Chip name: {chip_name}")

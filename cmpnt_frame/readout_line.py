@@ -11,9 +11,9 @@ class ReadoutLine(LibraryBase):
         self.coupling_length = 300
         self.orientation = 90
         self.outline = []
-        # 参数列表
+        # parameter list
         self.op_name_list = list(self.__dict__.keys())
-        # 初始化
+        # initialization
         self.inject_options(Dict(options))
         return
     

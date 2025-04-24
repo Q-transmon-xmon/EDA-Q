@@ -3,15 +3,15 @@ from base.library_base import LibraryBase
 
 class CrossOver(LibraryBase):
     def __init__(self, options):
-        # 框架
+        # framework
         self.name = "crosvs0"
         self.type = "CrossOver"
         self.chip = "chip0"
         self.pos = (0, 0)
         self.outline = []
-        # 参数列表
+        # parameter list
         self.op_name_list = list(self.__dict__.keys())
-        # 初始化
+        # initialization
         self.inject_options(Dict(options))
         self.calc_general_ops()
         return

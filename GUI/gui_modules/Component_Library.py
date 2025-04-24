@@ -23,16 +23,16 @@ from .Component.ReadoutCavity_Actions import ReadoutCavityActions
 from .Component.ReadoutCavityFlipchip_Actions import ReadoutCavityFlipchipActions
 from .Component.ReadoutCavityPlus_Actions import ReadoutCavityPlusActions
 from .Component.TransmissionPath_Actions import TransmissionPathActions
-from .Component.Transmon_Actions import TransmonActions  # 包含 TransmonActions 的导入
+from .Component.Transmon_Actions import TransmonActions  # contain TransmonActions The import
 from addict import Dict
 
 
 class ComponentLibrary(QDockWidget):
-    operation_completed = pyqtSignal(str)  # 统一操作完成信号
+    operation_completed = pyqtSignal(str)  # Unified operation completion signal
 
     def __init__(self, parent=None, current_design=None, categories=None):
         super().__init__("Component Library", parent)
-        self.actions = ComponentActions(current_design, parent)  # 传递 current_design
+        self.actions = ComponentActions(current_design, parent)  # transfer current_design
         self.airbridge_actions = AirBridgeActions(current_design, parent)
         self.airbriage_nb_actions = AirbriageNbActions(current_design, parent)
         self.charge_line_actions = ChargeLineActions(current_design, parent)
@@ -49,7 +49,7 @@ class ComponentLibrary(QDockWidget):
         self.readout_cavity_flipchip_actions = ReadoutCavityFlipchipActions(current_design, parent)
         self.readout_cavity_plus_actions = ReadoutCavityPlusActions(current_design, parent)
         self.transmission_path_actions = TransmissionPathActions(current_design, parent)
-        self.transmon_actions = TransmonActions(current_design, parent)  # 包含 TransmonActions 的实例
+        self.transmon_actions = TransmonActions(current_design, parent)  # contain TransmonActions Examples
         self.xmon_actions = XmonActions(current_design, parent)
         self.categories = categories or self.DEFAULT_CATEGORIES
         self.isResizing = False
@@ -57,7 +57,7 @@ class ComponentLibrary(QDockWidget):
         self.init_ui()
         self.setup_connections()
 
-        # 默认分类配置（包含所有 18 个组件）
+        # Default classification configuration（Include all 18 A component）
 
     DEFAULT_CATEGORIES = [
         {
@@ -116,17 +116,17 @@ class ComponentLibrary(QDockWidget):
     ]
 
     def setup_custom_titlebar(self):
-        # 创建自定义标题栏
+        # Create a custom title bar
         title_bar = QWidget()
         layout = QHBoxLayout(title_bar)
-        layout.setContentsMargins(0, 0, 0, 0)  # 移除标题栏内部的边距
-        layout.setSpacing(0)  # 将布局间距设置为0，使按钮更紧凑
+        layout.setContentsMargins(0, 0, 0, 0)  # Remove the margins inside the title bar
+        layout.setSpacing(0)  # Set the layout spacing to0，Make the button more compact
 
-        # 标题标签
+        # title tag
         title_label = QLabel("Component Library")
         title_label.setStyleSheet("font-weight: bold;")
 
-        # 动态获取图标路径
+        # Dynamically obtain icon path
         current_dir = os.path.dirname(os.path.abspath(__file__))
         icons_dir = os.path.join(os.path.dirname(current_dir), "icons", "title")
 
@@ -134,75 +134,75 @@ class ComponentLibrary(QDockWidget):
         float_icon_path = os.path.join(icons_dir, "split.svg")
         custom_icon_path = os.path.join(icons_dir, "loading.svg")
 
-        # 新增自定义按钮
+        # Add custom button
         custom_btn = QPushButton()
-        custom_btn.setIcon(QIcon(custom_icon_path))  # 动态加载自定义图标
-        custom_btn.setIconSize(QSize(15, 15))  # 调整图标大小
-        custom_btn.setFixedSize(15, 20)  # 减小按钮宽度
-        custom_btn.setToolTip("import gds")  # 鼠标悬停提示
-        custom_btn.setStyleSheet("border: none; background-color: transparent; padding: 0;")  # 去掉边距和边框
+        custom_btn.setIcon(QIcon(custom_icon_path))  # Dynamically load custom icons
+        custom_btn.setIconSize(QSize(15, 15))  # Adjust icon size
+        custom_btn.setFixedSize(15, 20)  # Reduce button width
+        custom_btn.setToolTip("import gds")  # Mouse hover prompt
+        custom_btn.setStyleSheet("border: none; background-color: transparent; padding: 0;")  # Remove margins and borders
 
-        # 右侧窗口控制按钮（最小化、最大化、关闭）
+        # Right window control button（minimize、maximize、close）
         close_button = QPushButton()
-        close_button.setIcon(QIcon(close_icon_path))  # 动态加载关闭图标
-        close_button.setIconSize(QSize(15, 15))  # 调整图标大小
-        close_button.setFixedSize(15, 20)  # 减小按钮宽度
-        close_button.setStyleSheet("border: none; background-color: transparent; padding: 0;")  # 去掉边距
+        close_button.setIcon(QIcon(close_icon_path))  # Dynamically load close icon
+        close_button.setIconSize(QSize(15, 15))  # Adjust icon size
+        close_button.setFixedSize(15, 20)  # Reduce button width
+        close_button.setStyleSheet("border: none; background-color: transparent; padding: 0;")  # Remove the margin
 
-        # 浮动按钮（还原按钮）
+        # Floating button（Restore button）
         float_button = QPushButton()
-        float_button.setIcon(QIcon(float_icon_path))  # 动态加载浮动图标
-        float_button.setIconSize(QSize(15, 15))  # 调整图标大小
-        float_button.setFixedSize(15, 20)  # 减小按钮宽度
-        float_button.setStyleSheet("border: none; background-color: transparent; padding: 0;")  # 去掉边距
+        float_button.setIcon(QIcon(float_icon_path))  # Dynamically load floating icons
+        float_button.setIconSize(QSize(15, 15))  # Adjust icon size
+        float_button.setFixedSize(15, 20)  # Reduce button width
+        float_button.setStyleSheet("border: none; background-color: transparent; padding: 0;")  # Remove the margin
 
 
-        # 连接按钮的事件
-        close_button.clicked.connect(self.close)  # 关闭窗口
-        float_button.clicked.connect(self.toggle_floating)  # 切换浮动状态
-        custom_btn.clicked.connect(self.handle_custom_button_clicked)  # 自定义按钮事件
+        # Event of connecting button
+        close_button.clicked.connect(self.close)  # close window
+        float_button.clicked.connect(self.toggle_floating)  # Switch floating state
+        custom_btn.clicked.connect(self.handle_custom_button_clicked)  # Custom button events
 
-        # 将所有控件添加到布局中
+        # Add all controls to the layout
         layout.addWidget(title_label)
-        layout.addStretch()  # 拉伸将按钮推到右侧
+        layout.addStretch()  # Stretch to push the button to the right
         layout.addWidget(custom_btn)
         layout.addWidget(float_button)
         layout.addWidget(close_button)
 
 
-        # 设置自定义标题栏
+        # Set custom title bar
         self.setTitleBarWidget(title_bar)
 #######-------------------------ADD GDS ----------------------------------#####
     def handle_custom_button_clicked(self):
-        print("自定义按钮点击了！")  # 替换为你想执行的逻辑
+        print("自定义按钮点击了！")  # Replace with the logic you want to execute
 
     def toggle_floating(self):
         if self.isFloating():
-            self.setFloating(False)  # 取消浮动
+            self.setFloating(False)  # Cancel floating
         else:
-            self.setFloating(True)  # 设置为浮动窗口
+            self.setFloating(True)  # Set as floating window
 
     def init_ui(self):
-        # 滚动区域设置
+        # Rolling Area Settings
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         content = QWidget()
         scroll.setWidget(content)
 
-        # 主布局
+        # Main layout
         main_layout = QVBoxLayout(content)
         main_layout.setAlignment(Qt.AlignTop)
         main_layout.setContentsMargins(8, 12, 8, 12)
         main_layout.setSpacing(8)
 
-        # 创建分类区块
+        # Create a classification block
         for category in self.categories:
             self.create_category(main_layout, category)
 
         self.setWidget(scroll)
 
     def get_styles(self):
-        """返回样式字典"""
+        """Return Style Dictionary"""
         return {
             "category_header": """  
                 QPushButton {  
@@ -233,42 +233,42 @@ class ComponentLibrary(QDockWidget):
         }
 
     def create_category(self, layout, category):
-        """创建分类区块（包含展开/折叠功能）"""
-        # 分类标题
+        """Create a classification block（Include expansion/Folding function）"""
+        # CATEGORY TITLE
         header = QPushButton(f"▶ {category['name']}")
         header.setCheckable(True)
         header.setStyleSheet(self.get_styles()["category_header"])
 
-        # 使用闭包固定header引用
+        # Fix using closuresheaderquote
         header.toggled.connect(lambda checked, h=header: self.toggle_category(h, checked))
 
-        # 组件容器
+        # Component Container
         container = QWidget()
         container.setVisible(False)
         grid = QGridLayout(container)
 
-        # 绑定鼠标事件
+        # Binding Mouse Events
         # header.setMouseTracking(True)
         # header.mousePressEvent = self.mousePressEvent
         # header.mouseMoveEvent = self.mouseMoveEvent
         # header.mouseReleaseEvent = self.mouseReleaseEvent
 
-        # 应用容器样式
+        # Apply container styles
         style = self.get_styles()["container_layout"]
         grid.setContentsMargins(*style["margins"])
         grid.setHorizontalSpacing(style["spacing"][0])
         grid.setVerticalSpacing(style["spacing"][1])
 
-        # 添加组件按钮
+        # Add Component Button
         row, col = 0, 0
         for comp in category["components"]:
             btn = self.create_component_button(comp)
             grid.addWidget(btn, row, col)
-            col = 1 - col  # 两列布局
+            col = 1 - col  # Two column layout
             if col == 0:
                 row += 1
 
-                # 存储容器引用
+                # Storage container reference
         container.setMinimumWidth(380)
         container.setMaximumWidth(500)
         header.container = container
@@ -276,52 +276,52 @@ class ComponentLibrary(QDockWidget):
         layout.addWidget(container)
 
     def create_component_button(self, comp):
-        """创建单个组件按钮"""
+        """Create a single component button"""
         btn = QPushButton(comp["name"])
         btn.setIcon(QIcon(comp["icon"]))
-        btn.setIconSize(QSize(16, 16))  # 设置图标大小
+        btn.setIconSize(QSize(16, 16))  # Set icon size
         text_width = QFontMetrics(btn.font()).boundingRect(btn.text()).width()
         # print(text_width)
-        # btn.setFixedSize(170, 40)  # 确保最小宽度为100，或文本宽度+20
+        # btn.setFixedSize(170, 40)  # Ensure that the minimum width is100，Or text width+20
         btn.setFixedSize(text_width + 200, 40)
         btn.setStyleSheet(self.get_styles()["component_button"])
         btn.setProperty("command", comp["command"])
         btn.clicked.connect(lambda: self.handle_component_click(comp["command"]))
-        btn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)  # 固定大小策略
+        btn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)  # Fixed size strategy
         return btn
 
     def toggle_category(self, header, expanded):
-        """处理展开/折叠状态"""
+        """Process unfolding/folding state"""
         header.setText(f"▼ {header.text()[2:]}" if expanded else f"▶ {header.text()[2:]}")
         header.container.setVisible(expanded)
 
-        # 切换文本
+        # Switch Text
         # header.setText(f"▼ {header.text()[2:]}" if expanded else f"▶ {header.text()[2:]}")
 
-        # 显示或隐藏组件容器
+        # Show or hide component containers
         # header.container.setVisible(expanded)
 
-        # 确保按钮宽度不会小于名称的宽度
+        # Ensure that the width of the button is not less than the width of the name
         if expanded:
-            # 获取文本宽度
+            # Get text width
             text_width = header.fontMetrics().boundingRect(header.text()).width()
-            # 设置按钮的最小宽度
-            header.setMinimumWidth(text_width + 60)  # 加一些额外的空间（如 30px）以适应图标和边距
+            # Set the minimum width of the button
+            header.setMinimumWidth(text_width + 60)  # Add some extra space（in compliance with 30px）To adapt to icons and margins
         else:
-            # 收起时可设置为更小的宽度，但仍然要考虑文本宽度
+            # When folded, it can be set to a smaller width，But still need to consider the width of the text
             text_width = header.fontMetrics().boundingRect(header.text()).width()
-            header.setMinimumWidth(text_width + 60)  # 同样考虑额外的空间
+            header.setMinimumWidth(text_width + 60)  # Also consider additional space
 
     def setup_connections(self):
-        """连接业务逻辑信号"""
+        """Connect business logic signals"""
         self.actions.operation_completed.connect(self.handle_operation_completed)
 
     def handle_operation_completed(self, message):
-        """处理操作完成信号的回调"""
-        print(message)  # 在控制台打印操作完成的消息
+        """Callback for processing operation completion signal"""
+        print(message)  # Print the message indicating the completion of the operation on the console
 
     def handle_component_click(self, command):
-        """路由组件点击事件"""
+        """Routing component click event"""
         handler_map = {
             "transmon": self.transmon_actions.transmon,
             "xmon": self.xmon_actions.xmon,
@@ -345,28 +345,28 @@ class ComponentLibrary(QDockWidget):
 
         if handler := handler_map.get(command):
             try:
-                handler()  # 直接调用具体的操作
+                handler()  # Directly call specific operations
             except Exception as e:
                 self.operation_completed.emit(f"操作异常: {str(e)}")
         else:
             self.operation_completed.emit(f"未定义操作: {command}")
 
     def mousePressEvent(self, event):
-        """开始拖动时记录起始位置"""
+        """Record the starting position when starting to drag"""
         if event.button() == Qt.LeftButton:
             self.isResizing = True
-            self.startPos = event.pos()  # 记录鼠标点击位置
+            self.startPos = event.pos()  # Record the mouse click position
 
     def mouseMoveEvent(self, event):
-        """处理拖动事件"""
+        """Handling drag events"""
         if self.isResizing:
-            # 计算新的宽度
+            # Calculate the new width
             newWidth = self.width() + (event.x() - self.startPos.x())
-            # 设置最小宽度
+            # Set minimum width
             if newWidth >= 380 and newWidth <= 550:
-                self.setFixedWidth(newWidth)  # 更新宽度
+                self.setFixedWidth(newWidth)  # Update width
 
     def mouseReleaseEvent(self, event):
-        """结束拖动"""
+        """End drag"""
         if event.button() == Qt.LeftButton:
             self.isResizing = False

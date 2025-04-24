@@ -90,7 +90,7 @@ def convert_format(pos, edge):
         for j in range(i+1, qubits_num):
             if edge[i][j] == 1:
                 new_edge.append([pos[i], pos[j]])
-    # 将numpy.int32数据类型转化成int
+    # supportnumpy.int32Convert data type toint
     new_pos1 = Dict()
     for i in range(0, qubits_num):
         topo_pos = copy.deepcopy(pos[i])
@@ -156,7 +156,7 @@ def get_coupling_degree_matrix(circuit,qp_name:str, matrix_path:str):
     toolbox.jg_and_create_path(matrix_path)
     plt.savefig(matrix_path)
     plt.clf()
-    # print("耦合度矩阵的heatmap保存在{}".format(f'./image/{qp_name}_heat_map.png'))
+    # print("The coupling degree matrixheatmapSave in{}".format(f'./image/{qp_name}_heat_map.png'))
     print("耦合度矩阵的heatmap保存在{}".format(matrix_path))
     return M
 
@@ -384,8 +384,8 @@ def qasm_to_topo(qasm_path,
         DNA[i*2]= standard_coordinate[int(position[i])][0]
         DNA[i*2+1]= standard_coordinate[int(position[i])][1]
 
-    node_index = 0  #标准序号起始点
-    # 创建完全网格图
+    node_index = 0  #Starting point of standard serial number
+    # Create a complete grid diagram
     G_complete = nx.grid_graph(dim=[row, col], periodic=False)
     DNA_set = set(tuple(pair) for pair in zip(DNA[0::2], DNA[1::2]))
     G_complete_set = set(list(G_complete.nodes()))
@@ -403,7 +403,7 @@ def qasm_to_topo(qasm_path,
         G.add_node(i)
     # Pruning(Adjacent and connected in the program)
     actual_edge1 = np.matlib.zeros((Q_NUM,Q_NUM))
-    actual_edge1 = np.asarray(actual_edge1) # 实际边矩阵
+    actual_edge1 = np.asarray(actual_edge1) # Actual edge matrix
     for i in range(len(M)):
         for j in range(len(M[i])):
             if j<i:
@@ -441,7 +441,7 @@ def qasm_to_topo(qasm_path,
     processor_architecture_draw(final_topo_path,q_pos,actual_edge2)
     plt.clf()
       
-    # 和新架构的接口
+    # Interface with the new architecture
 
     poss, edges = convert_format(q_pos, actual_edge2)
     topo_ops.positions = poss

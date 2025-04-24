@@ -11,7 +11,7 @@ if __name__ == "__main__":
     app.setFont(QFont("Segoe UI", 10))
 
     window = MainWindow()
-    controller = AppController(window)  # 注入依赖
+    controller = AppController(window)  # Injection dependency
 
     window.show()
     sys.exit(app.exec_())

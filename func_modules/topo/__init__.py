@@ -6,7 +6,7 @@ from func_modules.topo import gene_topo_ops
 from func_modules.topo import primitives
 
 ############################################################################################
-# 和拓扑有关的参数处理
+# Parameter processing related to topology
 ############################################################################################
 from addict import Dict
 

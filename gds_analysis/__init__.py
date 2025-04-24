@@ -128,17 +128,17 @@ def add_component_temporarily(path, components_type):
 
     read_single_component(path, "")
     
-    components_module = importlib.import_module("library.{}".format(components_type))    # 获得组件大类模块
-    new_component_module_name = toolbox.get_filename(path)    # 获得新添加的组件的模块名
-    components_module.module_name_list.append(new_component_module_name)    # 给组件大类模块增加新添加的模块名
+    components_module = importlib.import_module("library.{}".format(components_type))    # Obtain component category modules
+    new_component_module_name = toolbox.get_filename(path)    # Obtain the module name of the newly added component
+    components_module.module_name_list.append(new_component_module_name)    # Add a new module name to the component category module
 
-    # 给组件大类模块添加新组件的类作为属性
-    new_component_class_name = toolbox.convert_to_camel_case(new_component_module_name)    # 新组件的类名
-    new_component_module = importlib.import_module(new_component_module_name)    # 新组件的模块
-    new_component_class = getattr(new_component_module, new_component_class_name)    # 新组件的类
-    setattr(components_module, new_component_class_name, new_component_class)    # 给组件大类模块添加新组件的类作为属性
+    # Add new component classes as attributes to the component category module
+    new_component_class_name = toolbox.convert_to_camel_case(new_component_module_name)    # The class name of the new component
+    new_component_module = importlib.import_module(new_component_module_name)    # Modules of new components
+    new_component_class = getattr(new_component_module, new_component_class_name)    # Class of new components
+    setattr(components_module, new_component_class_name, new_component_class)    # Add new component classes as attributes to the component category module
 
-    # 打印提示信息
+    # Print prompt information
     print("The new component was added in {} successfully. "
         "If you want to use the newly added component, the component type is {}."
         .format(components_type, new_component_class_name))

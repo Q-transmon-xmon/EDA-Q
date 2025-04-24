@@ -290,22 +290,22 @@ def add_air_bridges2(pos, bend_radius, spacing=120, chip_type="chip3", width=10,
     from addict import Dict
     options = Dict()
 
-    # 创建 FlexPath 并提取多边形
+    # create FlexPath And extract polygons
     import gdspy
     path = gdspy.FlexPath(pos, width=width, corners="circular bend", bend_radius=bend_radius)
     polygons = path.to_polygonset().polygons
 
-    # 路径拐角处空气桥添加
+    # Add air bridge at the corner of the path
     for i in range(1, len(pos) - 1):
         prev_point, curr_point, next_point = pos[i - 1], pos[i], pos[i + 1]
 
-        # 调整拐角位置和旋转角度
+        # Adjust the corner position and rotation angle
         adjusted_pos, rotation_angle = adjust_air_bridge_position_for_bend(
             prev_point, curr_point, next_point, bend_radius, width
         )
 
-        # 检查中心点是否满足范围条件
-        if is_point_in_flexpath(adjusted_pos, polygons, width / 2 + 5):  # 增加5个单位容差
+        # Check if the center point meets the range conditions
+        if is_point_in_flexpath(adjusted_pos, polygons, width / 2 + 5):  # increase5Unit tolerance
             option = Dict(
                 name=f"air_bridge_pos_{i}",
                 type=air_bridge_type,
@@ -315,28 +315,28 @@ def add_air_bridges2(pos, bend_radius, spacing=120, chip_type="chip3", width=10,
             )
             options[option.name] = option
 
-    # 路径中段空气桥添加
+    # Add air bridge in the middle of the path
     for i in range(len(pos) - 1):
         start, end = pos[i], pos[i + 1]
 
-        # 计算段长度(考虑线宽调整)
+        # Calculate segment length(Consider adjusting the line width)
         path_vector = np.array([end[0] - start[0], end[1] - start[1]])
-        path_length = np.linalg.norm(path_vector) - bend_radius * 2  # 减去两端圆角部分
+        path_length = np.linalg.norm(path_vector) - bend_radius * 2  # Subtract the rounded corners at both ends
 
-        # 计算有效路径长度内空气桥的数量
+        # Calculate the number of air bridges within the effective path length
         if path_length > 0:
             num_bridges = max(1, math.ceil(path_length / spacing))
 
             for j in range(1, num_bridges + 1):
-                # 插值计算空气桥中心位置
+                # Interpolation calculation of the center position of the air bridge
                 t = j / (num_bridges + 1)
                 center_x = (1 - t) * start[0] + t * end[0]
                 center_y = (1 - t) * start[1] + t * end[1]
 
                 center_pos = (center_x, center_y)
 
-                # 检查中心点是否满足范围条件
-                if is_point_in_flexpath(center_pos, polygons, width / 2 + 5):  # 增加5个单位容差
+                # Check if the center point meets the range conditions
+                if is_point_in_flexpath(center_pos, polygons, width / 2 + 5):  # increase5Unit tolerance
                     angle = math.atan2(path_vector[1], path_vector[0])
 
                     option = Dict(
@@ -378,45 +378,45 @@ def add_air_bridges3(pos, bend_radius, spacing=120, chip_type="chip3", width=10,
 
     def find_nearest_segment_center(polygons, curr_point, line_width):
         """
-        寻找距离 curr_point 最近的线段的中心点，并根据线宽调整中心位置。
+        Search for distance curr_point The center point of the nearest line segment，And adjust the center position according to the line width。
         """
-        path_points = np.concatenate(polygons)  # 展开多边形点集为连续路径点
+        path_points = np.concatenate(polygons)  # Expand the polygon point set into continuous path points
         curr_x, curr_y = curr_point
 
-        # 初始化最小距离和最近中心点
+        # Initialize minimum distance and nearest center point
         min_distance = float('inf')
         nearest_center = None
 
-        # 遍历路径的每段线段
+        # Traverse each segment of the path
         for i in range(len(path_points) - 1):
-            # 计算线段两端点
+            # Calculate the endpoints of the line segment
             x1, y1 = path_points[i]
             x2, y2 = path_points[i + 1]
 
-            # 计算线段方向向量和长度
+            # Calculate the direction vector and length of the line segment
             dx, dy = x2 - x1, y2 - y1
             length = math.sqrt(dx**2 + dy**2)
 
-            # 单位方向向量
+            # Unit directional vector
             direction_x = dx / length
             direction_y = dy / length
 
-            # 正交方向向量（法向量）
+            # Orthogonal directional vector（Normal vector）
             normal_x = -direction_y
             normal_y = direction_x
 
-            # 计算线段中心点
+            # Calculate the center point of the line segment
             center_x = (x1 + x2) / 2
             center_y = (y1 + y2) / 2
 
-            # 根据线宽调整中心点
+            # Adjust the center point according to the line width
             adjusted_center_x = center_x + normal_x * (line_width / 2)
             adjusted_center_y = center_y + normal_y * (line_width / 2)
 
-            # 计算调整后中心点到 curr_point 的距离
+            # Calculate the adjusted center point to curr_point The distance
             distance = np.sqrt((adjusted_center_x - curr_x)**2 + (adjusted_center_y - curr_y)**2)
 
-            # 更新最近的中心点
+            # Update the nearest center point
             if distance < min_distance:
                 min_distance = distance
                 nearest_center = (adjusted_center_x, adjusted_center_y)
@@ -427,7 +427,7 @@ def add_air_bridges3(pos, bend_radius, spacing=120, chip_type="chip3", width=10,
 
     def adjust_air_bridge_position_for_bend(prev_point, curr_point, next_point, bend_radius,width):
         """
-        优化空气桥偏移量，精确计算圆角与路径的接触点，动态调整修正因子。
+        Optimize the offset of the air bridge，Accurately calculate the contact points between rounded corners and paths，Dynamic adjustment correction factor。
         """
 
         path_points = [prev_point, curr_point, next_point]
@@ -437,50 +437,50 @@ def add_air_bridges3(pos, bend_radius, spacing=120, chip_type="chip3", width=10,
             corners="circular bend",
             bend_radius=bend_radius
         )
-        polygons = path.to_polygonset().polygons  # 提取多边形点集
+        polygons = path.to_polygonset().polygons  # Extract polygon point set
         gds_pos = find_nearest_segment_center(polygons,curr_point,width)
 
-        # 向量计算
+        # Vector computation
         v1x, v1y = prev_point[0] - curr_point[0], prev_point[1] - curr_point[1]
         v2x, v2y = next_point[0] - curr_point[0], next_point[1] - curr_point[1]
 
-        # 归一化向量
+        # normalized vector
         v1_length = math.sqrt(v1x**2 + v1y**2)
         v2_length = math.sqrt(v2x**2 + v2y**2)
         v1x, v1y = v1x / v1_length, v1y / v1_length
         v2x, v2y = v2x / v2_length, v2y / v2_length
 
 
-        # 计算角平分线向量
+        # Calculate the vector of the angle bisector
         bisector_x = v1x + v2x
         bisector_y = v1y + v2y
         bisector_length = math.sqrt(bisector_x**2 + bisector_y**2)
         bisector_x /= bisector_length
         bisector_y /= bisector_length
 
-        # 计算切线方向的旋转角度
+        # Calculate the rotation angle in the tangent direction
         rotation_angle = math.atan2(bisector_y, bisector_x)
 
-        return gds_pos, rotation_angle + math.pi / 2  # 顺时针旋转90度
+        return gds_pos, rotation_angle + math.pi / 2  # clockwise rotation90linear measure
 
 
     def is_point_in_flexpath(point, polygons, tolerance):
         """
-        检查点是否在路径的多边形范围内，并允许一定容差。
+        Check if the checkpoint is within the polygon range of the path，And allow for a certain tolerance。
         """
         px, py = point
 
-        # 判断点是否在多边形内（严格条件）
+        # Determine whether the point is within the polygon（stringent condition）
         for poly in polygons:
             if gdspy.inside([point], [poly], short_circuit=True)[0]:
                 return True
 
-            # 判断点到多边形边界的最短距离
+            # Determine the shortest distance from a point to the polygon boundary
             for i in range(len(poly)):
                 x1, y1 = poly[i - 1]
                 x2, y2 = poly[i]
 
-                # 计算点到线段的最短距离
+                # Calculate the shortest distance from a point to a line segment
                 dx, dy = x2 - x1, y2 - y1
                 length_squared = dx**2 + dy**2
                 if length_squared == 0:
@@ -498,33 +498,33 @@ def add_air_bridges3(pos, bend_radius, spacing=120, chip_type="chip3", width=10,
     
     options = Dict()
 
-    # 创建 FlexPath 并提取多边形
+    # create FlexPath And extract polygons
     path = gdspy.FlexPath(pos, width=width, corners="circular bend", bend_radius=bend_radius)
     polygons = path.to_polygonset().polygons
 
 
-    # 路径中段空气桥添加
+    # Add air bridge in the middle of the path
     for i in range(len(pos) - 1):
         start, end = pos[i], pos[i + 1]
 
-        # 计算段长度（考虑线宽调整）
+        # Calculate segment length（Consider adjusting the line width）
         path_vector = np.array([end[0] - start[0], end[1] - start[1]])
-        path_length = np.linalg.norm(path_vector) - bend_radius * 2  # 减去两端圆角部分
+        path_length = np.linalg.norm(path_vector) - bend_radius * 2  # Subtract the rounded corners at both ends
 
-        # 计算有效路径长度内空气桥的数量
+        # Calculate the number of air bridges within the effective path length
         if path_length > 0:
             num_bridges = max(1, math.ceil(path_length / spacing))
 
             for j in range(1, num_bridges + 1):
-                # 插值计算空气桥中心位置
+                # Interpolation calculation of the center position of the air bridge
                 t = j / (num_bridges + 1)
                 center_x = (1 - t) * start[0] + t * end[0]
                 center_y = (1 - t) * start[1] + t * end[1]
 
                 gds_pos = (center_x, center_y)
 
-                # 检查中心点是否满足范围条件
-                if is_point_in_flexpath(gds_pos, polygons, width / 2 + 5):  # 增加5个单位容差
+                # Check if the center point meets the range conditions
+                if is_point_in_flexpath(gds_pos, polygons, width / 2 + 5):  # increase5Unit tolerance
                     angle = math.atan2(path_vector[1], path_vector[0])
 
                     option = Dict(
@@ -535,17 +535,17 @@ def add_air_bridges3(pos, bend_radius, spacing=120, chip_type="chip3", width=10,
                         rotation=angle
                     )
                     options[option.name] = option
-    # 路径拐角处空气桥添加
+    # Add air bridge at the corner of the path
     for i in range(1, len(pos) - 1):
         prev_point, curr_point, next_point = pos[i - 1], pos[i], pos[i + 1]
 
-        # 调整拐角位置和旋转角度
+        # Adjust the corner position and rotation angle
         adjusted_pos, rotation_angle = adjust_air_bridge_position_for_bend(
             prev_point, curr_point, next_point, bend_radius, width
         )
 
-        # 检查中心点是否满足范围条件
-        if is_point_in_flexpath(adjusted_pos, polygons, width / 2 + 5):  # 增加5个单位容差
+        # Check if the center point meets the range conditions
+        if is_point_in_flexpath(adjusted_pos, polygons, width / 2 + 5):  # increase5Unit tolerance
             option = Dict(
                 name=f"air_bridge_pos_{i}",
                 type=air_bridge_type,

@@ -1,12 +1,12 @@
 import sys
 import os
 
-# 获取当前脚本所在的目录
+# Retrieve the directory where the current script is located
 current_path = os.path.dirname(os.path.abspath(__file__))
 GUI_PATH = os.path.dirname(current_path)
 PROJ_PATH = os.path.dirname(GUI_PATH)
 
-# 添加路径
+# Add path
 sys.path.append(GUI_PATH)
 sys.path.append(PROJ_PATH)
 
@@ -18,21 +18,21 @@ from PyQt5.QtWidgets import (
     QTreeWidget, QTreeWidgetItem, QMessageBox,
     QApplication, QMenu, QInputDialog, QPushButton, QMainWindow
 )
-from api.design import Design  # 确保引用 Design
+from api.design import Design  # Ensure citation Design
 
 
 class DesignManager(QDockWidget):
-    """设计管理器类。"""
+    """Design Manager Class。"""
     component_clicked = pyqtSignal(str)
 
     def __init__(self, design, parent=None):
         super().__init__("Design Manager", parent)
         self.setFeatures(
             QDockWidget.DockWidgetMovable | QDockWidget.DockWidgetFloatable | QDockWidget.DockWidgetClosable)
-        self.design = design  # 存储原始Design对象引用
+        self.design = design  # Store original dataDesignobject reference
         self.Design_data = {'children': {}}
 
-        # 初始化数据
+        # Initialized Data
         self.refresh_data()
 
         if self.Design_data['children']:
@@ -46,7 +46,7 @@ class DesignManager(QDockWidget):
         self.setMinimumWidth(320)
 
     def init_ui(self):
-        """初始化界面布局"""
+        """Initialize interface layout"""
         main_layout = QVBoxLayout(self)
         main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.setSpacing(0)
@@ -65,21 +65,21 @@ class DesignManager(QDockWidget):
         self.tree.customContextMenuRequested.connect(self._show_context_menu)
 
     def refresh_data(self):
-        """从Design对象刷新数据"""
+        """followDesignObject refresh data"""
         self.Design_data['children'].clear()
         if self.design is not None:
             design_dict = self._convert_design_to_dict()
             self.Design_data['children'].update(design_dict)
 
     def update_display(self):
-        """更新界面显示"""
+        """Update interface display"""
         self._populate_tree()
 
     def _convert_design_to_dict(self):
-        """将Design对象递归转换为完整嵌套字典结构"""
+        """supportDesignRecursive conversion of objects to a fully nested dictionary structure"""
 
         def convert(obj):
-            node = {'children': {}, 'is_leaf': False}  # 新增 is_leaf 标识
+            node = {'children': {}, 'is_leaf': False}  # newly added is_leaf sign
             if isinstance(obj, dict):
                 for k, v in obj.items():
                     node['children'][k] = convert(v)
@@ -88,20 +88,20 @@ class DesignManager(QDockWidget):
                     if attr_name.startswith('_'):
                         continue
                     node['children'][attr_name] = convert(attr_value)
-                node['is_leaf'] = False  # 非叶节点
+                node['is_leaf'] = False  # Non leaf node
             elif isinstance(obj, list):
                 for index, value in enumerate(obj):
                     node['children'][f"Item {index}"] = convert(value)
-                node['is_leaf'] = False  # 非叶节点
+                node['is_leaf'] = False  # Non leaf node
             else:
-                node['value'] = obj  # 叶节点的值
-                node['is_leaf'] = True  # 叶节点
+                node['value'] = obj  # The value of leaf nodes
+                node['is_leaf'] = True  # leaf node
             return node
 
         return {self.design.__class__.__name__: convert(self.design)}
 
     def _create_design_tree(self):
-        """创建项目树组件"""
+        """Create project tree components"""
         self.tree = QTreeWidget()
         self.tree.setHeaderHidden(True)
         self.tree.setStyleSheet("""  
@@ -116,7 +116,7 @@ class DesignManager(QDockWidget):
         self._populate_tree()
 
     def _populate_tree(self):
-        """填充树结构并处理显示逻辑"""
+        """Fill the tree structure and process the display logic"""
         self.tree.clear()
         root = self.tree.invisibleRootItem()
 
@@ -126,23 +126,23 @@ class DesignManager(QDockWidget):
                 item = QTreeWidgetItem(parent_item, [item_text])
                 populate_items(item, details)
 
-                # 根据子节点类型设置 item 是否展开
+                # Set according to the type of child node item Expand or not
                 if details.get('is_leaf', False):
                     item.setData(0, Qt.UserRole, {'name': name, 'is_leaf': True, 'value': details['value']})
                 else:
-                    item.setData(0, Qt.UserRole, {'name': name, 'is_leaf': False})  # 设置非叶节点信息
+                    item.setData(0, Qt.UserRole, {'name': name, 'is_leaf': False})  # Set non leaf node information
 
-        populate_items(root, self.Design_data)  # 填充树结构
+        populate_items(root, self.Design_data)  # Fill tree structure
 
     def update_design(self, new_design=None):
-        """更新管理的Design对象并刷新显示"""
+        """Update ManagementDesignObject and refresh display"""
         if new_design is not None:
             self.design = new_design
         self.refresh_data()
         self.update_display()
 
     def _update_selected_design(self, item):
-        """更新选中的设计项目路径"""
+        """Update the selected design project path"""
         path = []
         current = item
         while current:
@@ -153,21 +153,21 @@ class DesignManager(QDockWidget):
         self.current_Design = " → ".join(path) if path else "No Design Selected"
 
     def _show_design_details(self, item):
-        """双击查看设计详细信息"""
+        """Double click to view design details"""
         if item:
             item_data = item.data(0, Qt.UserRole)
             if item_data:
-                if item_data['is_leaf']:  # 判断是否为叶节点
+                if item_data['is_leaf']:  # Determine whether it is a leaf node
                     QMessageBox.information(self, "Design Details", f"Value: {item_data['value']}", QMessageBox.Ok)
                 else:
                     QMessageBox.information(self, "Design Details", "This is a non-leaf node.", QMessageBox.Ok)
 
     def close_manager(self):
-        """关闭设计管理器面板"""
+        """Close the Design Manager panel"""
         self.setVisible(False)
 
     def add_item(self, parent_item, name):
-        """添加项目"""
+        """add item"""
         if name in self.Design_data['children']:
             QMessageBox.warning(self, "Duplicate Name", f"Design '{name}' already exists!")
             return
@@ -176,7 +176,7 @@ class DesignManager(QDockWidget):
         self.current_Design = name
 
     def delete_item(self, item):
-        """删除项目"""
+        """delete item"""
         if item is None:
             QMessageBox.warning(self, "Error", "No item selected!")
             return
@@ -195,36 +195,36 @@ class DesignManager(QDockWidget):
                 self.current_Design = "No Design Selected"
 
     def _show_context_menu(self, pos):
-        """显示右键菜单"""
+        """Display right-click menu"""
         item = self.tree.itemAt(pos)
         menu = QMenu(self)
 
         if item:
-            # 添加删除设计选项
+            # Add and delete design options
             delete_action = menu.addAction("Delete Design")
             delete_action.triggered.connect(partial(self.delete_item, item))
 
-            # 添加新建设计选项
+            # Add New Design Options
         new_action = menu.addAction("New Design")
         new_action.triggered.connect(self.new_design)
 
         menu.exec_(self.tree.viewport().mapToGlobal(pos))
 
     def new_design(self):
-        """新建设计"""
+        """new design"""
         text, ok = QInputDialog.getText(self, "New Design", "Enter design name:")
         if ok and text:
             self.add_item(self.tree.invisibleRootItem(), text)
 
     def _navigate_to_path(self, path):
-        """导航到指定路径的数据节点"""
+        """Navigate to the data node of the specified path"""
         current = self.Design_data
         for level in path:
             current = current['children'].get(level, {'children': {}})
         return current
 
     def _get_item_path(self, item):
-        """获取树节点的完整路径"""
+        """Obtain the complete path of the tree node"""
         path = []
         while item is not None:
             path.insert(0, item.text(0))
@@ -235,14 +235,14 @@ class DesignManager(QDockWidget):
 class MyMainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.design_manager = DesignManager(Design())  # 示例：实际应该用你的设计对象
+        self.design_manager = DesignManager(Design())  # Example：Actually, we should use your design object
 
     def updateMainDesign(self, updated_design):
-        """更新主设计内容并刷新显示"""
-        # 更新设计对象
+        """Update the main design content and refresh the display"""
+        # Update design object
         self.design = updated_design
 
-        # 更新 DesignManager 中的设计对象并刷新界面
+        # update DesignManager Design objects in and refresh the interface
         self.design_manager.update_design(updated_design)
 
 

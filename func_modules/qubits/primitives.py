@@ -150,10 +150,10 @@ def dehy(qubits_ops):
         new_qubits_ops: simplified qubits parameters
     """
 
-    # 接口
+    # interface
     qubits_op = copy.deepcopy(qubits_ops)
 
-    # 简化
+    # simplify
     new_qubits_op = Dict()
     for q_name, q_op in qubits_op.items():
         new_qubits_op[q_name].name = copy.deepcopy(q_op.name)
@@ -170,7 +170,7 @@ def dehy(qubits_ops):
         new_qubits_op[q_name].control_pins = copy.deepcopy(q_op.control_pins)
         new_qubits_op[q_name].outline = copy.deepcopy(q_op.outline)
 
-    # 接口
+    # interface
     new_qubits_ops = copy.deepcopy(new_qubits_op)
 
     return copy.deepcopy(new_qubits_ops)

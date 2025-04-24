@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import (QDialog, QLabel, QLineEdit, QHBoxLayout,
                              QVBoxLayout, QDialogButtonBox, QMessageBox, QPushButton)
 from PyQt5.QtCore import Qt
 from addict import Dict
-from api.design import Design  # 假设这是你的设计模块
+from api.design import Design  # Assuming this is your design module
 
 class Dialog_ctls(QDialog):
     # Define a signal for design updates
@@ -24,13 +24,13 @@ class Dialog_ctls(QDialog):
             name="charge_line0",
             type="ChargeLine",
             chip="chip0",
-            outline=[],  # 新增参数
-            pos=[[0, 0], [0, 100]],  # 替换 path 参数
-            width=15,  # 改为单值
-            gap=5,  # 改为单值
-            pad_width=15,  # 新增参数
-            pad_height=25,  # 新增参数
-            distance=50,  # 新增参数
+            outline=[],  # Add new parameters
+            pos=[[0, 0], [0, 100]],  # replace path parameter
+            width=15,  # Change to single value
+            gap=5,  # Change to single value
+            pad_width=15,  # Add new parameters
+            pad_height=25,  # Add new parameters
+            distance=50,  # Add new parameters
             corner_radius=20
         )
 
@@ -149,7 +149,7 @@ class Dialog_ctls(QDialog):
 
             try:
                 if key == "pos":
-                    # 解析二维坐标列表
+                    # Analyze 2D coordinate list
                     converted_value = ast.literal_eval(value_str.strip())
                     if not isinstance(converted_value, list):
                         raise ValueError("必须为二维列表格式")
@@ -162,21 +162,21 @@ class Dialog_ctls(QDialog):
                     options.pos = converted_value
 
                 elif key == "outline":
-                    # 可选参数，允许空列表
+                    # Optional parameters，Allow empty list
                     converted_value = ast.literal_eval(value_str.strip()) if value_str else []
                     if not isinstance(converted_value, list):
                         raise ValueError("必须为列表格式")
                     options.outline = converted_value
 
                 elif key in ["width", "gap", "pad_width", "pad_height", "distance", "corner_radius"]:
-                    # 数值类型验证
+                    # Numerical type verification
                     converted_value = float(value_str)
                     if converted_value <= 0:
                         raise ValueError("必须大于0")
                     options[key] = converted_value
 
                 else:
-                    # 字符串类型直接保存
+                    # Save string type directly
                     options[key] = value_str.strip()
 
             except Exception as e:

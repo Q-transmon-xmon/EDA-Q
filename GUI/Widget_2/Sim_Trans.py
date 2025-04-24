@@ -1,12 +1,12 @@
 import sys
 import os
 
-# 获取当前脚本所在的目录
+# Retrieve the directory where the current script is located
 current_path = os.path.dirname(os.path.abspath(__file__))
 GUI_PATH = os.path.dirname(current_path)
 PROJ_PATH = os.path.dirname(GUI_PATH)
 
-# 添加路径
+# Add path
 sys.path.append(GUI_PATH)
 sys.path.append(PROJ_PATH)
 
@@ -98,7 +98,7 @@ class Dialog_Transmon(QDialog):
         # Connect signals
         self.ui.buttonBox.accepted.connect(self.checkInputs)  # OK button
         self.ui.buttonBox.rejected.connect(self.reject)  # Cancel button
-        # 初始化矩阵对话框为 None
+        # The initialization matrix dialog box is None
         self.matrix_dialog = None
         # Install event filter for input fields
         for line_edit in self.ui.get_line_edits():
@@ -141,21 +141,21 @@ class Dialog_Transmon(QDialog):
         self.design.simulation(sim_module="TransmonSim", frequency=inputs[1], qubit_name=inputs[0])
         self.designUpdated.emit(self.design)  # Emit design updated signal
         self.accept()  # Close the dialog
-        # 在对话框关闭后显示矩阵窗口
+        # Display matrix window after closing the dialog box
         self.show_matrix_display()
 
     def show_matrix_display(self):
-        """显示矩阵窗口"""
+        """Display Matrix Window"""
         file_path = 'C:/sim_proj/transmon_sim/capacitance_matrix.txt'
 
-        # 检查文件是否存在
+        # Check if the file exists
         if not os.path.exists(file_path):
             print(f"文件 {file_path} 不存在，无法显示矩阵窗口")
             return
 
         print('xianshi')
 
-            # 创建并显示 DataFrameDisplay 窗口
+            # Create and display DataFrameDisplay window
         self.matrix_dialog = DataFrameDisplay(file_path=file_path)
         self.matrix_dialog.exec()
 

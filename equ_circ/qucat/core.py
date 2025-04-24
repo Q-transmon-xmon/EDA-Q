@@ -1347,7 +1347,7 @@ class GUI(Qcircuit):
             run([sys.executable,
                 os.path.join(os.path.dirname(__file__),"_gui.py"),
                 filename])
-        # print("计算等效电路组件参数...")
+        # print("Calculate equivalent circuit component parameters...")
         # netlist = []
         # with open(filename, 'r') as f:
         #     for el in f:

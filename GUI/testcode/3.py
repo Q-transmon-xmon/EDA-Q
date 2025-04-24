@@ -1,11 +1,11 @@
 import os
 import sys
-# 获取当前脚本所在的目录
+# Retrieve the directory where the current script is located
 current_path = os.path.dirname(os.path.abspath(__file__))
 GUI_PATH = os.path.dirname(current_path)
 PROJ_PATH = os.path.dirname(GUI_PATH)
 
-# 添加路径
+# Add path
 sys.path.append(GUI_PATH)
 sys.path.append(PROJ_PATH)
 
@@ -41,7 +41,7 @@ from api.design import Design
 
 class MyMainWindow(QMainWindow):
     def __init__(self):
-        super(MyMainWindow, self).__init__()  # 明确指定父类
+        super(MyMainWindow, self).__init__()  # Clearly specify the parent class
         self.node_dialog = None
         self.init_ui()  # Initialize UI
         self.design = Design()
@@ -49,18 +49,18 @@ class MyMainWindow(QMainWindow):
     def init_ui(self):
         self.setWindowTitle("QEDA")
 
-        # 获取主屏幕的可用尺寸（减去任务栏等区域）
+        # Obtain the available sizes of the main screen（Subtract taskbar and other areas）
         screen = QApplication.primaryScreen()
         screen_geometry = screen.availableGeometry()
 
-        # 将计算结果转换为整数（例如 1024.0 → 1024）
+        # Convert the calculation result to an integer（for example 1024.0 → 1024）
         window_width = int(screen_geometry.width() * 0.8)
         window_height = int(screen_geometry.height() * 0.8)
 
-        # 设置窗口大小
-        self.resize(window_width, window_height)  # 参数是整数
+        # Set window size
+        self.resize(window_width, window_height)  # The parameter is an integer
 
-        # 将窗口移动到屏幕中央（坐标也必须是整数）
+        # Move the window to the center of the screen（Coordinates must also be integers）
         self.move(
             int((screen_geometry.width() - window_width) / 2),
             int((screen_geometry.height() - window_height) / 2)
@@ -213,10 +213,10 @@ class MyMainWindow(QMainWindow):
         """)
 
     def create_tool_bar(self):
-        """创建功能区的工具栏按钮"""
+        """Create toolbar buttons for the ribbon"""
         self.toolbar = self.addToolBar("功能区")
 
-        # 按钮的文本和对象名称映射
+        # Mapping of button text and object names
         buttons = [
             ("🔧 Import topology", "Algorithm"),
             ("🔩 Custom Topology", "Topology"),
@@ -233,67 +233,67 @@ class MyMainWindow(QMainWindow):
             ("🗑️ Clear", "Clear"),
         ]
 
-        # 遍历按钮配置，创建工具栏按钮
+        # Traverse button configuration，Create toolbar button
         for button_text, object_name in buttons:
             if object_name == "Topology":
-                # 为 Topology 按钮添加下拉菜单
+                # do Topology Add dropdown menu button
                 menu = QMenu(self)
-                topology_options = ["Generate Topo Node", "Random-Generate Topo Edge", "Custom-Generate Topo Edge"]  # Topology 的选项
+                topology_options = ["Generate Topo Node", "Random-Generate Topo Edge", "Custom-Generate Topo Edge"]  # Topology The options
                 for option_name in topology_options:
                     action = menu.addAction(option_name)
                     action.triggered.connect(lambda checked, name=option_name: self.topology_option_handler(name))
 
                 action = QAction(button_text, self)
-                action.setMenu(menu)  # 设置下拉菜单
+                action.setMenu(menu)  # Set dropdown menu
                 self.toolbar.addAction(action)
 
             elif object_name == "Qubit":
-                # 为 Qubit 按钮添加下拉菜单
+                # do Qubit Add dropdown menu button
                 menu = QMenu(self)
-                qubit_options = ["Based on the existing topology", "Custom-generate qubits"]  # Qubit 的选项
+                qubit_options = ["Based on the existing topology", "Custom-generate qubits"]  # Qubit The options
                 for option_name in qubit_options:
                     action = menu.addAction(option_name)
                     action.triggered.connect(lambda checked, name=option_name: self.qubit_option_handler(name))
 
                 action = QAction(button_text, self)
-                action.setMenu(menu)  # 设置下拉菜单
+                action.setMenu(menu)  # Set dropdown menu
                 self.toolbar.addAction(action)
 
             elif object_name == "GenerateLine":
-                # 为 GenerateLine 按钮添加下拉菜单
+                # do GenerateLine Add dropdown menu button
                 menu = QMenu(self)
-                line_options = ["Coupling_line", "Control_line", "Crossover_line", "Transmission_line"]  # 线生成选项
+                line_options = ["Coupling_line", "Control_line", "Crossover_line", "Transmission_line"]  # Line generation options
                 for option_name in line_options:
                     action = menu.addAction(option_name)
                     action.triggered.connect(lambda checked, name=option_name: self.line_option_handler(name))
 
                 action = QAction(button_text, self)
-                action.setMenu(menu)  # 设置下拉菜单
+                action.setMenu(menu)  # Set dropdown menu
                 self.toolbar.addAction(action)
 
             elif object_name == "Simulation":
-                # 为 Simulation 按钮添加下拉菜单
+                # do Simulation Add dropdown menu button
                 menu = QMenu(self)
-                simulation_options = ["Xmon", "Transmon", "Readout"]  # 仿真选项
+                simulation_options = ["Xmon", "Transmon", "Readout"]  # simulation options
                 for option_name in simulation_options:
                     action = menu.addAction(option_name)
                     action.triggered.connect(lambda checked, name=option_name: self.simulation_option_handler(name))
 
                 action = QAction(button_text, self)
-                action.setMenu(menu)  # 设置下拉菜单
+                action.setMenu(menu)  # Set dropdown menu
                 self.toolbar.addAction(action)
 
             else:
-                # 其他没有下拉菜单的按钮
+                # Other buttons without dropdown menus
                 action = QAction(button_text, self)
                 action.setObjectName(object_name)
                 action.triggered.connect(lambda checked, name=object_name: self.MenuAffairs(name))
                 self.toolbar.addAction(action)
 
-                # 定义处理各下拉菜单的函数
+                # Define functions for handling various drop-down menus
 
     def topology_option_handler(self, option_name):
-        """通过选项名称动态处理 Topology 下拉菜单"""
+        """Dynamically process through option names Topology drop-down menu"""
         print(f"Topology Option Selected: {option_name}")
         if option_name == "Generate Topo Node":
             self.node_dialog = Dialog_Node(design=self.design)
@@ -309,7 +309,7 @@ class MyMainWindow(QMainWindow):
             self.CustomEdge.exec_()
 
     def qubit_option_handler(self, option_name):
-        """通过选项名称动态处理 Qubit 下拉菜单"""
+        """Dynamically process through option names Qubit drop-down menu"""
         print(f"Qubit Option Selected: {option_name}")
         if option_name == "Based on the existing topology":
             self.qubit_type = SelectionDialog(design=self.design)
@@ -321,7 +321,7 @@ class MyMainWindow(QMainWindow):
             self.custom_qubit.exec_()
 
     def line_option_handler(self, option_name):
-        """通过选项名称动态处理 Generate Line 下拉菜单"""
+        """Dynamically process through option names Generate Line drop-down menu"""
         print(f"Generate Line Option Selected: {option_name}")
         if option_name == "Coupling_line":
             self.cpl_dialog = Dialog_cpls(design=self.design)
@@ -341,7 +341,7 @@ class MyMainWindow(QMainWindow):
             self.tml_dialog.exec_()
 
     def simulation_option_handler(self, option_name):
-        """通过选项名称动态处理 Simulation 下拉菜单"""
+        """Dynamically process through option names Simulation drop-down menu"""
         print(f"Simulation Option Selected: {option_name}")
         if option_name == "Xmon":
             self.xmon_dialog = Dialog_Xmon(design=self.design)
@@ -363,7 +363,7 @@ class MyMainWindow(QMainWindow):
 
         splitter = QSplitter(Qt.Horizontal)
 
-        # 设置分割器的伸缩因子（左侧占1份，右侧占3份）
+        # Set the scaling factor of the splitter（Left side occupied1share，Right side occupied3share）
         splitter.setStretchFactor(0, 1)
         splitter.setStretchFactor(1, 3)
 
@@ -427,8 +427,8 @@ class MyMainWindow(QMainWindow):
         self.gds_layout.addWidget(self.gds_image_label)  # Adding image label to the layout
 
         # Add zoom button in the top-right corner of the display area
-        self.add_zoom_button(self.topo_layout, self.topo_image_label, "Topo")  # 传递标签和界面名称
-        self.add_zoom_button(self.gds_layout, self.gds_image_label, "GDS")  # 传递标签和界面名称
+        self.add_zoom_button(self.topo_layout, self.topo_image_label, "Topo")  # Passing tags and interface names
+        self.add_zoom_button(self.gds_layout, self.gds_image_label, "GDS")  # Passing tags and interface names
 
         # Add the tab widget to the main layout
         splitter.addWidget(self.tab_widget)
@@ -439,7 +439,7 @@ class MyMainWindow(QMainWindow):
         """Add a zoom button at the top right corner of the specified layout."""
         zoom_button = QPushButton("🔍")  # Zoom icon
         zoom_button.setToolTip("Zoom In")
-        # 将tab_name传递给zoom_in函数
+        # supporttab_nameTransferred tozoom_infunction
         zoom_button.clicked.connect(lambda: self.zoom_in(image_label, tab_name))  # Connect to zoom function
 
         # Create a horizontal layout to hold the button
@@ -451,7 +451,7 @@ class MyMainWindow(QMainWindow):
 
     def zoom_in(self, label, tab_name):
         """Zoom in functionality with tab-specific behavior."""
-        # 根据当前标签页输出不同的提示信息
+        # Output different prompt information based on the current tab
         if tab_name == "Topo":
             print("放大Topo")
             self.design.topology.show_image()
@@ -477,46 +477,46 @@ class MyMainWindow(QMainWindow):
     def show_topology_image(self, show=False):
         """Display the saved topology image."""
         try:
-            # 尝试保存拓扑图像
+            # Attempt to save topology image
             self.design.topology.save_image(path='./picture/topology.png')
         except Exception as e:
             print(f"Failed to save topology image: {e}")
             return
 
-        picture_path = './picture/topology.png'  # 图像路径
+        picture_path = './picture/topology.png'  # image path
 
-        if show:  # 仅在 show 为 True 时执行
+        if show:  # Only in show do True Time Execution
             if os.path.exists(picture_path):
                 print("Displaying topology image")
                 self.show_picture(self.topo_image_label, picture_path)
             else:
-                print(f"Topology image not found: {picture_path}")  # 增加打印信息以便调试
+                print(f"Topology image not found: {picture_path}")  # Add printing information for debugging purposes
 
     def show_circuit_image(self, show=False):
         """Display the saved equivalent circuit image."""
         circuit_picture_path = './picture/circuit.png'
-        if show:  # 仅在 show 为 True 时执行
+        if show:  # Only in show do True Time Execution
             if os.path.exists(circuit_picture_path):
                 print("Displaying equivalent circuit image")
                 self.show_picture(self.gds_image_label, circuit_picture_path)
             else:
-                print(f"Circuit image not found: {circuit_picture_path}")  # 增加打印信息以便调试
+                print(f"Circuit image not found: {circuit_picture_path}")  # Add printing information for debugging purposes
 
     def show_gds_image(self, show=False):
         """Display the saved GDS layout."""
         try:
-            self.design.gds.save_svg(path='./picture/gds.svg')  # 保存 GDS 图像为 SVG 文件
+            self.design.gds.save_svg(path='./picture/gds.svg')  # save GDS The image is SVG file
         except Exception as e:
             print(f"Failed to save GDS image: {e}")
             return
 
         gds_picture_path = './picture/gds.svg'
-        if show:  # 仅在 show 为 True 时执行
+        if show:  # Only in show do True Time Execution
             if os.path.exists(gds_picture_path):
                 print("Displaying GDS image")
                 self.show_picture(self.gds_image_label, gds_picture_path)
             else:
-                print(f"GDS image not found: {gds_picture_path}")  # 增加打印信息以便调试
+                print(f"GDS image not found: {gds_picture_path}")  # Add printing information for debugging purposes
 
     def show_picture(self, label, picture_path):
         try:
@@ -524,54 +524,54 @@ class MyMainWindow(QMainWindow):
                 print(f"Error: Image file not found at {picture_path}")
                 return
 
-            # 清除Label内容
+            # clean upLabelcontent
             label.clear()
 
-            # 加载图片
+            # load picture
             pixmap = QPixmap(picture_path)
             if pixmap.isNull():
                 print(f"Error: Failed to load image from {picture_path}")
                 return
 
-            # 保持比例缩放图片
+            # Maintain proportional scaling of images
             scaled_pixmap = pixmap.scaled(
                 label.size(),
-                Qt.KeepAspectRatio,  # 保持原始宽高比
-                Qt.SmoothTransformation  # 平滑缩放
+                Qt.KeepAspectRatio,  # Maintain the original aspect ratio
+                Qt.SmoothTransformation  # smooth zoom
             )
 
-            # 设置图片到Label并居中显示
+            # Set image toLabelAnd display it in the center
             label.setPixmap(scaled_pixmap)
-            label.setAlignment(Qt.AlignCenter)  # 新增：强制居中
+            label.setAlignment(Qt.AlignCenter)  # newly added：Forced centering
 
-            print(f"Displayed image: {picture_path}")  # 保留原有日志
+            print(f"Displayed image: {picture_path}")  # Keep the original logs
 
         except Exception as e:
-            print(f"Failed to display image: {e}")  # 保留原有错误处理
+            print(f"Failed to display image: {e}")  # Retain original error handling
 
     def _select_file(self):
-        """打开文件对话框，选择 topo 文件并更新图像"""
+        """Open file dialog box，select topo File and update images"""
         fileDialog = QFileDialog(self)
         fileDialog.setWindowTitle('请选择 topo 文件')
-        fileDialog.setFileMode(QFileDialog.ExistingFiles)  # 设置选择模式为现有文件
-        fileDialog.setNameFilter("QASM Files (*.qasm);;All Files (*);;Image Files (*.png *.jpg *.bmp *.svg)")  # 设置文件过滤器
-        fileDialog.setViewMode(QFileDialog.List)  # 以列表形式展示文件
+        fileDialog.setFileMode(QFileDialog.ExistingFiles)  # Set the selection mode to existing files
+        fileDialog.setNameFilter("QASM Files (*.qasm);;All Files (*);;Image Files (*.png *.jpg *.bmp *.svg)")  # Set file filter
+        fileDialog.setViewMode(QFileDialog.List)  # Display files in a list format
 
-        if fileDialog.exec_() == QFileDialog.Accepted:  # 确认选择了文件
-            file_paths = fileDialog.selectedFiles()  # 获取选择的所有文件
-            if file_paths:  # 确保选择列表不为空
-                file_path = file_paths[0]  # 选择第一个文件路径
+        if fileDialog.exec_() == QFileDialog.Accepted:  # Confirm that the file has been selected
+            file_paths = fileDialog.selectedFiles()  # Retrieve all selected files
+            if file_paths:  # Ensure that the selection list is not empty
+                file_path = file_paths[0]  # Select the first file path
                 print(f"Selected file: {file_path}")
 
-                # 更新设计并显示 topo 图像
+                # Update design and display topo image
                 self.design = Design(qasm_path=file_path)
-                self.show_topology_image(show=True)  # 显示更新后的 topo 图像
+                self.show_topology_image(show=True)  # Display the updated topo image
 
     def MenuAffairs(self, action_name):
         """Perform operations based on the action name."""
         if action_name == 'Algorithm':
             print("Executing algorithm customization operation")
-            self._select_file()  # 调用 _select_file 方法执行选择文件操作
+            self._select_file()  # call _select_file Method to perform file selection operation
         elif action_name == 'Circuit':
             print("Executing equivalent circuit construction operation")
             self.design.generate_equivalent_circuit()
@@ -611,28 +611,28 @@ class MyMainWindow(QMainWindow):
             self.other_dialog.show()
         elif action_name == 'Clear':
             print("Executing clear operation")
-            # 清除界面上的显示内容
+            # Clear the display content on the interface
             self.clear_display()
 
     def clear_display(self):
-        """清除界面上的显示内容"""
-        # 清除拓扑图显示
+        """Clear the display content on the interface"""
+        # Clear topology display
         self.topo_image_label.clear()
-        self.topo_display.setText("Topo Interface")  # 重置显示文本
+        self.topo_display.setText("Topo Interface")  # Reset display text
 
-        # 清除GDS布局显示
+        # clean upGDSLayout display
         self.gds_image_label.clear()
-        self.gds_display.setText("GDS Interface")  # 重置显示文本
+        self.gds_display.setText("GDS Interface")  # Reset display text
 
-        # # 清除项目管理器内容
+        # # Clear the content of the project manager
         # self.project_manager.clear()
-        # self.nested_dict = {}  # 清空项目数据
+        # self.nested_dict = {}  # Clear project data
 
-        # 重置设计数据
-        self.design = Design()  # 重新初始化设计对象
-        self.design_updated_flag = False  # 重置设计更新标志
+        # Reset design data
+        self.design = Design()  # Reinitialize the design object
+        self.design_updated_flag = False  # Reset design update flag
 
-        # 清除所有打开的对话框
+        # Clear all open dialog boxes
         for dialog in self.findChildren(QDialog):
             dialog.close()
 
@@ -648,7 +648,7 @@ class MyMainWindow(QMainWindow):
 
         # Update images based on design changes
         if self.design_updated_flag:
-            # 尝试显示 GDS 图像
+            # Attempt to display GDS image
             try:
                 self.show_topology_image(show=True)  # Show updated topology image
                 self.show_gds_image(show=True)  # Show updated GDS image
@@ -662,7 +662,7 @@ class MyMainWindow(QMainWindow):
         self.project_manager.setContextMenuPolicy(Qt.CustomContextMenu)
         self.project_manager.customContextMenuRequested.connect(self.show_context_menu)
 
-        self.project_manager.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)  # 允许扩展
+        self.project_manager.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)  # Allow extensions
 
         # Add sample projects
         self.nested_dict = {
@@ -713,15 +713,15 @@ class MyMainWindow(QMainWindow):
 
     def show_context_menu(self, pos):
         """Show context menu on right click"""
-        item = self.project_manager.itemAt(pos)  # 获取右键点击的项目
+        item = self.project_manager.itemAt(pos)  # Get the right-click item
         context_menu = QMenu(self)
 
-        # 添加右键菜单选项
+        # Add right-click menu options
         add_main_action = QAction("Add Main Project", self)
         add_main_action.triggered.connect(self.add_main_project)
 
         add_sub_action = QAction("Add Sub-Project", self)
-        add_sub_action.triggered.connect(lambda: self.add_sub_project(item))  # 传递当前的选项项目
+        add_sub_action.triggered.connect(lambda: self.add_sub_project(item))  # Transfer the current option item
 
         delete_action = QAction("Delete", self)
         delete_action.triggered.connect(lambda: self.delete_item(item))
@@ -729,17 +729,17 @@ class MyMainWindow(QMainWindow):
         save_action = QAction("Save", self)
         save_action.triggered.connect(lambda: self.save_item(item))
 
-        # 根据是否有选中项，决定是否禁用“Add Sub-Project”
+        # Based on whether there is a selected item or not，Decide whether to disable“Add Sub-Project”
         if item is None:
             add_sub_action.setEnabled(False)
 
-            # 将选项添加到右键菜单
+            # Add options to the right-click menu
         context_menu.addAction(add_main_action)
         context_menu.addAction(add_sub_action)
         context_menu.addAction(delete_action)
         context_menu.addAction(save_action)
 
-        # 弹出右键菜单
+        # Pop up right-click menu
         context_menu.exec_(self.project_manager.viewport().mapToGlobal(pos))
     def delete_item(self, item):
         """Delete the selected item"""

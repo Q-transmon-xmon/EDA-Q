@@ -1,12 +1,12 @@
 import sys
 import os
 
-# 获取当前脚本所在的目录
+# Retrieve the directory where the current script is located
 current_path = os.path.dirname(os.path.abspath(__file__))
 GUI_PATH = os.path.dirname(current_path)
 PROJ_PATH = os.path.dirname(GUI_PATH)
 
-# 添加路径
+# Add path
 sys.path.append(GUI_PATH)
 sys.path.append(PROJ_PATH)
 
@@ -22,7 +22,7 @@ class Ui_Dialog(object):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
         Dialog.resize(600, 400)
-        # 设置整个界面的字体为微软雅黑
+        # Set the font of the entire interface to Microsoft Yahei
         Dialog.setFont(QFont("Microsoft YaHei", 10.5))
         self.label_2 = QLabel(Dialog)
         self.label_2.setObjectName(u"label_2")
@@ -108,27 +108,27 @@ class Dialog_Xmon(QDialog, Ui_Dialog):
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
 
-        # 存储传入的 design 参数
+        # Store incoming data design parameter
         self.design = design
 
-        # 使用 QSettings 保存和加载输入的数据
+        # use QSettings Save and load input data
         self.settings = QSettings("MyCompany", "MyApp")
 
-        # 读取上一次保存的输入内容并显示
+        # Read the last saved input content and display it
         self.loadPreviousInputs()
 
-        # 连接按钮的信号
+        # Signal for connecting button
         self.ui.buttonBox.accepted.connect(self.process_xmon)
         self.ui.buttonBox.rejected.connect(self.reject)
 
     def loadPreviousInputs(self):
-        """加载上一次保存的输入内容"""
+        """Load the last saved input content"""
         self.ui.lineEdit_3.setText(self.settings.value("control_line_name", "control_lines_upper_0", type=str))
         self.ui.lineEdit_4.setText(self.settings.value("bit_name", "q0", type=str))
         self.ui.lineEdit_6.setText(self.settings.value("save_path", "C:/sim_proj/PlaneXmon_sim/Xmon_random_capacity_{}.txt", type=str))
 
     def process_xmon(self):
-        """保存输入框的文本到 QSettings,并发出 designUpdated 信号"""
+        """Save the text of the input box to QSettings,And send out designUpdated signal"""
         self.settings.setValue("control_line_name", self.ui.lineEdit_3.text())
         self.settings.setValue("bit_name", self.ui.lineEdit_4.text())
         self.settings.setValue("save_path", self.ui.lineEdit_6.text())
@@ -147,20 +147,20 @@ class Dialog_Xmon(QDialog, Ui_Dialog):
         show_matrix.exec()
         self.accept()
 
-        # 在对话框关闭后显示矩阵窗口
+        # Display matrix window after closing the dialog box
         self.show_matrix_display(path=save_path)
     def show_matrix_display(self,path):
-        """显示矩阵窗口"""
+        """Display Matrix Window"""
         file_path = path
 
-        # 检查文件是否存在
+        # Check if the file exists
         if not os.path.exists(file_path):
             print(f"文件 {file_path} 不存在，无法显示矩阵窗口")
             return
 
         print('xianshi')
 
-        # 创建并显示 DataFrameDisplay 窗口
+        # Create and display DataFrameDisplay window
         self.matrix_dialog = DataFrameDisplay(file_path=file_path)
         self.matrix_dialog.exec()
 
@@ -168,17 +168,17 @@ class Dialog_Xmon(QDialog, Ui_Dialog):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    design = Design()  # 创建 Design 实例
-    dialog = Dialog_Xmon(design=design)  # 将 design 实例传递给 Dialog_Qubit_Custom
+    design = Design()  # create Design example
+    dialog = Dialog_Xmon(design=design)  # support design Instance passed to Dialog_Qubit_Custom
 
-    # 更新主设计的信号
+    # Update the signal of the main design
     def updateMainDesign(updated_design):
         print("主窗口设计已更新")
     dialog.designUpdated.connect(updateMainDesign)
 
-    # 如果对话框接受，显示输入内容
+    # If the dialog box accepts，Display input content
     if dialog.exec() == QDialog.Accepted:
         dialog.design.gds.show_svg()
 
-    # 退出应用程序
+    # exit from application program
     sys.exit(app.exec())

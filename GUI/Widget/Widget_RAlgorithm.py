@@ -11,9 +11,9 @@ class Ui_Dialog_RAlgorithm(object):
     def setupUi(self, Dialog_RAlgorithm):
         Dialog_RAlgorithm.setObjectName("Dialog_RAlgorithm")
         Dialog_RAlgorithm.resize(419, 332)
-        # 设置整个界面的字体为微软雅黑
+        # Set the font of the entire interface to Microsoft Yahei
         Dialog_RAlgorithm.setFont(QFont("Microsoft YaHei", 10.5))
-        self.settings = QSettings("MyCompany", "MyApp")  # 初始化 QSettings
+        self.settings = QSettings("MyCompany", "MyApp")  # initialization QSettings
 
         self.buttonBox = QDialogButtonBox(Dialog_RAlgorithm)
         self.buttonBox.setGeometry(30, 280, 341, 32)
@@ -21,12 +21,12 @@ class Ui_Dialog_RAlgorithm(object):
 
         self.label = QLabel(Dialog_RAlgorithm)
         self.label.setGeometry(10, 60, 51, 25)
-        self.label.setText("算法：")  # 设置标签文本
+        self.label.setText("算法：")  # Set label text
 
-        # 创建"算法"标签并设置文本
+        # create"algorithm"Label and set text
         self.label_algorithm = QLabel(Dialog_RAlgorithm)
         self.label_algorithm.setGeometry(10, 200, 181, 25)
-        self.label_algorithm.setText("芯片层：")  # 设置标签文本为"算法"
+        self.label_algorithm.setText("芯片层：")  # Set the label text to"algorithm"
 
         self.lineEdit = QLineEdit(Dialog_RAlgorithm)
         self.lineEdit.setGeometry(80, 200, 181, 28)
@@ -37,22 +37,22 @@ class Ui_Dialog_RAlgorithm(object):
         self.verticalLayout = QVBoxLayout(self.widget)
 
         self.radioButtons = []
-        self.setStyleSheet("QRadioButton { font-family: 'Microsoft YaHei'; font-size: 14px; }")  # 设置单选按钮的字体样式
-        self.addRadioButton("Control_off_chip_routing")  # 单选按钮文本
-        self.addRadioButton("Flipchip_routing_IBM")  # 单选按钮文本
-        self.addRadioButton("Flipchip_routing")  # 单选按钮文本
+        self.setStyleSheet("QRadioButton { font-family: 'Microsoft YaHei'; font-size: 14px; }")  # Set the font style for radio buttons
+        self.addRadioButton("Control_off_chip_routing")  # Radio button text
+        self.addRadioButton("Flipchip_routing_IBM")  # Radio button text
+        self.addRadioButton("Flipchip_routing")  # Radio button text
 
         self.retranslateUi(Dialog_RAlgorithm)
 
         QMetaObject.connectSlotsByName(Dialog_RAlgorithm)
 
-        self.loadInputs()  # 载入先前保存的数据
+        self.loadInputs()  # Load previously saved data
 
     def retranslateUi(self, Dialog_RAlgorithm):
         Dialog_RAlgorithm.setWindowTitle(QCoreApplication.translate("Dialog_RAlgorithm", "选择布线算法", None))
 
     def addRadioButton(self, text):
-        """添加单选按钮到布局中"""
+        """Add radio buttons to the layout"""
         radio_btn = QRadioButton(text, self.widget)
         self.verticalLayout.addWidget(radio_btn)
         self.radioButtons.append(radio_btn)
@@ -66,55 +66,55 @@ class Dialog_RAlgorithm(QDialog, Ui_Dialog_RAlgorithm):
         self.design = design
         self.setupUi(self)
         self.settings = QSettings("MyCompany", "MyApp")
-        self.loadInputs()  # 加载输入数据
+        self.loadInputs()  # Load input data
 
-        # 连接保存输入的方法
+        # Method of connecting and saving input
         self.buttonBox.accepted.connect(self.Process_RAlgorithm)
         self.buttonBox.rejected.connect(self.reject)
 
-        # 新增变量
+        # Add new variables
         self.selected_algorithm = None
         self.chip_name = None
 
     def loadInputs(self):
-        """加载保存的输入框数据显示"""
+        """Loading and saving input box data display"""
         self.lineEdit.setText(self.settings.value("parameter_value", "", type=str))
 
-        # 加载单选按钮的状态
+        # Loading the status of radio buttons
         for radio_btn in self.radioButtons:
             radio_btn.setChecked(self.settings.value(radio_btn.text(), False, type=bool))
 
     def Process_RAlgorithm(self):
-        """保存输入框的文本到 QSettings"""
+        """Save the text of the input box to QSettings"""
         self.settings.setValue("parameter_value", self.lineEdit.text())
 
-        # 保存单选按钮的状态
+        # Save the status of the radio button
         for radio_btn in self.radioButtons:
             self.settings.setValue(radio_btn.text(), radio_btn.isChecked())
             if radio_btn.isChecked():
-                self.selected_algorithm = radio_btn.text()  # 保存选择的算法名称
+                self.selected_algorithm = radio_btn.text()  # Save the selected algorithm name
 
-        self.chip_name = self.lineEdit.text()  # 保存输入的芯片名称
+        self.chip_name = self.lineEdit.text()  # Save the input chip name
 
         print(f"输入的参数: {self.chip_name}")
         print("选中的单选按钮：", self.selected_algorithm)
 
         self.design.routing(method=self.selected_algorithm, chip_name=self.chip_name)
-        self.designUpdated.emit(self.design)  # 发送设计更新信号
-        self.accept()  # 关闭对话框
+        self.designUpdated.emit(self.design)  # Send design update signal
+        self.accept()  # close dialog boxes
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     design = Design()
     dialog = Dialog_RAlgorithm(design=design)
-    # 更新主设计的信号
+    # Update the signal of the main design
     def updateMainDesign(updated_design):
         design=updated_design
         print("主窗口设计已更新")
     dialog.designUpdated.connect(updateMainDesign)
 
     if dialog.exec() == QDialog.Accepted:
-        # 点击OK按钮后会自动处理参数并退出
+        # clickOKAfter pressing the button, the parameters will be automatically processed and exit
         pass
 
     sys.exit(app.exec())

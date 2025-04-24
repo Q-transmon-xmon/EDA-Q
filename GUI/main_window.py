@@ -15,13 +15,13 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("QEDA")
         self.setGeometry(100, 100, 800, 600)
 
-        # 初始化各组件
+        # Initialize each component
         self.menu_bar = MenuBar(self)
         self.tool_bar = ToolBar(self)
         self.image_tabs = ImageTabs(self)
         self.project_manager = ProjectManager(self)
 
-        # 创建主布局
+        # Create main layout
         main_widget = QWidget()
         main_layout = QVBoxLayout()
         main_layout.addWidget(self.tool_bar)

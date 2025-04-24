@@ -2,16 +2,16 @@ import sys
 import os
 import logging
 
-# 获取当前脚本所在的目录
+# Retrieve the directory where the current script is located
 current_path = os.path.dirname(os.path.abspath(__file__))
 GUI_PATH = os.path.dirname(current_path)
 PROJ_PATH = os.path.dirname(GUI_PATH)
 
-# 添加路径
+# Add path
 sys.path.append(GUI_PATH)
 sys.path.append(PROJ_PATH)
 
-# 导入模块
+# Import module
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QVBoxLayout,

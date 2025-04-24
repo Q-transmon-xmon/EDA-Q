@@ -20,21 +20,21 @@ class Ui_Dialog_Qubit_Custom:
         self.layoutWidget.setGeometry(QRect(40, 40, 331, 200))
         self.verticalLayout = QVBoxLayout(self.layoutWidget)
 
-        # 创建标签和输入框
+        # Create tags and input boxes
         self.createLabeledInput("量子比特数目：")
         self.createLabeledInput("距离：")
         self.createLabeledInput("芯片层：")
 
-        # 添加量子比特类型选择
+        # Add quantum bit type selection
         self.addQubitTypeSelection()
 
         self.retranslateUi(Dialog_Qubit_Custom)
 
-        # 连接信号与槽
+        # Connect signal and slot
         QMetaObject.connectSlotsByName(Dialog_Qubit_Custom)
 
     def createLabeledInput(self, label_text):
-        """创建一个标签和相应的输入框，并将它们添加到布局中"""
+        """Create a label and corresponding input box，And add them to the layout"""
         horizontalLayout = QHBoxLayout()
         label = QLabel(label_text)
         line_edit = QLineEdit()
@@ -43,13 +43,13 @@ class Ui_Dialog_Qubit_Custom:
         horizontalLayout.addWidget(line_edit)
         self.verticalLayout.addLayout(horizontalLayout)
 
-        # 将输入框添加到实例变量中，以便后续访问
+        # Add input box to instance variable，For future visits
         if not hasattr(self, 'lineEdits'):
             self.lineEdits = []
         self.lineEdits.append(line_edit)
 
     def addQubitTypeSelection(self):
-        """添加量子比特类型选择"""
+        """Add quantum bit type selection"""
         horizontalLayout = QHBoxLayout()
         label = QLabel("量子比特类型：")
         self.qubit_type_combo = QComboBox()
@@ -73,24 +73,24 @@ class Dialog_Qubit_Custom(QDialog, Ui_Dialog_Qubit_Custom):
         # Store the passed design parameter
         self.design = design
 
-        # QSettings 用于保存和加载输入的数据
+        # QSettings Used to save and load input data
         self.settings = QSettings("MyCompany", "MyApp")
 
-        # 读取上一次保存的输入内容并显示
+        # Read the last saved input content and display it
         self.loadPreviousInputs()
 
-        # 连接按钮的信号
+        # Signal for connecting button
         self.buttonBox.accepted.connect(self.Process_Qubit)
-        self.buttonBox.rejected.connect(self.reject)  # 连接取消按钮到 QDialog 的 reject 方法
+        self.buttonBox.rejected.connect(self.reject)  # Cancel connection button to QDialog of reject method
 
     def loadPreviousInputs(self):
-        """加载上一次保存的输入内容"""
+        """Load the last saved input content"""
         self.lineEdits[0].setText(self.settings.value("quantum_bits", "", type=str))
         self.lineEdits[1].setText(self.settings.value("distance", "", type=str))
         self.lineEdits[2].setText(self.settings.value("thickness", "", type=str))
 
     def Process_Qubit(self):
-        """保存输入框的文本到 QSettings"""
+        """Save the text of the input box to QSettings"""
         self.settings.setValue("quantum_bits", self.lineEdits[0].text())
         self.settings.setValue("distance", self.lineEdits[1].text())
         self.settings.setValue("thickness", self.lineEdits[2].text())
@@ -108,26 +108,26 @@ class Dialog_Qubit_Custom(QDialog, Ui_Dialog_Qubit_Custom):
         self.design.generate_topology(qubits_num=quantum_bits, topo_col=int(math.sqrt(quantum_bits)))
         self.design.generate_qubits(chip_name=thickness, dist=distance, qubits_type=qubit_type,
                                     topo_positions=self.design.topology.positions)
-        # 发出设计更新信号
+        # Send design update signal
         self.designUpdated.emit(self.design)
 
-        # 关闭对话框
-        self.accept()  # 关闭对话框
+        # close dialog boxes
+        self.accept()  # close dialog boxes
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    design = Design()  # 创建 Design 实例
-    dialog = Dialog_Qubit_Custom(design=design)  # 将 design 实例传递给 Dialog_Qubit_Custom
+    design = Design()  # create Design example
+    dialog = Dialog_Qubit_Custom(design=design)  # support design Instance passed to Dialog_Qubit_Custom
 
-    # 更新主设计的信号
+    # Update the signal of the main design
     def updateMainDesign(updated_design):
         print("主窗口设计已更新")
     dialog.designUpdated.connect(updateMainDesign)
 
-    # 如果对话框接受，显示输入内容
+    # If the dialog box accepts，Display input content
     if dialog.exec() == QDialog.Accepted:
         dialog.design.gds.show_svg()
 
-    # 退出应用程序
+    # exit from application program
     sys.exit(app.exec())

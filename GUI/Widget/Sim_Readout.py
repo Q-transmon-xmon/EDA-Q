@@ -7,25 +7,25 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(500, 400)  # 增加对话框的高度
+        Dialog.resize(500, 400)  # Increase the height of the dialog box
 
         self.buttonBox = QDialogButtonBox(Dialog)
         self.buttonBox.setObjectName(u"buttonBox")
-        self.buttonBox.setGeometry(QRect(50, 340, 400, 32))  # 调整按钮框的位置
+        self.buttonBox.setGeometry(QRect(50, 340, 400, 32))  # Adjust the position of the button box
         self.buttonBox.setOrientation(Qt.Horizontal)
         self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
 
-        self.groupBox = QGroupBox("仿真参数", Dialog)  # 使用 QGroupBox 作为参数框
+        self.groupBox = QGroupBox("仿真参数", Dialog)  # use QGroupBox As a parameter box
         self.groupBox.setObjectName(u"groupBox")
-        self.groupBox.setGeometry(QRect(20, 70, 460, 260))  # 调整参数框的位置和大小
-        self.groupBox.setStyleSheet("QGroupBox { border: 1px solid black; border-radius: 5px; padding: 10px; }")  # 设置边框样式
+        self.groupBox.setGeometry(QRect(20, 70, 460, 260))  # Adjust the position and size of the parameter box
+        self.groupBox.setStyleSheet("QGroupBox { border: 1px solid black; border-radius: 5px; padding: 10px; }")  # Set border style
 
         self.verticalLayout = QVBoxLayout(self.groupBox)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setSpacing(15)  # 增加垂直布局的间距
-        self.verticalLayout.setContentsMargins(10, 10, 10, 10)  # 设置内容边距
+        self.verticalLayout.setSpacing(15)  # Increase the spacing of vertical layout
+        self.verticalLayout.setContentsMargins(10, 10, 10, 10)  # Set content margins
 
-        # 添加模式的标签和输入框
+        # Add labels and input boxes for patterns
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.label_3 = QLabel(self.groupBox)
@@ -34,11 +34,11 @@ class Ui_Dialog(object):
 
         self.lineEdit = QLineEdit(self.groupBox)
         self.lineEdit.setObjectName(u"lineEdit")
-        self.lineEdit.setMinimumHeight(30)  # 设置输入框的最小高度
+        self.lineEdit.setMinimumHeight(30)  # Set the minimum height of the input box
         self.horizontalLayout.addWidget(self.lineEdit)
         self.verticalLayout.addLayout(self.horizontalLayout)
 
-        # 添加 pin0 名称的标签和输入框
+        # add pin0 Label and input box for the name
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.label_5 = QLabel(self.groupBox)
@@ -47,11 +47,11 @@ class Ui_Dialog(object):
 
         self.lineEdit_3 = QLineEdit(self.groupBox)
         self.lineEdit_3.setObjectName(u"lineEdit_3")
-        self.lineEdit_3.setMinimumHeight(30)  # 设置输入框的最小高度
+        self.lineEdit_3.setMinimumHeight(30)  # Set the minimum height of the input box
         self.horizontalLayout_3.addWidget(self.lineEdit_3)
         self.verticalLayout.addLayout(self.horizontalLayout_3)
 
-        # 添加 pin1 名称的标签和输入框
+        # add pin1 Label and input box for the name
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.label_7 = QLabel(self.groupBox)
@@ -60,11 +60,11 @@ class Ui_Dialog(object):
 
         self.lineEdit_5 = QLineEdit(self.groupBox)
         self.lineEdit_5.setObjectName(u"lineEdit_5")
-        self.lineEdit_5.setMinimumHeight(30)  # 设置输入框的最小高度
+        self.lineEdit_5.setMinimumHeight(30)  # Set the minimum height of the input box
         self.horizontalLayout_5.addWidget(self.lineEdit_5)
         self.verticalLayout.addLayout(self.horizontalLayout_5)
 
-        # 添加读取线名称的标签和输入框
+        # Add labels and input boxes for reading line names
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.label_4 = QLabel(self.groupBox)
@@ -73,11 +73,11 @@ class Ui_Dialog(object):
 
         self.lineEdit_2 = QLineEdit(self.groupBox)
         self.lineEdit_2.setObjectName(u"lineEdit_2")
-        self.lineEdit_2.setMinimumHeight(30)  # 设置输入框的最小高度
+        self.lineEdit_2.setMinimumHeight(30)  # Set the minimum height of the input box
         self.horizontalLayout_2.addWidget(self.lineEdit_2)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
 
-        # 添加传输线名称的标签和输入框
+        # Add labels and input boxes for transmission line names
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.label_8 = QLabel(self.groupBox)
@@ -86,7 +86,7 @@ class Ui_Dialog(object):
 
         self.lineEdit_6 = QLineEdit(self.groupBox)
         self.lineEdit_6.setObjectName(u"lineEdit_6")
-        self.lineEdit_6.setMinimumHeight(30)  # 设置输入框的最小高度
+        self.lineEdit_6.setMinimumHeight(30)  # Set the minimum height of the input box
         self.horizontalLayout_6.addWidget(self.lineEdit_6)
         self.verticalLayout.addLayout(self.horizontalLayout_6)
 
@@ -113,7 +113,7 @@ class Dialog_s21(QDialog):
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
 
-        # 设置样式
+        # Setting Styles
         self.setStyleSheet("""  
             QWidget {  
                 background-color: #f0f0f0;  
@@ -123,8 +123,8 @@ class Dialog_s21(QDialog):
                 color: #333333;  
             }  
             QLineEdit {  
-                background: white;  /* 白色背景 */  
-                border: none;  /* 无边框 */  
+                background: white;  /* White background */  
+                border: none;  /* no border */  
                 border-radius: 4px;  
                 padding: 6px 6px;  
             }  
@@ -140,21 +140,21 @@ class Dialog_s21(QDialog):
             }  
         """)
 
-        # 存储传入的设计参数
+        # Store incoming design parameters
         self.design = design
 
-        # 使用 QSettings 保存和加载输入的数据
+        # use QSettings Save and load input data
         self.settings = QSettings("MyCompany", "MyApp")
 
-        # 读取上一次保存的输入内容并显示
+        # Read the last saved input content and display it
         self.loadPreviousInputs()
 
-        # 连接按钮的信号
+        # Signal for connecting button
         self.ui.buttonBox.accepted.connect(self.process_inputs)
         self.ui.buttonBox.rejected.connect(self.reject)
 
     def loadPreviousInputs(self):
-        """加载上一次保存的输入内容"""
+        """Load the last saved input content"""
         self.ui.lineEdit.setText(self.settings.value("model_param", "", type=str))
         self.ui.lineEdit_3.setText(self.settings.value("pin0_name", "", type=str))
         self.ui.lineEdit_5.setText(self.settings.value("pin1_name", "", type=str))
@@ -162,14 +162,14 @@ class Dialog_s21(QDialog):
         self.ui.lineEdit_6.setText(self.settings.value("tml_name", "", type=str))
 
     def process_inputs(self):
-        """保存输入框的文本到 QSettings,并发出 designUpdated 信号"""
+        """Save the text of the input box to QSettings,And send out designUpdated signal"""
         self.settings.setValue("model_param", self.ui.lineEdit.text())
         self.settings.setValue("pin0_name", self.ui.lineEdit_3.text())
         self.settings.setValue("pin1_name", self.ui.lineEdit_5.text())
         self.settings.setValue("read_line_name", self.ui.lineEdit_2.text())
         self.settings.setValue("tml_name", self.ui.lineEdit_6.text())
 
-        # 示例参数处理
+        # Example parameter processing
         model_param = self.settings.value("model_param", "", type=str)
         pin0_name = self.settings.value("pin0_name", "", type=str)
         pin1_name = self.settings.value("pin1_name", "", type=str)
@@ -183,7 +183,7 @@ class Dialog_s21(QDialog):
         print(f"传输线名称: {tml_name}")
 
         self.design.simulation(sim_module="s21", mode=model_param, pin0_name=pin0_name, pin1_name=pin1_name, rdl_name=read_line_name, tml_name=tml_name)
-        # 发出设计更新信号
+        # Send design update signal
         self.designUpdated.emit(self.design)
         self.accept()
 
@@ -192,8 +192,8 @@ if __name__ == "__main__":
     import sys
 
     app = QApplication(sys.argv)
-    design = Design()  # 在这里假设 design 是一个字典或相应的对象
-    dialog = Dialog_s21(design)  # 创建 Dialog_s21 实例并传入设计参数
+    design = Design()  # Assuming here design It is a dictionary or corresponding object
+    dialog = Dialog_s21(design)  # create Dialog_s21 Instance and input design parameters
 
     def updateMainDesign(updated_design):
         print("主设计已更新")

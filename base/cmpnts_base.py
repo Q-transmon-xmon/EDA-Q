@@ -283,7 +283,7 @@ class CmpntsBase(GdsBase):
 
     def generate_row_middle(self, mid_pos, dist, key, num, pre_name, type, geometric_options: Dict = None):
         ops = self.options
-        # 生成坐标点的集合
+        # Generate a set of coordinate points
         pos_list = []
         for i in range(num):
             pos = (mid_pos[0]+i*dist, mid_pos[1])
@@ -293,7 +293,7 @@ class CmpntsBase(GdsBase):
             pos = copy.deepcopy(pos_list[i])
             pos_list[i] = (pos[0]-move_dist, pos[1])
         # print(pos_list)
-        # 生成每个组件的参数
+        # Generate parameters for each component
         for i in range(num):
             op = Dict()
             name = pre_name + "_{}".format(i)
@@ -371,7 +371,7 @@ class CmpntsBase(GdsBase):
         Exception:
             ValueError: Throws an exception when the component name or type is not specified.
         """
-        # 批量操作，避免多次拷贝和注入
+        # bulk operation，Avoid multiple copies and injections
         new_ops = self.options.copy()
         for options in options_list:
             name = options.name

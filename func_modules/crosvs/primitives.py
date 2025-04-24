@@ -1,5 +1,5 @@
 ############################################################################################
-# 和跨线有关的参数处理
+# Parameter processing related to crossing lines
 ############################################################################################
 
 from addict import Dict
@@ -8,22 +8,22 @@ import copy
 from components import cross_overs
 
 def generate_ins_sheets(cpls_ops, tmls_ops):
-    """根据耦合线和传输线生成绝缘垫
+    """Generate insulation pads based on coupling lines and transmission lines
 
-    输入：
-        cpls_ops: 耦合线参数
-        tmls_ops: 传输线参数
+    input：
+        cpls_ops: Coupling line parameters
+        tmls_ops: Transmission line parameters
 
-    输出：
-        ins_sheets: 绝缘垫参数
+    output：
+        ins_sheets: Insulation pad parameters
     
     """
 
-    # 接口
+    # interface
     cpls_ops = Dict(cpls_ops)
     tmls_ops = Dict(tmls_ops)
 
-    # 生成绝缘垫
+    # Generate insulation pad
     ins_sheets = Dict()
     idx = 0
 
@@ -41,66 +41,66 @@ def generate_ins_sheets(cpls_ops, tmls_ops):
     return copy.deepcopy(ins_sheets)
 
 def soak_cross_overs(cross_overs_ops):
-    """根据类补全跨线参数
+    """Complete cross line parameters based on class
 
-    输入：
-        cross_overs_ops: 跨线参数
+    input：
+        cross_overs_ops: Cross line parameters
 
-    输出：
-        cross_overs_ops: 补全后的跨线参数
+    output：
+        cross_overs_ops: 补全后的Cross line parameters
     """
 
-    # 接口
+    # interface
     cross_overs_ops = copy.deepcopy(cross_overs_ops)
 
-    # 获得实例
+    # Obtain examples
     inst = cross_overs.CrossOvers(cross_overs_ops)
 
-    # 依次修改参数
+    # Modify parameters sequentially
     for k, v in cross_overs_ops.items():
         cross_overs_ops[k] = inst.options[k]
 
     return copy.deepcopy(cross_overs_ops)
 
 def set_chips(cross_overs_ops, chip_name):
-    """设置跨线的芯片信息
+    """Set cross line chip information
 
-    输入：
-        cross_overs_ops: 耦合线参数
-        chip_name: 要设置的芯片名称
+    input：
+        cross_overs_ops: Coupling line parameters
+        chip_name: The chip name to be set
 
-    输出： 
-        cross_overs_ops: 设置芯片名称后的耦合线参数
+    output： 
+        cross_overs_ops: 设置芯片名称后的Coupling line parameters
     """
     
-    # 接口
+    # interface
     cross_overs_ops = copy.deepcopy(cross_overs_ops)
 
-    # 依次设置芯片信息
+    # Set chip information sequentially
     for k, v in cross_overs_ops.items():
         cross_overs_ops[k].chip = chip_name
         
     return copy.deepcopy(cross_overs_ops)
 
 def generate_crosvs_ops_from_cpls_ops_and_tmls_ops(cpls_ops, tmls_ops, crosvs_type, chip_name):
-    """根据耦合线和传输线生成绝缘垫
+    """Generate insulation pads based on coupling lines and transmission lines
 
-    输入：
-        cpls_ops: 耦合线参数
-        tmls_ops: 传输线参数
+    input：
+        cpls_ops: Coupling line parameters
+        tmls_ops: Transmission line parameters
 
-    输出：
-        ins_sheets: 绝缘垫参数
+    output：
+        ins_sheets: Insulation pad parameters
     
     """
 
-    # 接口
+    # interface
     cpls_ops = Dict(cpls_ops)
     tmls_ops = Dict(tmls_ops)
     crosvs_type = crosvs_type
     chip_name = chip_name
 
-    # 生成绝缘垫
+    # Generate insulation pad
     ins_sheets = Dict()
     idx = 0
 

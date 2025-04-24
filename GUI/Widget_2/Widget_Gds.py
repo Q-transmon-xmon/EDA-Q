@@ -12,7 +12,7 @@ from api.design import Design
 
 
 class Dialog_NestedDictViewer(QMainWindow):
-    # designUpdated = QtCore.pyqtSignal(object)  # 定义 designUpdated 信号
+    # designUpdated = QtCore.pyqtSignal(object)  # definition designUpdated signal
     def __init__(self, design):
         super().__init__()
         self.setWindowTitle("GDS Layout Modification")
