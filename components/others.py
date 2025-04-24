@@ -5,7 +5,7 @@ import copy
 
 class Others(CmpntsBase):
     """
-    Othersclass，Inherited fromCmpntsBase，用于管理和操作其他class型的组件。
+    Othersclass，Inherited fromCmpntsBase，used for managing and operating other Class-type components.
     """
 
     def __init__(self, **init_ops):
@@ -13,7 +13,7 @@ class Others(CmpntsBase):
         initializationOthersobject。
 
         input：
-            init_ops: dict，initialization所需的参数。
+            init_ops: dict，initialization parameters.。
 
         output：
             not have

@@ -13,7 +13,7 @@ class ControlLines(CmpntsBase):
         initializationControlLinesobject。
 
         input：
-            init_ops: dict，initialization所需的参数。
+            init_ops: dict，initialization parameters.。
 
         output：
             not have

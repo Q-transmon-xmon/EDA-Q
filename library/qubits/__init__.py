@@ -23,4 +23,4 @@ module_name_list = ["circlemon",
                     "transmon", 
                     "xmon",
                     "xmon_rotate",
-                    "transmon_benzheng"]
+                    "transmon_benzheng",]

@@ -22,7 +22,7 @@ def set_types(ctls_ops, ctls_type):
         type: The type of control line to be modified
     
     output:
-        ctls: Modify control line type后的参数
+        ctls: The parameters after Modify control line type
     """
 
     # interface
