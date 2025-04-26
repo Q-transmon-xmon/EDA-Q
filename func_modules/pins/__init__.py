@@ -30,11 +30,11 @@ def set_chips(pins_ops, chip_name: str = None):
     """set uppinsChip information in
     
     input：
-        pins_ops: pinsParameters for the chip
-        chip_name: The name of the chip
+        pins_ops: pinsParameters for
+        chip_name: 所set up的chipthe name of
 
     output：
-        pins: pinsParameters for after setting up the chip information
+        pins: set up芯片信息后的pinsParameters for
     """
     pins_ops = primitives.set_chips(pins_ops=pins_ops, chip_name=chip_name)
     return copy.deepcopy(pins_ops)

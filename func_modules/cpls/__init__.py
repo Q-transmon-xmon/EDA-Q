@@ -20,7 +20,7 @@ def generate_coupling_lines(**gene_ops):
         cp_type: Generated coupling types
         chip: Generate coupled layers
     output： 
-        cpls_ops: coupling lines' parameters.
+        cpls_ops: 耦合线parameter
     """
     return copy.deepcopy(gene_cpls_ops.gene_cpls_ops(**gene_ops))
 
@@ -44,7 +44,7 @@ def set_chips(cpls_ops, chip_name: str = None):
         chip_name: The chip name to be set
 
     output： 
-        cpls_ops: Set the Coupling line parameters after the chip name.
+        cpls_ops: 设置芯片名称后的Coupling line parameters
     """
     cpls_ops = primitives.set_chips(cpls_ops=cpls_ops, chip_name=chip_name)
     return copy.deepcopy(cpls_ops)

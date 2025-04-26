@@ -12,7 +12,7 @@ class AirBridges(CmpntsBase):
         initializationAirBridgesobject。
 
         input：
-            init_ops: dict，initialization parameters.
+            init_ops: dict，initialization所需的参数。
 
         output：
             not have

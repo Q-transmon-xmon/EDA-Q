@@ -71,7 +71,7 @@ def change_qubits_type(qubits_ops, qubits_type):
         type: target type
 
     output：
-        qubits: The coupling after modifying the type is parameter first
+        qubits: 修改类型后的耦合先parameter
     """
 
     # interface
@@ -90,7 +90,7 @@ def reset_cp_info(qubits):
         qubits: qubitsparameter
 
     output：
-        qubits: The qubitsparameter after setting coupling information
+        qubits: resetcoupling information后的qubitsparameter
     """
 
     # interface
@@ -113,7 +113,7 @@ def topo_to_cp_info(qubits, topology):
 
     input：
         qubits: qubitsparameter
-        topology: Topology parameter
+        topology: 拓扑parameter
 
     output：  
         qubits: After supplementing the coupling informationqubitsparameter
@@ -138,7 +138,7 @@ def add_rd_info(qubits, readout_lines):
     
     input：
         qubits: qubitsparameter
-        readout_lines: Read cavity parameter
+        readout_lines: 读取腔parameter
     
     output：
         qubits: After supplementing the reading of cavity informationqubitsparameter
@@ -175,10 +175,10 @@ def set_chips(qubits, chip_name):
 
     input：
         qubits: qubitsparameter
-        chip_name: The name of the chip set up
+        chip_name: 要set up的芯片名称
 
     output： 
-        qubits: set up the coupling line parameter after the chip name
+        qubits: set up芯片名称后的耦合线parameter
     """
 
     # interface
@@ -195,7 +195,7 @@ def set_chip(qubit, chip_name):
     
     input：
         qubit: qubitParameters for
-        chip_name: The name of The chip needs to be set
+        chip_name: 要设置The chip名称
 
     output： 
         qubit: Coupling line parameters after setting the chip name

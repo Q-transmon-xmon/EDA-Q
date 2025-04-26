@@ -12,7 +12,7 @@ class Chip(LibraryBase):
         initializationChipobject。
 
         input：
-            options: Dict, the dict of chip initialization parameters,Default isNone。
+            options: Dict,包含芯片initialization参数的字典,Default isNone。
 
         output：
             not have

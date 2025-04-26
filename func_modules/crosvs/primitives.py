@@ -47,7 +47,7 @@ def soak_cross_overs(cross_overs_ops):
         cross_overs_ops: Cross line parameters
 
     output：
-        cross_overs_ops: The completed Cross line parameters
+        cross_overs_ops: 补全后的Cross line parameters
     """
 
     # interface
@@ -70,7 +70,7 @@ def set_chips(cross_overs_ops, chip_name):
         chip_name: The chip name to be set
 
     output： 
-        cross_overs_ops: Set the Coupling line parameters after the chip name
+        cross_overs_ops: 设置芯片名称后的Coupling line parameters
     """
     
     # interface
