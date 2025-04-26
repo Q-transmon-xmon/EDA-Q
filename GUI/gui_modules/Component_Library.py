@@ -23,7 +23,7 @@ from .Component.ReadoutCavity_Actions import ReadoutCavityActions
 from .Component.ReadoutCavityFlipchip_Actions import ReadoutCavityFlipchipActions
 from .Component.ReadoutCavityPlus_Actions import ReadoutCavityPlusActions
 from .Component.TransmissionPath_Actions import TransmissionPathActions
-from .Component.Transmon_Actions import TransmonActions  # contain TransmonActions The import
+from .Component.Transmon_Actions import TransmonActions  # Import containing TransmonActions
 from addict import Dict
 
 
@@ -32,7 +32,7 @@ class ComponentLibrary(QDockWidget):
 
     def __init__(self, parent=None, current_design=None, categories=None):
         super().__init__("Component Library", parent)
-        self.actions = ComponentActions(current_design, parent)  # transfer current_design
+        self.actions = ComponentActions(current_design, parent)  # Pass current_design
         self.airbridge_actions = AirBridgeActions(current_design, parent)
         self.airbriage_nb_actions = AirbriageNbActions(current_design, parent)
         self.charge_line_actions = ChargeLineActions(current_design, parent)
@@ -49,7 +49,7 @@ class ComponentLibrary(QDockWidget):
         self.readout_cavity_flipchip_actions = ReadoutCavityFlipchipActions(current_design, parent)
         self.readout_cavity_plus_actions = ReadoutCavityPlusActions(current_design, parent)
         self.transmission_path_actions = TransmissionPathActions(current_design, parent)
-        self.transmon_actions = TransmonActions(current_design, parent)  # contain TransmonActions Examples
+        self.transmon_actions = TransmonActions(current_design, parent)  # Instance containing TransmonActions
         self.xmon_actions = XmonActions(current_design, parent)
         self.categories = categories or self.DEFAULT_CATEGORIES
         self.isResizing = False
@@ -57,7 +57,7 @@ class ComponentLibrary(QDockWidget):
         self.init_ui()
         self.setup_connections()
 
-        # Default classification configuration（Include all 18 A component）
+        # Default category configuration (includes all 18 components)
 
     DEFAULT_CATEGORIES = [
         {
@@ -119,14 +119,14 @@ class ComponentLibrary(QDockWidget):
         # Create a custom title bar
         title_bar = QWidget()
         layout = QHBoxLayout(title_bar)
-        layout.setContentsMargins(0, 0, 0, 0)  # Remove the margins inside the title bar
-        layout.setSpacing(0)  # Set the layout spacing to0，Make the button more compact
+        layout.setContentsMargins(0, 0, 0, 0)  # Remove title bar margins
+        layout.setSpacing(0)  # Set layout spacing to 0 for more compact buttons
 
-        # title tag
+        # Title label
         title_label = QLabel("Component Library")
         title_label.setStyleSheet("font-weight: bold;")
 
-        # Dynamically obtain icon path
+        # Dynamically get icon path
         current_dir = os.path.dirname(os.path.abspath(__file__))
         icons_dir = os.path.join(os.path.dirname(current_dir), "icons", "title")
 
@@ -136,35 +136,35 @@ class ComponentLibrary(QDockWidget):
 
         # Add custom button
         custom_btn = QPushButton()
-        custom_btn.setIcon(QIcon(custom_icon_path))  # Dynamically load custom icons
+        custom_btn.setIcon(QIcon(custom_icon_path))  # Dynamically load custom icon
         custom_btn.setIconSize(QSize(15, 15))  # Adjust icon size
         custom_btn.setFixedSize(15, 20)  # Reduce button width
-        custom_btn.setToolTip("import gds")  # Mouse hover prompt
+        custom_btn.setToolTip("import gds")  # Mouse hover tooltip
         custom_btn.setStyleSheet("border: none; background-color: transparent; padding: 0;")  # Remove margins and borders
 
-        # Right window control button（minimize、maximize、close）
+        # Window control buttons (minimize, maximize, close)
         close_button = QPushButton()
         close_button.setIcon(QIcon(close_icon_path))  # Dynamically load close icon
         close_button.setIconSize(QSize(15, 15))  # Adjust icon size
         close_button.setFixedSize(15, 20)  # Reduce button width
-        close_button.setStyleSheet("border: none; background-color: transparent; padding: 0;")  # Remove the margin
+        close_button.setStyleSheet("border: none; background-color: transparent; padding: 0;")  # Remove margins
 
-        # Floating button（Restore button）
+        # Float button (restore button)
         float_button = QPushButton()
-        float_button.setIcon(QIcon(float_icon_path))  # Dynamically load floating icons
+        float_button.setIcon(QIcon(float_icon_path))  # Dynamically load float icon
         float_button.setIconSize(QSize(15, 15))  # Adjust icon size
         float_button.setFixedSize(15, 20)  # Reduce button width
-        float_button.setStyleSheet("border: none; background-color: transparent; padding: 0;")  # Remove the margin
+        float_button.setStyleSheet("border: none; background-color: transparent; padding: 0;")  # Remove margins
 
 
-        # Event of connecting button
-        close_button.clicked.connect(self.close)  # close window
-        float_button.clicked.connect(self.toggle_floating)  # Switch floating state
+        # Connect button events
+        close_button.clicked.connect(self.close)  # Close window
+        float_button.clicked.connect(self.toggle_floating)  # Toggle floating state
         custom_btn.clicked.connect(self.handle_custom_button_clicked)  # Custom button events
 
-        # Add all controls to the layout
+        # Add all controls to layout
         layout.addWidget(title_label)
-        layout.addStretch()  # Stretch to push the button to the right
+        layout.addStretch()  # Push buttons to the right
         layout.addWidget(custom_btn)
         layout.addWidget(float_button)
         layout.addWidget(close_button)
@@ -174,7 +174,7 @@ class ComponentLibrary(QDockWidget):
         self.setTitleBarWidget(title_bar)
 #######-------------------------ADD GDS ----------------------------------#####
     def handle_custom_button_clicked(self):
-        print("自定义按钮点击了！")  # Replace with the logic you want to execute
+        print("Custom button clicked!")  # Replace with your desired logic
 
     def toggle_floating(self):
         if self.isFloating():
@@ -183,7 +183,7 @@ class ComponentLibrary(QDockWidget):
             self.setFloating(True)  # Set as floating window
 
     def init_ui(self):
-        # Rolling Area Settings
+        # Scroll area settings
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         content = QWidget()
@@ -195,14 +195,14 @@ class ComponentLibrary(QDockWidget):
         main_layout.setContentsMargins(8, 12, 8, 12)
         main_layout.setSpacing(8)
 
-        # Create a classification block
+        # Create category blocks
         for category in self.categories:
             self.create_category(main_layout, category)
 
         self.setWidget(scroll)
 
     def get_styles(self):
-        """Return Style Dictionary"""
+        """Return style dictionary"""
         return {
             "category_header": """  
                 QPushButton {  
@@ -233,25 +233,19 @@ class ComponentLibrary(QDockWidget):
         }
 
     def create_category(self, layout, category):
-        """Create a classification block（Include expansion/Folding function）"""
+        """Create a category block (includes expand/collapse functionality)"""
         # CATEGORY TITLE
         header = QPushButton(f"▶ {category['name']}")
         header.setCheckable(True)
         header.setStyleSheet(self.get_styles()["category_header"])
 
-        # Fix using closuresheaderquote
+        # Fix using closures to reference header
         header.toggled.connect(lambda checked, h=header: self.toggle_category(h, checked))
 
-        # Component Container
+        # Component container
         container = QWidget()
         container.setVisible(False)
         grid = QGridLayout(container)
-
-        # Binding Mouse Events
-        # header.setMouseTracking(True)
-        # header.mousePressEvent = self.mousePressEvent
-        # header.mouseMoveEvent = self.mouseMoveEvent
-        # header.mouseReleaseEvent = self.mouseReleaseEvent
 
         # Apply container styles
         style = self.get_styles()["container_layout"]
@@ -259,7 +253,7 @@ class ComponentLibrary(QDockWidget):
         grid.setHorizontalSpacing(style["spacing"][0])
         grid.setVerticalSpacing(style["spacing"][1])
 
-        # Add Component Button
+        # Add component buttons
         row, col = 0, 0
         for comp in category["components"]:
             btn = self.create_component_button(comp)
@@ -268,7 +262,7 @@ class ComponentLibrary(QDockWidget):
             if col == 0:
                 row += 1
 
-                # Storage container reference
+                # Store container reference
         container.setMinimumWidth(380)
         container.setMaximumWidth(500)
         header.container = container
@@ -281,47 +275,39 @@ class ComponentLibrary(QDockWidget):
         btn.setIcon(QIcon(comp["icon"]))
         btn.setIconSize(QSize(16, 16))  # Set icon size
         text_width = QFontMetrics(btn.font()).boundingRect(btn.text()).width()
-        # print(text_width)
-        # btn.setFixedSize(170, 40)  # Ensure that the minimum width is100，Or text width+20
         btn.setFixedSize(text_width + 200, 40)
         btn.setStyleSheet(self.get_styles()["component_button"])
         btn.setProperty("command", comp["command"])
         btn.clicked.connect(lambda: self.handle_component_click(comp["command"]))
-        btn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)  # Fixed size strategy
+        btn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)  # Fixed size policy
         return btn
 
     def toggle_category(self, header, expanded):
-        """Process unfolding/folding state"""
+        """Handle expand/collapse state"""
         header.setText(f"▼ {header.text()[2:]}" if expanded else f"▶ {header.text()[2:]}")
         header.container.setVisible(expanded)
 
-        # Switch Text
-        # header.setText(f"▼ {header.text()[2:]}" if expanded else f"▶ {header.text()[2:]}")
-
-        # Show or hide component containers
-        # header.container.setVisible(expanded)
-
-        # Ensure that the width of the button is not less than the width of the name
+        # Ensure button width is not less than name width
         if expanded:
             # Get text width
             text_width = header.fontMetrics().boundingRect(header.text()).width()
-            # Set the minimum width of the button
-            header.setMinimumWidth(text_width + 60)  # Add some extra space（in compliance with 30px）To adapt to icons and margins
+            # Set button minimum width
+            header.setMinimumWidth(text_width + 60)  # Add extra space (30px) for icons and margins
         else:
-            # When folded, it can be set to a smaller width，But still need to consider the width of the text
+            # When collapsed, can set smaller width but still consider text width
             text_width = header.fontMetrics().boundingRect(header.text()).width()
-            header.setMinimumWidth(text_width + 60)  # Also consider additional space
+            header.setMinimumWidth(text_width + 60)  # Also consider extra space
 
     def setup_connections(self):
         """Connect business logic signals"""
         self.actions.operation_completed.connect(self.handle_operation_completed)
 
     def handle_operation_completed(self, message):
-        """Callback for processing operation completion signal"""
-        print(message)  # Print the message indicating the completion of the operation on the console
+        """Callback for handling operation completion signal"""
+        print(message)  # Print operation completion message to console
 
     def handle_component_click(self, command):
-        """Routing component click event"""
+        """Route component click events"""
         handler_map = {
             "transmon": self.transmon_actions.transmon,
             "xmon": self.xmon_actions.xmon,
@@ -345,22 +331,22 @@ class ComponentLibrary(QDockWidget):
 
         if handler := handler_map.get(command):
             try:
-                handler()  # Directly call specific operations
+                handler()  # Directly call specific operation
             except Exception as e:
-                self.operation_completed.emit(f"操作异常: {str(e)}")
+                self.operation_completed.emit(f"Operation exception: {str(e)}")
         else:
-            self.operation_completed.emit(f"未定义操作: {command}")
+            self.operation_completed.emit(f"Undefined operation: {command}")
 
     def mousePressEvent(self, event):
-        """Record the starting position when starting to drag"""
+        """Record starting position when beginning drag"""
         if event.button() == Qt.LeftButton:
             self.isResizing = True
-            self.startPos = event.pos()  # Record the mouse click position
+            self.startPos = event.pos()  # Record mouse click position
 
     def mouseMoveEvent(self, event):
-        """Handling drag events"""
+        """Handle drag events"""
         if self.isResizing:
-            # Calculate the new width
+            # Calculate new width
             newWidth = self.width() + (event.x() - self.startPos.x())
             # Set minimum width
             if newWidth >= 380 and newWidth <= 550:

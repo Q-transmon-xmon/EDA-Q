@@ -9,7 +9,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("EDA 工具")
+        self.setWindowTitle("EDA Tool")
         self.setGeometry(100, 100, 1200, 800)
 
         # Create a menu bar
@@ -28,7 +28,7 @@ class MainWindow(QMainWindow):
         # Create a splitter to place the project manager on the left and the main workspace on the right
         splitter = QSplitter()
 
-        # project manager
+        # Project manager
         self.project_manager = QListWidget()
         self.project_manager.addItems(["Project1", "Project2", "Project3"])
         splitter.addWidget(self.project_manager)
@@ -46,7 +46,7 @@ class MainWindow(QMainWindow):
         self.properties_widget.addItems(["Name", "Value", "Unit", "Evaluation"])
         self.layout.addWidget(self.properties_widget)
 
-        # status bar
+        # Status bar
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
 
@@ -54,53 +54,53 @@ class MainWindow(QMainWindow):
         menu_bar = QMenuBar()
 
         # FILE
-        file_menu = menu_bar.addMenu("文件")
-        new_action = QAction("新建", self)
+        file_menu = menu_bar.addMenu("File")
+        new_action = QAction("New", self)
         new_action.triggered.connect(self.new_file)
         file_menu.addAction(new_action)
 
-        open_action = QAction("打开", self)
+        open_action = QAction("Open", self)
         open_action.triggered.connect(self.open_file)
         file_menu.addAction(open_action)
 
-        save_action = QAction("保存", self)
+        save_action = QAction("Save", self)
         save_action.triggered.connect(self.save_file)
         file_menu.addAction(save_action)
 
-        # edit
-        edit_menu = menu_bar.addMenu("编辑")
-        undo_action = QAction("撤销", self)
+        # EDIT
+        edit_menu = menu_bar.addMenu("Edit")
+        undo_action = QAction("Undo", self)
         edit_menu.addAction(undo_action)
 
         return menu_bar
 
     def create_tool_bar(self):
-        tool_bar = QToolBar("工具栏")
+        tool_bar = QToolBar("Toolbar")
 
-        run_action = QAction("运行", self)
+        run_action = QAction("Run", self)
         run_action.triggered.connect(self.run_simulation)
         tool_bar.addAction(run_action)
 
-        stop_action = QAction("停止", self)
+        stop_action = QAction("Stop", self)
         stop_action.triggered.connect(self.stop_simulation)
         tool_bar.addAction(stop_action)
 
         return tool_bar
 
     def new_file(self):
-        print("新建文件")
+        print("New file")
 
     def open_file(self):
-        print("打开文件")
+        print("Open file")
 
     def save_file(self):
-        print("保存文件")
+        print("Save file")
 
     def run_simulation(self):
-        print("运行仿真")
+        print("Run simulation")
 
     def stop_simulation(self):
-        print("停止仿真")
+        print("Stop simulation")
 
 
 if __name__ == "__main__":

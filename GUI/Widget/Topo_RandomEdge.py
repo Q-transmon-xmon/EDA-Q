@@ -5,7 +5,7 @@ import sys
 
 
 class RandomEdge_Dialog(QtWidgets.QDialog):
-    # Define a signal，Used to notify external parties after design updates
+    # Define a signal, used to notify external parties after design updates
     designUpdated = QtCore.Signal(object)
 
     def __init__(self, design, parent=None):
@@ -17,7 +17,7 @@ class RandomEdge_Dialog(QtWidgets.QDialog):
     def setupUi(self):
         self.setObjectName("Dialog")
         self.resize(400, 129)
-        # Set the font of the entire interface to Microsoft Yahei
+        # Set the font of the entire interface to Microsoft YaHei
         self.setFont(QFont("Microsoft YaHei", 10.5))
         self.buttonBox = QtWidgets.QDialogButtonBox(self)
         self.buttonBox.setGeometry(QtCore.QRect(290, 20, 81, 241))
@@ -48,24 +48,24 @@ class RandomEdge_Dialog(QtWidgets.QDialog):
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        self.setWindowTitle(_translate("Dialog", "随机化拓扑边设计"))
-        self.label.setText(_translate("Dialog", "添加边的数目："))
+        self.setWindowTitle(_translate("Dialog", "Randomize Topology Edges"))
+        self.label.setText(_translate("Dialog", "Number of edges to add:"))
 
     def Process_RandomEdge(self):
         """Save the value of the input box to num variable"""
         try:
             self.num = int(self.lineEdit.text())  # Convert input to an integer
-            print(f"输入的边数：{self.num}")
+            print(f"Number of edges: {self.num}")
             self.design.topology.generate_random_edges(self.num)
             # self.design.topology.show_image()
 
-            # emit a signal，Transfer design objects to external parties
+            # Emit a signal, transfer design objects to external parties
             self.designUpdated.emit(self.design)
-            # close window
+            # Close window
             self.accept()
 
         except ValueError:
-            QtWidgets.QMessageBox.warning(self, "输入错误", "请输入一个有效的整数。")
+            QtWidgets.QMessageBox.warning(self, "Input Error", "Please enter a valid integer.")
 
 
 if __name__ == "__main__":
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     dialog = RandomEdge_Dialog(design)
 
     # Connect signals to a function to handle design updates
-    dialog.designUpdated.connect(lambda updated_design: print("设计更新已传回主窗口！"))
+    dialog.designUpdated.connect(lambda updated_design: print("Design update has been sent back to the main window!"))
     dialog.exec()  # Show the dialog
 
     sys.exit(app.exec())

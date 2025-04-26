@@ -1,5 +1,5 @@
 ############################
-#a base class for components
+# A base class for components
 ############################
 
 from addict import Dict
@@ -17,7 +17,8 @@ class CmpntsBase(GdsBase):
         """
         Initializes the CmpntsBase object.
         """
-        return
+        super().__init__(**init_ops)
+        self.cmpnt_name_list = []
 
     def clear(self):
         """
@@ -32,7 +33,6 @@ class CmpntsBase(GdsBase):
         for cmpnt_name in self.cmpnt_name_list:
             delattr(self, cmpnt_name)  # Delete component attributes
         self.cmpnt_name_list.clear()  # Clear the component name list
-        return
 
     def extract_options(self):
         """
@@ -70,18 +70,17 @@ class CmpntsBase(GdsBase):
 
             ### Error checking ###
             if cmpnt_type == Dict():
-                raise ValueError("{}'s type is empty!".format(cmpnt_name))  # Exception for empty type
+                raise ValueError(f"{cmpnt_name}'s type is empty!")  # Exception for empty type
 
             module_name = toolbox.convert_to_snake_case(self.__class__.__name__)
             module_name_list = getattr(getattr(library, module_name), "module_name_list")
             class_name_list = [toolbox.convert_to_camel_case(i) for i in module_name_list]
             if cmpnt_type not in class_name_list:
-                raise ValueError("{} not in {}".format(cmpnt_type, class_name_list))  # Exception for undefined type
+                raise ValueError(f"{cmpnt_type} not in {class_name_list}")  # Exception for undefined type
 
             ### Inject component instances ###
             super().__setattr__(cmpnt_name, getattr(getattr(library, module_name), cmpnt_type)(options=cmpnt_ops))
             self.cmpnt_name_list.append(cmpnt_name)
-        return
 
     def draw_gds(self):
         """
@@ -131,7 +130,6 @@ class CmpntsBase(GdsBase):
         self.cell = self.lib.new_cell(module_name)
         for chip_name, chip_cell in self.cell_Dict.items():
             self.cell.add(chip_cell)
-        return
 
     def calc_general_ops(self):
         """
@@ -145,7 +143,6 @@ class CmpntsBase(GdsBase):
         """
         for cmpnt_name in self.cmpnt_name_list:
             getattr(self, cmpnt_name).calc_general_ops()
-        return
 
     def move(self, pos_name, dx: float = 0, dy: float = 0):
         """
@@ -166,7 +163,6 @@ class CmpntsBase(GdsBase):
             pos = (pos[0] + dx, pos[1] + dy)
             cmpnt_ops[pos_name] = copy.deepcopy(pos)
             getattr(self, cmpnt_name).inject_options(cmpnt_ops)
-        return
 
     def change_option(self, op_name, op_value):
         """
@@ -184,7 +180,6 @@ class CmpntsBase(GdsBase):
             cmpnt_ops[op_name] = copy.deepcopy(op_value)
             getattr(self, cmpnt_name).inject_options(cmpnt_ops)
             self.calc_general_ops()  # Recalculate common parameters
-        return
 
     def change_options(self, new_options):
         """
@@ -203,7 +198,6 @@ class CmpntsBase(GdsBase):
                 cmpnt_ops[op_name] = copy.deepcopy(op_value)
             getattr(self, cmpnt_name).inject_options(cmpnt_ops)
             self.calc_general_ops()  # Recalculate common parameters
-        return
 
     def add(self, options):
         """
@@ -232,7 +226,6 @@ class CmpntsBase(GdsBase):
 
         new_ops[name] = copy.deepcopy(options)
         self.inject_options(new_ops)
-        return
 
     def copy_component(self, old_name, new_name):
         """
@@ -248,7 +241,6 @@ class CmpntsBase(GdsBase):
         ops = self.options
         ops[new_name] = copy.deepcopy(ops[old_name])
         self.inject_options(ops)
-        return
 
     def generate_row(self, start_pos, dist, key, num, pre_name, type, geometric_options: Dict = None):
         """
@@ -279,20 +271,34 @@ class CmpntsBase(GdsBase):
                     op[k] = copy.deepcopy(v)
             ops[name] = copy.deepcopy(op)
         self.inject_options(ops)
-        return 
 
     def generate_row_middle(self, mid_pos, dist, key, num, pre_name, type, geometric_options: Dict = None):
+        """
+        Generates a row of components centered around a middle position.
+
+        Input:
+            mid_pos: tuple, the middle position.
+            dist: float, the distance between adjacent components.
+            key: str, the key name of the position parameter.
+            num: int, the number of components.
+            pre_name: str, the prefix of the component name.
+            type: str, the type of component.
+            geometric_options: dict, the configuration of geometric parameters (optional).
+
+        Output:
+            None
+        """
         ops = self.options
         # Generate a set of coordinate points
         pos_list = []
         for i in range(num):
-            pos = (mid_pos[0]+i*dist, mid_pos[1])
+            pos = (mid_pos[0] + i * dist, mid_pos[1])
             pos_list.append(copy.deepcopy(pos))
         move_dist = (pos_list[0][0] + pos_list[-1][0]) / 2
         for i in range(num):
             pos = copy.deepcopy(pos_list[i])
-            pos_list[i] = (pos[0]-move_dist, pos[1])
-        # print(pos_list)
+            pos_list[i] = (pos[0] - move_dist, pos[1])
+
         # Generate parameters for each component
         for i in range(num):
             op = Dict()
@@ -304,10 +310,9 @@ class CmpntsBase(GdsBase):
             if geometric_options is not None:
                 for k, v in geometric_options.items():
                     op[k] = copy.deepcopy(v)
-            ops[name]  = copy.deepcopy(op)
+            ops[name] = copy.deepcopy(op)
         self.inject_options(ops)
-        return
-    
+
     def batch_generate(self, pos_list, key, pre_name, type, geometric_options: Dict = None):
         """
         Batch generate components.
@@ -335,7 +340,6 @@ class CmpntsBase(GdsBase):
                     options[k] = copy.deepcopy(v)
             ops[name] = copy.deepcopy(options)
         self.inject_options(ops)
-        return
 
     def batch_change(self, name_list, op_name, op_value):
         """
@@ -356,7 +360,6 @@ class CmpntsBase(GdsBase):
             options[op_name] = copy.deepcopy(op_value)
             ops[name] = copy.deepcopy(options)
         self.inject_options(ops)
-        return
 
     def batch_add(self, options_list):
         """
@@ -371,13 +374,13 @@ class CmpntsBase(GdsBase):
         Exception:
             ValueError: Throws an exception when the component name or type is not specified.
         """
-        # bulk operation，Avoid multiple copies and injections
+        # Bulk operation, avoid multiple copies and injections
         new_ops = self.options.copy()
         for options in options_list:
             name = options.name
             type = options.type
             if name is None or type is None:
-                raise ValueError(f"无效的选项：{options}")
+                raise ValueError(f"Invalid options: {options}")
 
             new_ops[name] = options
         

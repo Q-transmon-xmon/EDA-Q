@@ -93,9 +93,9 @@ class DataFrameDisplay(QMainWindow):
                 if matrices:
                     self.display_selected_matrix()
             except Exception as e:
-                print(f"文件读取失败: {e}")
+                print(f"Failed to read file: {e}")
         else:
-            print(f"文件 {file_path} 不存在")
+            print(f"File {file_path} does not exist")
 
     def parse_file(self, file_path):
         with open(file_path, 'r') as file:

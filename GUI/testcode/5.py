@@ -6,7 +6,7 @@ import os
 
 
 class DisplayArea(QTabWidget):
-    """integrationTabmanagement function，direct inheritanceQTabWidget"""
+    """Integration of tab management functions, directly inheriting from QTabWidget"""
 
     def __init__(self, main_window, parent=None):
         super().__init__(parent)
@@ -16,7 +16,7 @@ class DisplayArea(QTabWidget):
         self.init_ui()
 
     def init_ui(self):
-        """initializationTabinterface"""
+        """Initialize tab interface"""
         self.setTabsClosable(False)
         self.setStyleSheet("""
             QTabWidget::pane { border: 1px solid black; border-top-left-radius: 5px; border-top-right-radius: 5px; }
@@ -24,7 +24,7 @@ class DisplayArea(QTabWidget):
             QTabBar::tab:selected { background: white; font-weight: bold; }
         """)
 
-        # createTopoandGDSTag Page
+        # Create Topo and GDS tab pages
         self.topo_tab = self.DisplayTab("Topo", self.main_window)
         self.gds_tab = self.DisplayTab("GDS", self.main_window)
         self.addTab(self.topo_tab, "Topo")
@@ -41,7 +41,7 @@ class DisplayArea(QTabWidget):
             self.init_ui()
 
         def init_ui(self):
-            """Initialize tab interface（Keep the originalDisplayAreafunction）"""
+            """Initialize tab interface (Keep the original DisplayArea functionality)"""
             layout = QVBoxLayout(self)
 
             # Display Label
@@ -64,8 +64,8 @@ class DisplayArea(QTabWidget):
             layout.addLayout(button_layout)
 
         def zoom_in(self):
-            """zoom function（Accessing through the main windowdesign）"""
-            print(f"放大{self.tab_name}")
+            """Zoom function (Accessing through the main window design)"""
+            print(f"Zooming in {self.tab_name}")
             try:
                 if self.main_window and hasattr(self.main_window, "design"):
                     if self.tab_name == "GDS":
@@ -77,7 +77,7 @@ class DisplayArea(QTabWidget):
                 print(f"Error in zoom_in: {str(e)}")
 
         def load_image(self, image_path):
-            """Load and display images（Keep the original logic）"""
+            """Load and display images (Keep the original logic)"""
             if os.path.exists(image_path):
                 pixmap = QPixmap(image_path)
                 self.image_label.setPixmap(pixmap.scaled(
@@ -90,7 +90,7 @@ class DisplayArea(QTabWidget):
                 print(f"Image not found: {image_path}")
 
         def show_image(self, image_path, show=True):
-            """display picture（Keep the original logic）"""
+            """Display picture (Keep the original logic)"""
             try:
                 if show and os.path.exists(image_path):
                     print(f"Displaying {self.tab_name} image")
@@ -99,7 +99,7 @@ class DisplayArea(QTabWidget):
                 print(f"Failed to save or display {self.tab_name} image: {e}")
 
         def show_picture(self, picture_path):
-            """Display the image and center it（Keep the original logic）"""
+            """Display the image and center it (Keep the original logic)"""
             try:
                 if not os.path.exists(picture_path):
                     print(f"Error: Image file not found at {picture_path}")
@@ -123,6 +123,6 @@ class DisplayArea(QTabWidget):
                 print(f"Failed to display image: {e}")
 
         def clear_display(self):
-            """Clear screen function（Keep the original logic）"""
+            """Clear screen function (Keep the original logic)"""
             self.image_label.clear()
-            print(f"{self.tab_name} 显示已清除")
+            print(f"{self.tab_name} display has been cleared")

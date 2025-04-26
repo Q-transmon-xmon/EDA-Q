@@ -150,7 +150,7 @@ class Dialog_Transmon(QDialog):
 
         # Check if the file exists
         if not os.path.exists(file_path):
-            print(f"文件 {file_path} 不存在，无法显示矩阵窗口")
+            print(f"The file {file_path} does not exist, and the matrix window cannot be displayed.")
             return
 
         print('xianshi')

@@ -19,7 +19,7 @@ class GdspyIntegration(QMainWindow):
 
     def initUI(self):
         """Initialize user interface"""
-        self.setWindowTitle('Gdspy集成到PyQt5')
+        self.setWindowTitle('Gdspy is integrated into PyQt5')
         self.setGeometry(100, 100, 800, 600)
 
         central_widget = QWidget()

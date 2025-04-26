@@ -1342,7 +1342,7 @@ class GUI(Qcircuit):
             # ... and file
             with open(filename, "w") as f:
                 pass
-        print("绘制等效电路图...")
+        print("Draw an equivalent circuit diagram...")
         if edit:
             run([sys.executable,
                 os.path.join(os.path.dirname(__file__),"_gui.py"),

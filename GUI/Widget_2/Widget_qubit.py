@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-  
+# -*- coding: utf-8 -*-
 import sys
 import os
 
@@ -12,10 +12,11 @@ sys.path.append(GUI_PATH)
 sys.path.append(PROJ_PATH)
 
 from PySide6 import QtCore, QtWidgets, QtGui
-import sys
 from api.design import Design  # import Design class
 from GUI.Widget.Qubit_Custom import Dialog_Qubit_Custom
 from GUI.Widget.Qubit_type import SelectionDialog
+
+
 class Ui_Dialog(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super(Ui_Dialog, self).__init__(parent)
@@ -28,12 +29,12 @@ class Ui_Dialog(QtWidgets.QDialog):
         # Create vertical layout
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.setAlignment(QtCore.Qt.AlignCenter)  # Set layout centered
-        self.layout.setSpacing(20)  # Set the layout spacing to20
+        self.layout.setSpacing(20)  # Set the layout spacing to 20
 
         self.label = QtWidgets.QLabel(self)
         self.label.setObjectName("label")
-        self.label.setFont(QtGui.QFont("微软雅黑", 12))  # Set the font to Microsoft Yahei，The size is12
-        self.layout.addWidget(self.label, alignment=QtCore.Qt.AlignCenter)  # Add tags and center them
+        self.label.setFont(QtGui.QFont("Microsoft YaHei", 12))  # Set the font to Microsoft YaHei, size 12
+        self.layout.addWidget(self.label, alignment=QtCore.Qt.AlignCenter)  # Add label and center it
 
         self.widget = QtWidgets.QWidget(self)
         self.widget.setObjectName("widget")
@@ -61,7 +62,7 @@ class Ui_Dialog(QtWidgets.QDialog):
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        self.setWindowTitle(_translate("Dialog", "生成量子比特"))
+        self.setWindowTitle(_translate("Dialog", "Generate Qubits"))
         self.label.setText(_translate("Dialog", "Topology"))
         self.pushButton.setText(_translate("Dialog", "True"))
         self.label_2.setText(_translate("Dialog", "or"))
@@ -81,40 +82,38 @@ class Dialog_Qubit(Ui_Dialog):
         self.pushButton_2.clicked.connect(self.handleFalse)
 
     def handleTrue(self):
-        """handle True Button click event"""
+        """Handle True Button click event"""
         print("User selected: True")
-        # self.design.generate_topology(topo_col=4, topo_row=4)
-        # self.design.gds.show_svg(width=300)
         Qubit_type_dialog = SelectionDialog(design=self.design)
         Qubit_type_dialog.designUpdated.connect(self.updateDesign)
         Qubit_type_dialog.exec_()
         self.designUpdated.emit(self.design)  # Send design update signal
-        self.accept()  # close dialog boxes
+        self.accept()  # Close dialog box
 
     def handleFalse(self):
-        """handle False Button click event"""
+        """Handle False Button click event"""
         print("User selected: False")
         Qubit_Custom_dialog = Dialog_Qubit_Custom(design=self.design)
         Qubit_Custom_dialog.designUpdated.connect(self.updateDesign)
         Qubit_Custom_dialog.exec()
         self.designUpdated.emit(self.design)  # Send design update signal
-        self.accept()  # close dialog boxes
+        self.accept()  # Close dialog box
 
     def updateDesign(self, updated_design):
         self.design = updated_design
-        print("Qubit中的设计已更新")
+        print("Design updated in Qubit")
         # self.design.topology.show_image()
-        # self.designUpdated.emit(self.design)  # emit a signal，Transfer the updated design
+        # self.designUpdated.emit(self.design)  # Emit a signal, transfer the updated design
+
 
 if __name__ == "__main__":
-
     app = QtWidgets.QApplication(sys.argv)
 
-    # Set the global font to Microsoft Yahei
-    app.setFont(QtGui.QFont("微软雅黑", 10))  # Set the global font to Microsoft Yahei，The size is10
+    # Set the global font to Microsoft YaHei
+    app.setFont(QtGui.QFont("Microsoft YaHei", 10))  # Set the global font to Microsoft YaHei, size 10
 
-    design = Design()  # create Design example
-    dialog = Dialog_Qubit(design=design)  # support design Instance passed to Dialog_Qubit
+    design = Design()  # Create Design instance
+    dialog = Dialog_Qubit(design=design)  # Pass design instance to Dialog_Qubit
 
     # Connect the design update signal to the processing function
     dialog.designUpdated.connect(lambda updated_design: print("Design updated:", updated_design))

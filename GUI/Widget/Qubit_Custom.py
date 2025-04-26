@@ -20,12 +20,12 @@ class Ui_Dialog_Qubit_Custom:
         self.layoutWidget.setGeometry(QRect(40, 40, 331, 200))
         self.verticalLayout = QVBoxLayout(self.layoutWidget)
 
-        # Create tags and input boxes
-        self.createLabeledInput("量子比特数目：")
-        self.createLabeledInput("距离：")
-        self.createLabeledInput("芯片层：")
+        # Create labels and input boxes
+        self.createLabeledInput("Number of Qubits:")
+        self.createLabeledInput("Distance:")
+        self.createLabeledInput("Chip Layer:")
 
-        # Add quantum bit type selection
+        # Add qubit type selection
         self.addQubitTypeSelection()
 
         self.retranslateUi(Dialog_Qubit_Custom)
@@ -34,7 +34,7 @@ class Ui_Dialog_Qubit_Custom:
         QMetaObject.connectSlotsByName(Dialog_Qubit_Custom)
 
     def createLabeledInput(self, label_text):
-        """Create a label and corresponding input box，And add them to the layout"""
+        """Create a label and corresponding input box, and add them to the layout"""
         horizontalLayout = QHBoxLayout()
         label = QLabel(label_text)
         line_edit = QLineEdit()
@@ -43,15 +43,15 @@ class Ui_Dialog_Qubit_Custom:
         horizontalLayout.addWidget(line_edit)
         self.verticalLayout.addLayout(horizontalLayout)
 
-        # Add input box to instance variable，For future visits
+        # Add input box to instance variable for future access
         if not hasattr(self, 'lineEdits'):
             self.lineEdits = []
         self.lineEdits.append(line_edit)
 
     def addQubitTypeSelection(self):
-        """Add quantum bit type selection"""
+        """Add qubit type selection"""
         horizontalLayout = QHBoxLayout()
-        label = QLabel("量子比特类型：")
+        label = QLabel("Qubit Type:")
         self.qubit_type_combo = QComboBox()
         self.qubit_type_combo.addItems(["Xmon", "Transmon"])
 
@@ -60,7 +60,7 @@ class Ui_Dialog_Qubit_Custom:
         self.verticalLayout.addLayout(horizontalLayout)
 
     def retranslateUi(self, Dialog_Qubit_Custom):
-        Dialog_Qubit_Custom.setWindowTitle(QCoreApplication.translate("Dialog_Qubit_Custom", "生成量子比特"))
+        Dialog_Qubit_Custom.setWindowTitle(QCoreApplication.translate("Dialog_Qubit_Custom", "Generate Qubits"))
 
 
 class Dialog_Qubit_Custom(QDialog, Ui_Dialog_Qubit_Custom):
@@ -73,7 +73,7 @@ class Dialog_Qubit_Custom(QDialog, Ui_Dialog_Qubit_Custom):
         # Store the passed design parameter
         self.design = design
 
-        # QSettings Used to save and load input data
+        # QSettings used to save and load input data
         self.settings = QSettings("MyCompany", "MyApp")
 
         # Read the last saved input content and display it
@@ -81,7 +81,7 @@ class Dialog_Qubit_Custom(QDialog, Ui_Dialog_Qubit_Custom):
 
         # Signal for connecting button
         self.buttonBox.accepted.connect(self.Process_Qubit)
-        self.buttonBox.rejected.connect(self.reject)  # Cancel connection button to QDialog of reject method
+        self.buttonBox.rejected.connect(self.reject)  # Connect cancel button to QDialog's reject method
 
     def loadPreviousInputs(self):
         """Load the last saved input content"""
@@ -95,15 +95,15 @@ class Dialog_Qubit_Custom(QDialog, Ui_Dialog_Qubit_Custom):
         self.settings.setValue("distance", self.lineEdits[1].text())
         self.settings.setValue("thickness", self.lineEdits[2].text())
 
-        quantum_bits = self.settings.value("quantum_bits", "", type=int)
-        distance = self.settings.value("distance", "", type=int)
-        thickness = self.settings.value("thickness", "", type=str)
+        quantum_bits = int(self.lineEdits[0].text())
+        distance = int(self.lineEdits[1].text())
+        thickness = self.lineEdits[2].text()
         qubit_type = self.qubit_type_combo.currentText()
 
-        print(f"量子比特数目: {quantum_bits}")
-        print(f"距离: {distance}")
-        print(f"芯片层: {thickness}")
-        print(f"选择的量子比特类型: {qubit_type}")
+        print(f"Number of Qubits: {quantum_bits}")
+        print(f"Distance: {distance}")
+        print(f"Chip Layer: {thickness}")
+        print(f"Selected Qubit Type: {qubit_type}")
 
         self.design.generate_topology(qubits_num=quantum_bits, topo_col=int(math.sqrt(quantum_bits)))
         self.design.generate_qubits(chip_name=thickness, dist=distance, qubits_type=qubit_type,
@@ -111,23 +111,23 @@ class Dialog_Qubit_Custom(QDialog, Ui_Dialog_Qubit_Custom):
         # Send design update signal
         self.designUpdated.emit(self.design)
 
-        # close dialog boxes
-        self.accept()  # close dialog boxes
+        # Close dialog box
+        self.accept()
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    design = Design()  # create Design example
-    dialog = Dialog_Qubit_Custom(design=design)  # support design Instance passed to Dialog_Qubit_Custom
+    design = Design()  # Create Design instance
+    dialog = Dialog_Qubit_Custom(design=design)  # Pass design instance to Dialog_Qubit_Custom
 
-    # Update the signal of the main design
+    # Connect the design update signal to the main design
     def updateMainDesign(updated_design):
-        print("主窗口设计已更新")
+        print("Main window design has been updated")
     dialog.designUpdated.connect(updateMainDesign)
 
-    # If the dialog box accepts，Display input content
+    # If the dialog box is accepted, display the input content
     if dialog.exec() == QDialog.Accepted:
         dialog.design.gds.show_svg()
 
-    # exit from application program
+    # Exit the application
     sys.exit(app.exec())

@@ -11,7 +11,6 @@ PROJ_PATH = os.path.dirname(GUI_PATH)
 sys.path.append(GUI_PATH)
 sys.path.append(PROJ_PATH)
 
-
 from PyQt5.QtGui import QFont
 from api.design import Design
 from GUI.Widget.Topo_Node import Dialog_Node
@@ -23,7 +22,7 @@ class Ui_Dialog_Topology(object):
     def setupUi(self, Dialog_Topology):
         Dialog_Topology.setObjectName("Dialog_topology")
         Dialog_Topology.resize(500, 300)
-        # Set the font of the entire interface to Microsoft Yahei，Support floating point font size
+        # Set the font of the entire interface to Microsoft YaHei，Support floating point font size
         font = QFont("Microsoft YaHei")
         font.setPointSizeF(9)  # Set font size using floating-point numbers
         Dialog_Topology.setFont(font)
@@ -69,14 +68,14 @@ class Ui_Dialog_Topology(object):
 
     def retranslateUi(self, Dialog_Topology):
         _translate = QtCore.QCoreApplication.translate
-        Dialog_Topology.setWindowTitle(_translate("Dialog_topology", "自定义拓扑"))
-        self.pushButton.setText(_translate("Dialog_topology", "拓扑节点生成"))
-        self.pushButton_2.setText(_translate("Dialog_topology", "随机化拓扑边设计"))
-        self.pushButton_3.setText(_translate("Dialog_topology", "拓扑边定制设计"))
+        Dialog_Topology.setWindowTitle(_translate("Dialog_topology", "Custom Topology"))
+        self.pushButton.setText(_translate("Dialog_topology", "Generate Topology Nodes"))
+        self.pushButton_2.setText(_translate("Dialog_topology", "Randomize Topology Edges"))
+        self.pushButton_3.setText(_translate("Dialog_topology", "Customize Topology Edges"))
 
 
 class Dialog_Topology(QtWidgets.QDialog, Ui_Dialog_Topology):
-    # PyQt5Definition of Signal in，change toQtCore.pyqtSignal
+    # PyQt5 Definition of Signal in, change to QtCore.pyqtSignal
     designUpdated = QtCore.pyqtSignal(Design)  # Define custom signals
 
     def __init__(self, parent=None, design=None):
@@ -91,28 +90,28 @@ class Dialog_Topology(QtWidgets.QDialog, Ui_Dialog_Topology):
     def handleTopologyNodeGeneration(self):
         node_dialog = Dialog_Node(design=self.design)
         node_dialog.designUpdated.connect(self.updateDesign)
-        node_dialog.exec_()  # PyQt5Used inexec_()
+        node_dialog.exec_()  # PyQt5 Used in exec_()
 
     def handleRandomEdgeDesign(self):
         random_edge_dialog = RandomEdge_Dialog(design=self.design)
         random_edge_dialog.designUpdated.connect(self.updateDesign)
-        random_edge_dialog.exec_()  # PyQt5Used inexec_()
+        random_edge_dialog.exec_()  # PyQt5 Used in exec_()
 
     def handleCustomEdgeDesign(self):
         custom_edge_dialog = CustomEdge_Dialog(design=self.design)
         custom_edge_dialog.designUpdated.connect(self.updateDesign)
-        custom_edge_dialog.exec_()  # PyQt5Used inexec_()
+        custom_edge_dialog.exec_()  # PyQt5 Used in exec_()
 
     def updateDesign(self, updated_design):
         self.design = updated_design
-        print("topology中的设计已更新")
+        print("Design updated in topology")
         # self.design.topology.show_image()
-        self.designUpdated.emit(self.design)  # emit a signal，Transfer the updated design
+        self.designUpdated.emit(self.design)  # Emit a signal, transfer the updated design
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     dialog = Dialog_Topology(design=Design())
-    dialog.designUpdated.connect(lambda updated_design: print("主窗口接收到更新后的设计!"))
+    dialog.designUpdated.connect(lambda updated_design: print("Main window received the updated design!"))
     dialog.show()
-    sys.exit(app.exec_())  # PyQt5Used inexec_()
+    sys.exit(app.exec_())  # PyQt5 Used in exec_()

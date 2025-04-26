@@ -56,7 +56,7 @@ class LambdaQuarterFrequencyDialog(QDialog):
     def calculate_frequency(self):
         try:
             # Retrieve input values and validate them
-            length_um = self.length_input.value()  # unit：micron
+            length_um = self.length_input.value()  # unit:micron
             k = self.k_input.value()
 
             if length_um <= 0:
@@ -64,7 +64,7 @@ class LambdaQuarterFrequencyDialog(QDialog):
             if k < 1:
                 raise ValueError("Relative permittivity must be ≥1")
 
-            # conversion units：micron -> rice
+            # conversion units:micron -> rice
             length_m = length_um * 1e-6
 
             # Call calculation function

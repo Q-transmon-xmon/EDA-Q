@@ -46,7 +46,7 @@ class Ui_Dialog:
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "自定义生成边"))  # Set the window title here
+        Dialog.setWindowTitle(_translate("Dialog", "Customized generation of edges"))  # Set the window title here
 
 
 class CustomEdge_Dialog(QDialog, Ui_Dialog):
@@ -108,7 +108,7 @@ if __name__ == "__main__":
 
     # Connect signals to a function to handle design updates
     def updateMainDesign(updated_design):
-        print("主函数设计已更新")
+        print("The design of the main function has been updated.")
 
     dialog.designUpdated.connect(updateMainDesign)
     dialog.exec()

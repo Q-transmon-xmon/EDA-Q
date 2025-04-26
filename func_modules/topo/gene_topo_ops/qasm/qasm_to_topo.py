@@ -36,7 +36,7 @@ def export_to_excel(best_pop_list,min_fitness_list,filepath):
         sht1.write(i,1,str(min_fitness_list[j]))
         i=i+1
     xls.save(filepath)
-    print("迭代信息保存在{}".format(filepath))
+    print("The iteration information is saved in {}".format(filepath))
     return
 
 def generate_standard_coordinate(row,col):
@@ -128,7 +128,7 @@ def get_coupling_degree_matrix(circuit,qp_name:str, matrix_path:str):
         Coupling Degree Matrix M
     """
 
-    print("生成耦合度矩阵...")
+    print("Generating the coupling degree matrix...")
     QNUM = len(circuit._qubits) # Qubit Number
     coupling_list = get_coupling_list(circuit) # coupling degree list
 
@@ -157,12 +157,12 @@ def get_coupling_degree_matrix(circuit,qp_name:str, matrix_path:str):
     plt.savefig(matrix_path)
     plt.clf()
     # print("The coupling degree matrixheatmapSave in{}".format(f'./image/{qp_name}_heat_map.png'))
-    print("耦合度矩阵的heatmap保存在{}".format(matrix_path))
+    print("The heatmap of the coupling degree matrix is saved in {}".format(matrix_path))
     return M
 
 def processor_architecture_qubits_pos_draw(processor_architecture_layout_path,pos):
     """
-       draw qubits position
+       Draw qubits position
     """
     try:
         dpi =300
@@ -182,7 +182,7 @@ def processor_architecture_qubits_pos_draw(processor_architecture_layout_path,po
 
 def processor_architecture_draw(processor_architecture_path,pos,edges):
     """
-       draw processor architecture
+       Draw processor architecture
     """
     try:
         G = nx.Graph()
@@ -221,8 +221,8 @@ def PAD_GATS(topo_convergence_path,qp_name:str,M,path, row: int = None, col: int
         path: Path of processor architecture.
     """
 
-    print("遗传算法迭代...")
-   
+    print("Genetic algorithm iteration...")
+
     path = path+qp_name+'_GATS'+'.xls'
     Q_NUM=len(M) # Qubit Number
 
@@ -230,7 +230,7 @@ def PAD_GATS(topo_convergence_path,qp_name:str,M,path, row: int = None, col: int
     # Create the activity adjacency matrix.
     edge_matrix = M.copy()
     '''
-    
+
     # Genetic Algorithm(GA) parameters
     POP_SIZE = 100           # population size 
     N_GENERATIONS = 15      # iterations
@@ -247,13 +247,13 @@ def PAD_GATS(topo_convergence_path,qp_name:str,M,path, row: int = None, col: int
     if row is None and col is None:
         column = math.ceil(math.sqrt(Q_NUM))
         row = math.ceil(Q_NUM/column)
-        print("默认拓扑的行数为{}，列数为{}".format(row, column))
+        print("The default number of rows is {}, and the number of columns is {}".format(row, column))
     elif row is None:
         row = math.ceil(Q_NUM/column)
-        print("计算得拓扑的行数为{}，列数为{}".format(row, column))
+        print("The calculated number of rows is {}, and the number of columns is {}".format(row, column))
     elif column is None:
         column = math.ceil(Q_NUM/row)
-        print("计算得拓扑的行数为{}，列数为{}".format(row, column))
+        print("The calculated number of rows is {}, and the number of columns is {}".format(row, column))
 
     standard_coordinate = generate_standard_coordinate(row,column)
     pop = np.zeros((POP_SIZE,Q_NUM),dtype=int).tolist()
@@ -269,7 +269,7 @@ def PAD_GATS(topo_convergence_path,qp_name:str,M,path, row: int = None, col: int
     # population fitness value
     fitness = np.zeros((POP_SIZE,1),dtype=float)
     fitness = GA_steps.get_fitness(pop,M,standard_coordinate,row,column).tolist()
-   
+
     # Keep current optimal
     best_fit = min(fitness)
     best_pop = pop[fitness.index(best_fit)].copy()
@@ -317,13 +317,13 @@ def PAD_GATS(topo_convergence_path,qp_name:str,M,path, row: int = None, col: int
         # add tabu
         ts_list.append(best_pop)
         ts_time.append(ts_length)
-            
+
         best_fit_list.append(best_fit[0])
         best_pop_list.append(best_pop)
         # print('%d:optimal value %.1f' % (iteration+2, best_fit[0]))
 
     export_to_excel(best_pop_list,best_fit_list,path)
-    
+
     # show convergence
     abscissa = np.arange(1,N_GENERATIONS+1)
     l1,= plt.plot(abscissa,best_fit_list,color='r',marker='o')
@@ -334,7 +334,7 @@ def PAD_GATS(topo_convergence_path,qp_name:str,M,path, row: int = None, col: int
     plt.savefig(topo_convergence_path)
     # plt.show()
     plt.clf()
-    print("适应度收敛结果保存在{}".format(topo_convergence_path))
+    print("The convergence result of fitness is saved in {}".format(topo_convergence_path))
 
     return path,row,column,standard_coordinate 
 
@@ -413,7 +413,7 @@ def qasm_to_topo(qasm_path,
                     actual_edge1[i][j]=1
                     actual_edge1[j][i]=1
                     G.add_edge(i, j)
-             
+
     # Modify(For the case of disconnected or non shortest path)
     actual_edge2=actual_edge1.copy()
     for i in range(len(M)):
@@ -431,16 +431,16 @@ def qasm_to_topo(qasm_path,
                         G.add_edge(pos_q[a_path[k]], pos_q[a_path[k+1]])
                         actual_edge2[pos_q[a_path[k]]][pos_q[a_path[k+1]]]=1
                         actual_edge2[pos_q[a_path[k+1]]][pos_q[a_path[k]]]=1
-    
+
     processor_architecture_qubits_pos_draw(qubit_layout_path,q_pos)
     plt.clf()
-    
+
     processor_architecture_draw(topo_pruning_path,q_pos,actual_edge1)
     plt.clf()
 
     processor_architecture_draw(final_topo_path,q_pos,actual_edge2)
     plt.clf()
-      
+
     # Interface with the new architecture
 
     poss, edges = convert_format(q_pos, actual_edge2)

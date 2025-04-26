@@ -152,27 +152,27 @@ class Dialog_ctls(QDialog):
                     # Analyze 2D coordinate list
                     converted_value = ast.literal_eval(value_str.strip())
                     if not isinstance(converted_value, list):
-                        raise ValueError("必须为二维列表格式")
+                        raise ValueError("Must be a 2D list format")
                     for i, point in enumerate(converted_value):
                         if not (isinstance(point, list) and len(point) == 2):
-                            raise ValueError(f"第 {i + 1} 个坐标点格式错误")
+                            raise ValueError(f"Point {i + 1} format error")
                         x, y = point
                         if not (isinstance(x, (int, float)) and isinstance(y, (int, float))):
-                            raise ValueError(f"第 {i + 1} 个坐标点包含非数字值")
+                            raise ValueError(f"Point {i + 1} contains non-numeric values")
                     options.pos = converted_value
 
                 elif key == "outline":
-                    # Optional parameters，Allow empty list
+                    # Optional parameters, allow empty list
                     converted_value = ast.literal_eval(value_str.strip()) if value_str else []
                     if not isinstance(converted_value, list):
-                        raise ValueError("必须为列表格式")
+                        raise ValueError("Must be a list format")
                     options.outline = converted_value
 
                 elif key in ["width", "gap", "pad_width", "pad_height", "distance", "corner_radius"]:
                     # Numerical type verification
                     converted_value = float(value_str)
                     if converted_value <= 0:
-                        raise ValueError("必须大于0")
+                        raise ValueError("Must be greater than 0")
                     options[key] = converted_value
 
                 else:
@@ -180,7 +180,7 @@ class Dialog_ctls(QDialog):
                     options[key] = value_str.strip()
 
             except Exception as e:
-                QMessageBox.warning(self, "输入错误", f"{key} 参数错误: {str(e)}")
+                QMessageBox.warning(self, "Input Error", f"Error in {key}: {str(e)}")
                 valid_input = False
                 break
 

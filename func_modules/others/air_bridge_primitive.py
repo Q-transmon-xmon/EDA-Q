@@ -108,7 +108,7 @@ def add_air_bridges(pos, bend_radius, spacing=120, chip_name="chip3"):
                 rotation=angle
             )
             options[option.name] = option
-    print("生成空气桥的数量为： {}".format(len(options)))
+    print("The number of generated air bridges is: {}".format(len(options)))
     return options
 
 def add_air_bridges2(pos, bend_radius, spacing=120, chip_type="chip3", width=10, air_bridge_type="AirBridge"):

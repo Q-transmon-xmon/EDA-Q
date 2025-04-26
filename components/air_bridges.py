@@ -4,31 +4,31 @@ import func_modules
 
 class AirBridges(CmpntsBase):
     """
-    AirBridgesclass，Inherited fromCmpntsBase，Used for managing and operating air bridge components（AirBridge）。
+    AirBridges class, inherited from CmpntsBase, used for managing and operating air bridge components (AirBridge).
     """
 
     def __init__(self, **init_ops):
         """
-        initializationAirBridgesobject。
+        Initialize the AirBridges object.
 
-        input：
-            init_ops: dict，initialization所需的参数。
+        Input:
+            init_ops: dict, parameters required for initialization.
 
-        output：
-            not have
+        Output:
+            None
         """
         self.initialization(**init_ops)  # Call initialization method
         return
     
     def initialization(self, **init_ops):
         """
-        Initialize the collection of air bridge components。
+        Initialize the collection of air bridge components.
 
-        input：
-            init_ops: dict，Generate initialization parameters for air bridge components。
+        Input:
+            init_ops: dict, parameters for generating air bridge components.
 
-        output：
-            not have
+        Output:
+            None
         """
         # Initialize component name list
         self.cmpnt_name_list = []
@@ -39,13 +39,13 @@ class AirBridges(CmpntsBase):
     
     def counts(self):
         """
-        Count the current number of air bridge components。
+        Count the current number of air bridge components.
 
-        input：
-            not have
+        Input:
+            None
 
-        output：
-            count: int，The current quantity of air bridge components。
+        Output:
+            count: int, the current quantity of air bridge components.
         """
         ops = self.options  # Extract current component parameters
         return len(ops)  # Return the number of components

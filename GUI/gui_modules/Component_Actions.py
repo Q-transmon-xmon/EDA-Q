@@ -63,7 +63,7 @@ class ComponentActions(QObject):
         separator = QFrame()  
         separator.setFrameShape(QFrame.VLine)  # Set as vertical line
         separator.setFrameShadow(QFrame.Sunken)  # Set the shadow of the line
-        separator.setMinimumHeight(400)  # Set the minimum height of the dividing line，Make it consistent with the images and forms
+        separator.setMinimumHeight(400)  # Set the minimum height of the dividing line,Make it consistent with the images and forms
         h_layout.addWidget(separator)
         '''
 

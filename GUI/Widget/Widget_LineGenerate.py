@@ -103,7 +103,7 @@ class Dialog_Line(QtWidgets.QDialog):
 
     def updateDesign(self, updated_design):
         self.design = updated_design
-        print("LineGenerate中的设计已更新")
+        print("The design in LineGenerate has been updated.")
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

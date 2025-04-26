@@ -12,13 +12,14 @@ from api.design import Design
 class Dialog_Others(QDialog):
     # Define a signal for design updates
     designUpdated = QtCore.Signal(object)
-    def __init__(self,design, parent=None):
+
+    def __init__(self, design, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Others")
         self.setFont(QFont("Microsoft YaHei", 10.5))
         self.resize(400, 200)
         self.design = design
-        # Default value
+        # Default values
         self.default_values = Dict(
             name="",
             type="",
@@ -50,24 +51,24 @@ class Dialog_Others(QDialog):
         self.buttonLayout.setAlignment(Qt.AlignRight)  # Align the button to the right
         self.mainLayout.addLayout(self.buttonLayout)
 
-        # Connection button event
+        # Connect button events
         self.okButton.clicked.connect(self.submitValues)
         self.cancelButton.clicked.connect(self.reject)
 
     def loadInputs(self):
         """Dynamically generate input boxes"""
         labels = {
-            "name": "名称",
-            "type": "类型",
-            "chip": "芯片名称"
+            "name": "Name",
+            "type": "Type",
+            "chip": "Chip Name"
         }
 
         for key, value in self.default_values.items():
             # Create horizontal layout
             layout = QHBoxLayout()
 
-            # create label
-            label = QLabel(f"{labels[key]}：")
+            # Create label
+            label = QLabel(f"{labels[key]}:")
             layout.addWidget(label)
 
             # Create input box
@@ -96,17 +97,17 @@ class Dialog_Others(QDialog):
                 converted_value = expected_type(value_str)
                 options[key] = converted_value  # Save to the updated dictionary
             except ValueError as e:
-                QMessageBox.warning(self, "无效输入", f"{key} 的输入无效: {e}")
+                QMessageBox.warning(self, "Invalid Input", f"Invalid input for {key}: {e}")
                 valid_input = False
                 break
 
         if valid_input:
             # Print results
-            print("用户输入的值：", options)
+            print("User input values:", options)
             self.design.gds.others.add(options)
             self.designUpdated.emit(self.design)  # Send design update signal
-            # QMessageBox.information(self, "Submitted successfully", f"The input value has been submitted：\n{options}")
-            self.accept()  # close window
+            # QMessageBox.information(self, "Submitted successfully", f"The input value has been submitted:\n{options}")
+            self.accept()  # Close window
 
 
 if __name__ == "__main__":

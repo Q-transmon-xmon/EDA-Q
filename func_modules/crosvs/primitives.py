@@ -47,7 +47,7 @@ def soak_cross_overs(cross_overs_ops):
         cross_overs_ops: Cross line parameters
 
     output：
-        cross_overs_ops: 补全后的Cross line parameters
+        cross_overs_ops: The completed Cross line parameters
     """
 
     # interface
@@ -70,7 +70,7 @@ def set_chips(cross_overs_ops, chip_name):
         chip_name: The chip name to be set
 
     output： 
-        cross_overs_ops: 设置芯片名称后的Coupling line parameters
+        cross_overs_ops: Set the Coupling line parameters after the chip name
     """
     
     # interface
@@ -107,7 +107,7 @@ def generate_crosvs_ops_from_cpls_ops_and_tmls_ops(cpls_ops, tmls_ops, crosvs_ty
     for cpl_name, cpl_ops in cpls_ops.items():
         for tml_name, tml_ops in tmls_ops.items():
             if cpl_ops.type != "CouplingLineStraight":
-                raise ValueError("自动生成crossover暂时只支持耦合类型为CouplingLineStraight，{}的类型为{}！".format(cpl_name, cpl_ops.type))
+                raise ValueError("The automatic generation of crossover currently only supports the coupling type of CouplingLineStraight, and the type of {} is {}!".format(cpl_name, cpl_ops.type))
             
             path1 = [cpl_ops.start_pos, cpl_ops.end_pos]
             path2 = tml_ops.pos

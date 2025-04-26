@@ -5,31 +5,31 @@ import copy
 
 class Others(CmpntsBase):
     """
-    Othersclass，Inherited fromCmpntsBase，用于管理和操作其他class型的组件。
+    Others class, inherited from CmpntsBase, used for managing and operating components of other types.
     """
 
     def __init__(self, **init_ops):
         """
-        initializationOthersobject。
+        Initialize the Others object.
 
-        input：
-            init_ops: dict，initialization所需的参数。
+        Input:
+            init_ops: dict, parameters required for initialization.
 
-        output：
-            not have
+        Output:
+            None
         """
         self.initialization(**init_ops)  # Call initialization method
         return
     
     def initialization(self, **init_ops):
         """
-        Initialize other component collections。
+        Initialize the collection of other components.
 
-        input：
-            init_ops: dict，Generate initialization parameters for other component collections。
+        Input:
+            init_ops: dict, parameters for generating the collection of other components.
 
-        output：
-            not have
+        Output:
+            None
         """
         # Initialize component name list
         self.cmpnt_name_list = []
@@ -40,30 +40,30 @@ class Others(CmpntsBase):
     
     def mirror_ZlineNju(self, name_list):
         """
-        Regarding the specifiedZlineNjuPerform horizontal mirroring operation on components。
+        Perform horizontal mirroring operation on the specified ZlineNju components.
 
-        input：
-            name_list: list，Contains a list of component names that need to be mirrored。
+        Input:
+            name_list: list, contains the names of components that need to be mirrored.
 
-        output：
-            not have
+        Output:
+            None
         """
-        # Get currentZlineNjuThe parameter set of the component
+        # Get the current parameter set of ZlineNju components
         zline_njus_ops = self.options
         for name in name_list:
-            # Extract original component parameters
+            # Extract the original component parameters
             zline_nju_ops = copy.deepcopy(zline_njus_ops[name])
             
-            # Create a parameter copy of the mirror component
+            # Create a parameter copy of the mirrored component
             new_zline_nju_ops = copy.deepcopy(zline_nju_ops)
-            new_name = name + "_mirror"  # Mirror component name
+            new_name = name + "_mirror"  # Mirrored component name
             new_zline_nju_ops.name = new_name
 
             # Mirror the initial position horizontally
             line_init_pos = copy.deepcopy(zline_nju_ops.line_init_pos)
             new_line_init_pos = []
             for pos in line_init_pos:
-                new_pos = (-pos[0], pos[1])  # Horizontal mirror operation（xTake negative coordinates）
+                new_pos = (-pos[0], pos[1])  # Horizontal mirror operation (negate x-coordinate)
                 new_line_init_pos.append(copy.deepcopy(new_pos))
             new_zline_nju_ops.line_init_pos = copy.deepcopy(new_line_init_pos)
 
@@ -71,7 +71,7 @@ class Others(CmpntsBase):
             line_end_pos = copy.deepcopy(zline_nju_ops.line_end_pos)
             new_line_end_pos = []
             for pos in line_end_pos:
-                new_pos = (-pos[0], pos[1])  # Horizontal mirror operation（xTake negative coordinates）
+                new_pos = (-pos[0], pos[1])  # Horizontal mirror operation (negate x-coordinate)
                 new_line_end_pos.append(copy.deepcopy(new_pos))
             new_zline_nju_ops.line_end_pos = copy.deepcopy(new_line_end_pos)
 

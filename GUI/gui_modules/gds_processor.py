@@ -6,14 +6,14 @@ class GDSProcessor:
     @staticmethod
     def parse_gds(path, components_type):
         """
-        analysisGDSThe core method for generating files and corresponding components
-        :param path: GDSFile Path
-        :param components_type: User specified component type（in compliance with "cpw_components"）
+        The core method for generating files and corresponding components
+        :param path: GDS File Path
+        :param components_type: User specified component type (in compliance with "cpw_components")
         """
-        # Implement the actual hereGDSAnalyze Logic
+        # Implement the actual GDS analysis logic here
         print(f"Reading GDS file from path: {path}")
 
-        # Component parsing and automatic generation of component files（Assuming these functions have been implemented in the toolbox）
+        # Component parsing and automatic generation of component files (Assuming these functions have been implemented in the toolbox)
         import toolbox
         toolbox.generate_python_class_from_gds(path, "")
 
@@ -30,6 +30,6 @@ class GDSProcessor:
         new_component_class = getattr(new_component_module, new_component_class_name)
         setattr(components_module, new_component_class_name, new_component_class)
 
-        print(f"组件已成功添加到 {components_type} 类别，"
-              f"新组件类名：{new_component_class_name}")
+        print(f"Component has been successfully added to the {components_type} category, "
+              f"New component class name: {new_component_class_name}")
         return True

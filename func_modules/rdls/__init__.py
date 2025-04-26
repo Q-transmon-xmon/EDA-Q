@@ -17,11 +17,11 @@ def find_rdl_name(rdls_ops, qubit_ops):
             rdl_name_result = rdl_ops.name
 
     if rdl_name_result is None:
-        raise ValueError("找不到{}对应的读取腔！".format(qubit_ops.name))
+        raise ValueError(f"No readout line found corresponding to {qubit_ops.name}!")
     
     # print("-------------------------------------------------------------------")
     # toolbox.show_options(qubit_ops)
-    # print("rdl_name = {}".format(rdl_name_result))
+    # print(f"rdl_name = {rdl_name_result}")
     # print("-------------------------------------------------------------------")
     
     return rdl_name_result

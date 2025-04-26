@@ -40,7 +40,7 @@ class RoutingBranch(BranchBase):
             If gds_ops is not passed, a ValueError is thrown.
         """
         if "gds_ops" not in branch_options.keys():
-            raise ValueError("RoutingBranch需要传入gds_ops!")
+            raise ValueError("RoutingBranch requires gds_ops to be passed!")
 
         if "method" not in branch_options.keys():
             self.method = "Control_off_chip_routing"
@@ -64,7 +64,7 @@ class RoutingBranch(BranchBase):
 
         # Error checking
         if not hasattr(self, hash_num):
-            raise ValueError("没有{}布线方法".format(hash_num))
+            raise ValueError(f"No {hash_num} routing method available")
 
         result = getattr(self, hash_num)(branch_options)
 
@@ -72,21 +72,21 @@ class RoutingBranch(BranchBase):
 
     def Control_off_chip_routing(self, branch_options):
         """
-        Control chip off-chip wiring method.
+        Control chip off-chip routing method.
         """
         coc = ControlOffChip(**branch_options)
         return copy.deepcopy(coc.branch_process())
 
     def Flipchip_routing_IBM(self, branch_options):
         """
-        Flipchip_IBM wiring method.
+        Flipchip_IBM routing method.
         """
         fci = FlipchipIBM(**branch_options)
         return copy.deepcopy(fci.branch_process())
 
     def Flipchip_routing(self, branch_options):
         """
-        Flipchip wiring method.
+        Flipchip routing method.
         """
         fcr = FlipchipRouting(**branch_options)
         return copy.deepcopy(fcr.branch_process())
@@ -94,7 +94,7 @@ class RoutingBranch(BranchBase):
 class ControlOffChip(BranchBase):
     def gds_ops(self, branch_options):
         """
-        Control chip off-chip wiring operations.
+        Control chip off-chip routing operations.
 
         Input:
             branch_options: A dictionary of wiring options.
@@ -113,7 +113,7 @@ class ControlOffChip(BranchBase):
         tmls_type = "TransmissionPath"
         # Input check
         if chip_ops == Dict():
-            raise ValueError("没有找到芯片{}的参数！".format(chip_name))
+            raise ValueError(f"No parameters found for chip {chip_name}!")
         # Perform operations
         pins_ops, tmls_ops = Control_off_chip.control_off_chip_routing(qubits_ops, rdls_ops, chip_ops, pins_type,
                                                                        tmls_type)
@@ -124,7 +124,7 @@ class ControlOffChip(BranchBase):
 
     def chip_name__gds_ops(self, branch_options):
         """
-        Perform control chip off-chip wiring operations based on chip name.
+        Perform control chip off-chip routing operations based on chip name.
 
         Input:
             branch_options: A dictionary of wiring options.
@@ -143,7 +143,7 @@ class ControlOffChip(BranchBase):
         tmls_type = "TransmissionPath"
         # Input check
         if chip_ops == Dict():
-            raise ValueError("没有找到芯片{}的参数！".format(chip_name))
+            raise ValueError(f"No parameters found for chip {chip_name}!")
         # Perform operations
         pins_ops, tmls_ops = Control_off_chip.control_off_chip_routing(qubits_ops, rdls_ops, chip_ops, pins_type,
                                                                        tmls_type)
@@ -155,7 +155,7 @@ class ControlOffChip(BranchBase):
 class FlipchipIBM(BranchBase):
     def gds_ops(self, branch_options):
         """
-        IBM Flipchip wiring operations.
+        IBM Flipchip routing operations.
 
         Input:
             branch_options: A dictionary of wiring options.
@@ -172,7 +172,7 @@ class FlipchipIBM(BranchBase):
         ctls_type = "ChargeLine"
         # Input check
         if chip_ops == Dict():
-            raise ValueError("没有找到芯片{}的参数！".format(chip_name))
+            raise ValueError(f"No parameters found for chip {chip_name}!")
         # Generate
         pins_ops, ctls_ops = Flipchip_IBM.flipchiproutingibm(qubits_ops=qubits_ops,
                                                              chip_ops=chip_ops,
@@ -186,7 +186,7 @@ class FlipchipIBM(BranchBase):
 
     def chip_name__gds_ops(self, branch_options):
         """
-        Perform IBM Flipchip wiring operations based on chip name.
+        Perform IBM Flipchip routing operations based on chip name.
 
         Input:
             branch_options: A dictionary of wiring options.
@@ -204,7 +204,7 @@ class FlipchipIBM(BranchBase):
         ctls_type = "ChargeLine"
         # Input check
         if chip_ops == Dict():
-            raise ValueError("没有找到芯片{}的参数！".format(chip_name))
+            raise ValueError(f"No parameters found for chip {chip_name}!")
         # Generate
         pins_ops, ctls_ops = Flipchip_IBM.flipchiproutingibm(qubits_ops=qubits_ops,
                                                              chip_ops=chip_ops,
@@ -218,7 +218,7 @@ class FlipchipIBM(BranchBase):
 
     def chip_name__ctls_type__gds_ops(self, branch_options):
         """
-        Perform IBM Flipchip wiring operations based on chip name and control line type.
+        Perform IBM Flipchip routing operations based on chip name and control line type.
 
         Input:
             branch_options: A dictionary of wiring options.
@@ -237,7 +237,7 @@ class FlipchipIBM(BranchBase):
         ctls_type = ctls_type
         # Input check
         if chip_ops == Dict():
-            raise ValueError("没有找到芯片{}的参数！".format(chip_name))
+            raise ValueError(f"No parameters found for chip {chip_name}!")
         # Generate
         pins_ops, ctls_ops = Flipchip_IBM.flipchiproutingibm(qubits_ops=qubits_ops,
                                                              chip_ops=chip_ops,
@@ -252,7 +252,7 @@ class FlipchipIBM(BranchBase):
 class FlipchipRouting(BranchBase):
     def gds_ops(self, branch_ops):
         """
-        Perform Flipchip wiring operations.
+        Perform Flipchip routing operations.
 
         Input:
             branch_ops: A dictionary of wiring operation parameters.
@@ -274,7 +274,7 @@ class FlipchipRouting(BranchBase):
         pins_geometric_ops = copy.deepcopy(getattr(pins, pins_type).default_options)
         # Input check
         if chip_ops == Dict():
-            raise ValueError("缺少{}！".format(chip_name))
+            raise ValueError(f"Missing {chip_name}!")
         # Generate
         pins_ops, tmls_ops, ctls_ops, new_chip_ops = Flipchip.flipchip_routing(qubits_ops=qubits_ops,
                                                                                rdls_ops=rdls_ops,
@@ -293,7 +293,7 @@ class FlipchipRouting(BranchBase):
 
     def chip_name__gds_ops(self, branch_ops):
         """
-        Perform Flipchip wiring operations based on chip name.
+        Perform Flipchip routing operations based on chip name.
 
         Input:
             branch_ops: A dictionary of wiring operation parameters.
@@ -315,7 +315,7 @@ class FlipchipRouting(BranchBase):
         pins_geometric_ops = copy.deepcopy(getattr(pins, pins_type).default_options)
         # Input check
         if chip_ops == Dict():
-            raise ValueError("缺少{}！".format(chip_name))
+            raise ValueError(f"Missing {chip_name}!")
         # Generate
         pins_ops, tmls_ops, ctls_ops, new_chip_ops = Flipchip.flipchip_routing(qubits_ops=qubits_ops,
                                                                                rdls_ops=rdls_ops,
@@ -334,7 +334,7 @@ class FlipchipRouting(BranchBase):
 
     def chip_name__ctls_type__gds_ops__pins_type__tmls_type(self, branch_ops):
         """
-        Perform Flipchip wiring operations based on chip name, control line type, pin type, and transmission line type.
+        Perform Flipchip routing operations based on chip name, control line type, pin type, and transmission line type.
 
         Input:
             branch_ops: A dictionary of wiring operation parameters.
@@ -355,7 +355,7 @@ class FlipchipRouting(BranchBase):
         pins_geometric_ops = copy.deepcopy(branch_ops.pins_geometric_ops)
         # Input check
         if chip_ops == Dict():
-            raise ValueError("缺少{}！".format(chip_name))
+            raise ValueError(f"Missing {chip_name}!")
         # Generate
         pins_ops, tmls_ops, ctls_ops, new_chip_ops = Flipchip.flipchip_routing(qubits_ops=qubits_ops,
                                                                                rdls_ops=rdls_ops,

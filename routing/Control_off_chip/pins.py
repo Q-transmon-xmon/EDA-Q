@@ -72,7 +72,7 @@ def generate_pins(qubits_ops, chip_ops, pins_type):
     Output:
     pins_ops: Dictionary of generated pin operation parameters.
     """
-    print("Control_off_chip策略生成pins...")
+    print("Control_off_chip strategy generating pins...")
     ########################### Interface ###########################
 
     topo_poss = Dict()
@@ -93,7 +93,7 @@ def generate_pins(qubits_ops, chip_ops, pins_type):
 
     ############################ Input Check ###########################
     if chip == Dict() or chip is None:
-        raise ValueError("未指定芯片，无法使用该策略生成pins！")
+        raise ValueError("No chip specified, cannot generate pins using this strategy!")
     ################################################################
 
     old_topo_poss = convert_topo(topo_poss)
@@ -109,7 +109,7 @@ def generate_pins(qubits_ops, chip_ops, pins_type):
     max_x_num = (chip.end_pos[0] - chip.start_pos[0]) / (pad_width + pad_gap * 2) - 2
     max_y_num = (chip.end_pos[1] - chip.start_pos[1]) / (pad_width + pad_gap * 2) - 2
     if max_x_num < upper_num or max_y_num < left_num:
-        raise ValueError("当前芯片尺寸导致Pins数量溢出。")
+        raise ValueError("Current chip size causes pin overflow.")
     x_left, x_right, y_upper, y_lower = boundary_qubit_pos(qubits)
     for i in range(upper_num):
         pin_name = "pin_upper_{}".format(i)

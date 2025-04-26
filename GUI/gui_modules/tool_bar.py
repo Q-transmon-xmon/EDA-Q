@@ -296,11 +296,11 @@ class ToolBarManager(QToolBar):
                 print("Unable to update design")
 
     def handle_circuit_option(self, option_name):
-        """Process circuit parameter modification operations（Integrated dialog box version）"""
+        """Process circuit parameter modification operations(Integrated dialog box version)"""
         if current_design := self.get_current_design():
             try:
                 if option_name == "Generate Equivalent Circuit":
-                    # Generate equivalent circuit（Keep the original logic）
+                    # Generate equivalent circuit(Keep the original logic)
                     current_design.generate_equivalent_circuit()
                     current_design.equivalent_circuit.show()
 

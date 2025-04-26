@@ -13,14 +13,14 @@ class Ui_Dialog_Rcavity(object):
         if not Dialog_Rcavity.objectName():
             Dialog_Rcavity.setObjectName("Dialog_Rcavity")
         Dialog_Rcavity.resize(600, 500)
-        # Set the font of the entire interface to Microsoft Yahei
+        # Set the font of the entire interface to Microsoft YaHei
         Dialog_Rcavity.setFont(QFont("Microsoft YaHei", 10.5))
         self.verticalLayout = QVBoxLayout(Dialog_Rcavity)
         self.verticalLayout.setContentsMargins(10, 10, 10, 10)
 
-        # create rdls_type Input box
+        # Create rdls_type input box
         self.rdlsLayout = QHBoxLayout()
-        self.rdlsLabel = QLabel("读取腔类型：")
+        self.rdlsLabel = QLabel("Readout Cavity Type:")
         self.rdlsLineEdit = QLineEdit()
         self.rdlsLineEdit.setText("ReadoutCavity")  # Set default values
         self.rdlsLayout.addWidget(self.rdlsLabel)
@@ -28,11 +28,11 @@ class Ui_Dialog_Rcavity(object):
         self.verticalLayout.addLayout(self.rdlsLayout)
 
         # Create a chip layer name input box
-        self.chipLayerLayout = QHBoxLayout()  # Add Layout
-        self.chipLayerLabel = QLabel("芯片层名称：")  # Add tags
+        self.chipLayerLayout = QHBoxLayout()  # Add layout
+        self.chipLayerLabel = QLabel("Chip Layer Name:")  # Add label
         self.chipLayerLineEdit = QLineEdit()  # Add input box
         self.chipLayerLineEdit.setText("chip0")  # Set default values
-        self.chipLayerLayout.addWidget(self.chipLayerLabel)  # Add tags to layout
+        self.chipLayerLayout.addWidget(self.chipLayerLabel)  # Add label to layout
         self.chipLayerLayout.addWidget(self.chipLayerLineEdit)  # Add input box to layout
         self.verticalLayout.addLayout(self.chipLayerLayout)  # Add layout to main layout
 
@@ -50,14 +50,14 @@ class Ui_Dialog_Rcavity(object):
         self.verticalLayout.addWidget(self.buttonBox)
 
         # Initialize the list of input boxes and labels for storage
-        self.lineEdits = []  # storage QLineEdit List of
-        self.labels = []  # List of Storage Tags
+        self.lineEdits = []  # List of storage QLineEdit
+        self.labels = []  # List of storage labels
 
         self.retranslateUi(Dialog_Rcavity)
         QMetaObject.connectSlotsByName(Dialog_Rcavity)
 
     def addInputField(self, label_text, default_value=None):
-        """Add tags and input boxes to the dictionary box"""
+        """Add labels and input boxes to the dictionary box"""
         horizontalLayout = QHBoxLayout()
         label = QLabel(label_text)
         line_edit = QLineEdit()
@@ -67,10 +67,10 @@ class Ui_Dialog_Rcavity(object):
         horizontalLayout.addWidget(line_edit)
         self.dictFrameLayout.addLayout(horizontalLayout)  # Add to the layout of the dictionary box
         self.lineEdits.append(line_edit)  # Save reference to input box
-        self.labels.append(label_text)  # Save tag reference
+        self.labels.append(label_text)  # Save label reference
 
     def retranslateUi(self, Dialog_Rcavity):
-        Dialog_Rcavity.setWindowTitle(QCoreApplication.translate("Dialog_Rcavity", "生成读取腔"))
+        Dialog_Rcavity.setWindowTitle(QCoreApplication.translate("Dialog_Rcavity", "Generate Readout Cavity"))
 
 
 class Dialog_RCavity(QtWidgets.QDialog, Ui_Dialog_Rcavity):
@@ -82,7 +82,7 @@ class Dialog_RCavity(QtWidgets.QDialog, Ui_Dialog_Rcavity):
         self.design = design
         self.settings = QSettings("MyCompany", "MyApp")
 
-        # definition geometric_options The default value
+        # Define geometric_options default values
         self.geometric_options = Dict(
             coupling_length=300,  # Coupling line length
             width=10,  # Coupling line width
@@ -104,26 +104,26 @@ class Dialog_RCavity(QtWidgets.QDialog, Ui_Dialog_Rcavity):
         self.buttonBox.rejected.connect(self.reject)
 
     def loadPreviousInput(self):
-        """dynamic loading geometric_options All contents in the dictionary，And display default values"""
+        """Dynamically load all contents in geometric_options dictionary and display default values"""
         self.lineEdits = []  # Clear the input box list
-        self.labels = []  # Clear tag list
+        self.labels = []  # Clear the label list
         self.input_types = []  # Clear the input type list
 
         for key, default_value in self.geometric_options.items():
-            # Dynamically add tags and input boxes
-            label_text = f"{key.replace('_', ' ').capitalize()}："  # Format label text
+            # Dynamically add labels and input boxes
+            label_text = f"{key.replace('_', ' ').capitalize()}: "  # Format label text
             self.addInputField(label_text, default_value)
 
-            # Save default values to QSettings，If it has not been saved before，Then use default values
+            # Save default values to QSettings, use default values if not saved before
             value = self.settings.value(key, default_value)
             try:
                 # Attempt to convert the value to the default value type
                 converted_value = type(default_value)(value)
                 self.lineEdits[-1].setText(str(converted_value))  # Set default values for input boxes
             except (ValueError, TypeError):
-                self.lineEdits[-1].setText(str(default_value))  # If the conversion fails，Use default values
+                self.lineEdits[-1].setText(str(default_value))  # Use default values if conversion fails
 
-            # Save tags and input types
+            # Save labels and input types
             self.input_types.append(type(default_value))
 
     def process_RCavity(self):
@@ -131,33 +131,33 @@ class Dialog_RCavity(QtWidgets.QDialog, Ui_Dialog_Rcavity):
         geometric_options = Dict()
         valid_input = True
 
-        # obtain rdls_type The value of
-        rdls_type = self.rdlsLineEdit.text()  # obtain rdls_type The value of
-        chip_layer_name = self.chipLayerLineEdit.text()  # Obtain the value of the chip layer name
+        # Get rdls_type value
+        rdls_type = self.rdlsLineEdit.text()  # Get rdls_type value
+        chip_layer_name = self.chipLayerLineEdit.text()  # Get chip layer name value
 
         for i, label in enumerate(self.labels):
-            key = label[:-1].replace(' ', '_').lower()  # Convert tags to dictionary keys
+            key = label[:-2].replace(' ', '_').lower()  # Convert labels to dictionary keys
             value_str = self.lineEdits[i].text()
             expected_type = self.input_types[i]
 
             try:
                 # Convert input values based on type
                 if expected_type == list:
-                    # If it is a list type，Attempt to parse as Python list
+                    # If it is a list type, attempt to parse as a Python list
                     converted_value = eval(value_str)
                     if not isinstance(converted_value, list):
-                        raise ValueError("输入值不是有效的列表")
+                        raise ValueError("Input value is not a valid list")
                 else:
                     converted_value = expected_type(value_str)
 
                 geometric_options[key] = converted_value  # Save to dictionary
             except (ValueError, SyntaxError) as e:
-                QMessageBox.warning(self, "无效输入", f"{label} 输入无效: {e}")
+                QMessageBox.warning(self, "Invalid Input", f"{label} input is invalid: {e}")
                 valid_input = False
                 break
 
         if valid_input:
-            # save to QSettings
+            # Save to QSettings
             for key, value in geometric_options.items():
                 self.settings.setValue(key, value)
 
@@ -177,7 +177,7 @@ if __name__ == "__main__":
     dialog = Dialog_RCavity(design)
 
     def updateMainDesign(updated_design):
-        print("主窗口设计已更新")
+        print("Main design has been updated")
 
     dialog.designUpdated.connect(updateMainDesign)
     design.gds.show_svg()

@@ -214,7 +214,7 @@ class MyMainWindow(QMainWindow):
 
     def create_tool_bar(self):
         """Create toolbar buttons for the ribbon"""
-        self.toolbar = self.addToolBar("功能区")
+        self.toolbar = self.addToolBar("Function area")
 
         # Mapping of button text and object names
         buttons = [
@@ -453,10 +453,10 @@ class MyMainWindow(QMainWindow):
         """Zoom in functionality with tab-specific behavior."""
         # Output different prompt information based on the current tab
         if tab_name == "Topo":
-            print("放大Topo")
+            print("Enlarge Topo")
             self.design.topology.show_image()
         elif tab_name == "GDS":
-            print("放大GDS")
+            print("Enlarge GDS")
             self.design.gds.show_gds()
 
 
@@ -552,7 +552,7 @@ class MyMainWindow(QMainWindow):
     def _select_file(self):
         """Open file dialog box，select topo File and update images"""
         fileDialog = QFileDialog(self)
-        fileDialog.setWindowTitle('请选择 topo 文件')
+        fileDialog.setWindowTitle('Please select the topo file.')
         fileDialog.setFileMode(QFileDialog.ExistingFiles)  # Set the selection mode to existing files
         fileDialog.setNameFilter("QASM Files (*.qasm);;All Files (*);;Image Files (*.png *.jpg *.bmp *.svg)")  # Set file filter
         fileDialog.setViewMode(QFileDialog.List)  # Display files in a list format
@@ -636,7 +636,7 @@ class MyMainWindow(QMainWindow):
         for dialog in self.findChildren(QDialog):
             dialog.close()
 
-        print("界面内容已清除")
+        print("The interface content has been cleared.")
 
 
     @pyqtSlot(Design)  # Assuming Design is a QString type

@@ -6,7 +6,7 @@ from func_modules.pins import gene_pins_ops
 from func_modules.pins import primitives
 
 ############################################################################################
-# modifypinsParameters for
+# Modify pin parameters
 ############################################################################################
 
 from addict import Dict
@@ -15,36 +15,53 @@ from func_modules.pins import primitives
 from cmpnt_frame.pin import Pin as Pin_frame
 
 def soak_pins(pins_ops):
-    """usepinThe class willpinComplete parameter supplementation
+    """Use the Pin class to supplement pin parameters completely.
 
-    input：
-        pins: originallypinsParameters for
+    input:
+        pins_ops: Original pin parameters
 
-    output：
-        pins: After supplementationpinsParameters for
+    output:
+        pins_ops: Pin parameters after supplementation
     """
     pins_ops = primitives.soak_pins(pins_ops=pins_ops)
     return copy.deepcopy(pins_ops)
 
 def set_chips(pins_ops, chip_name: str = None):
-    """set uppinsChip information in
-    
-    input：
-        pins_ops: pinsParameters for
-        chip_name: 所set up的chipthe name of
+    """Set up chip information for pins.
 
-    output：
-        pins: set up芯片信息后的pinsParameters for
+    input:
+        pins_ops: Pin parameters
+        chip_name: The name of the chip to set up
+
+    output:
+        pins_ops: Pin parameters after setting up chip information
     """
     pins_ops = primitives.set_chips(pins_ops=pins_ops, chip_name=chip_name)
     return copy.deepcopy(pins_ops)
 
 def set_types(pins_ops, pins_type):
+    """Set the type for all pins.
+
+    input:
+        pins_ops: Pin parameters
+        pins_type: The type to set for the pins
+
+    output:
+        pins_ops: Pin parameters after setting the type
+    """
     for pin_name, pin_ops in pins_ops.items():
         pins_ops[pin_name].type = pins_type
     return copy.deepcopy(pins_ops)
 
 def dehy_pins(pins_ops):
+    """Dehydrate pin parameters using the Pin class.
+
+    input:
+        pins_ops: Pin parameters
+
+    output:
+        pins_ops: Dehydrated pin parameters
+    """
     pins_ops = copy.deepcopy(pins_ops)
     for pin_name, pin_ops in pins_ops.items():
         pin_ops.type = "Pin"
@@ -52,4 +69,12 @@ def dehy_pins(pins_ops):
     return copy.deepcopy(pins_ops)
 
 def generate_pins(**gene_ops):
+    """Generate pin parameters based on provided options.
+
+    input:
+        gene_ops: Options for generating pins
+
+    output:
+        pins_ops: Generated pin parameters
+    """
     return copy.deepcopy(gene_pins_ops.gene_pins_ops(**gene_ops))

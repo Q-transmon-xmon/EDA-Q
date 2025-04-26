@@ -169,7 +169,7 @@ def crossover_GATS(popsize,parent1_pops,parent2_pops,ts_list,row,column):
                         temp.append(children[0][j])
                 # print("child1")
                 # print(children[0])
-                # insertparent2The number，Not withchild1Fixed conflicts
+                # insertparent2The number,Not withchild1Fixed conflicts
                 cro_points = list()
                 for j in range(len(children[0])):
                     if children[0][j] == -1:
@@ -196,7 +196,7 @@ def crossover_GATS(popsize,parent1_pops,parent2_pops,ts_list,row,column):
                         children[1][parent2.index(temp[j])] = temp[j]
                 # print("child2")
                 # print(children[1])
-                # insertparent1The number，Not withchild2Fixed conflicts
+                # insertparent1The number,Not withchild2Fixed conflicts
                 cro_points_2 = list()
                 for j in range(len(children[1])):
                     if children[1][j] == -1:

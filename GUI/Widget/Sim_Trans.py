@@ -21,49 +21,49 @@ from GUI.Widget.Show_Dataframe import DataFrameDisplay
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
-            Dialog.setObjectName(u"Dialog")
+            Dialog.setObjectName("Dialog")
         Dialog.resize(400, 300)
-        # Set the font of the entire interface to Microsoft Yahei
+        # Set the font of the entire interface to Microsoft YaHei
         Dialog.setFont(QFont("Microsoft YaHei", 10.5))
         self.widget_parameter = QWidget(Dialog)
-        self.widget_parameter.setObjectName(u"widget_parameter")
+        self.widget_parameter.setObjectName("widget_parameter")
         self.widget_parameter.setGeometry(QRect(90, 60, 281, 131))
-        self.widget_parameter.setStyleSheet(u"background-color: rgb(214, 214, 214);")
+        self.widget_parameter.setStyleSheet("background-color: rgb(214, 214, 214);")
         self.verticalLayout_2 = QVBoxLayout(self.widget_parameter)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.horizontalLayout = QHBoxLayout()
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setObjectName("horizontalLayout")
         self.label_3 = QLabel(self.widget_parameter)
-        self.label_3.setObjectName(u"label_3")
+        self.label_3.setObjectName("label_3")
 
         self.horizontalLayout.addWidget(self.label_3)
 
         self.lineEdit = QLineEdit(self.widget_parameter)
-        self.lineEdit.setObjectName(u"lineEdit")
+        self.lineEdit.setObjectName("lineEdit")
 
         self.horizontalLayout.addWidget(self.lineEdit)
 
         self.verticalLayout_2.addLayout(self.horizontalLayout)
 
         self.horizontalLayout_2 = QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.label_4 = QLabel(self.widget_parameter)
-        self.label_4.setObjectName(u"label_4")
+        self.label_4.setObjectName("label_4")
 
         self.horizontalLayout_2.addWidget(self.label_4)
 
         self.lineEdit_2 = QLineEdit(self.widget_parameter)
-        self.lineEdit_2.setObjectName(u"lineEdit_2")
+        self.lineEdit_2.setObjectName("lineEdit_2")
 
         self.horizontalLayout_2.addWidget(self.lineEdit_2)
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
 
         self.label_2 = QLabel(Dialog)
-        self.label_2.setObjectName(u"label_2")
+        self.label_2.setObjectName("label_2")
         self.label_2.setGeometry(QRect(10, 50, 61, 31))
         self.buttonBox = QDialogButtonBox(Dialog)
-        self.buttonBox.setObjectName(u"buttonBox")
+        self.buttonBox.setObjectName("buttonBox")
         self.buttonBox.setGeometry(QRect(20, 240, 341, 32))
         self.buttonBox.setOrientation(Qt.Horizontal)
         self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
@@ -74,9 +74,9 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", "Transmon", None))
-        self.label_3.setText(QCoreApplication.translate("Dialog", "比特名称：", None))
-        self.label_4.setText(QCoreApplication.translate("Dialog", "比特频率：", None))
-        self.label_2.setText(QCoreApplication.translate("Dialog", "仿真参数：", None))
+        self.label_3.setText(QCoreApplication.translate("Dialog", "Qubit Name:", None))
+        self.label_4.setText(QCoreApplication.translate("Dialog", "Qubit Frequency:", None))
+        self.label_2.setText(QCoreApplication.translate("Dialog", "Simulation Parameters:", None))
 
 
 class Dialog_Transmon(QDialog, Ui_Dialog):
@@ -90,7 +90,7 @@ class Dialog_Transmon(QDialog, Ui_Dialog):
         # Store incoming data design parameter
         self.design = design
 
-        # use QSettings Save and load input data
+        # Use QSettings to save and load input data
         self.settings = QSettings("MyCompany", "MyApp")
 
         # Read the last saved input content and display it
@@ -109,7 +109,7 @@ class Dialog_Transmon(QDialog, Ui_Dialog):
         self.ui.lineEdit_2.setText(self.settings.value("bit_freq", "5.6", type=str))
 
     def process_transmon(self):
-        """Save the text of the input box to QSettings,And send out designUpdated signal"""
+        """Save the text of the input box to QSettings, and send out designUpdated signal"""
         # Save input content
         self.settings.setValue("bit_name", self.ui.lineEdit.text())
         self.settings.setValue("bit_freq", self.ui.lineEdit_2.text())
@@ -119,8 +119,8 @@ class Dialog_Transmon(QDialog, Ui_Dialog):
         bit_freq = self.settings.value("bit_freq", "", type=float)
 
         # Print input content
-        print(f"比特名称: {bit_name}")
-        print(f"比特频率: {bit_freq}")
+        print(f"Qubit Name: {bit_name}")
+        print(f"Qubit Frequency: {bit_freq}")
 
         # Call the simulation method of design
         self.design.simulation(sim_module="TransmonSim", frequency=bit_freq, qubit_name=bit_name)
@@ -140,32 +140,30 @@ class Dialog_Transmon(QDialog, Ui_Dialog):
 
         # Check if the file exists
         if not os.path.exists(file_path):
-            print(f"文件 {file_path} 不存在，无法显示矩阵窗口")
+            print(f"File {file_path} does not exist, cannot display matrix window")
             return
 
-        print('xianshi')
+        print('Displaying matrix...')
 
-            # Create and display DataFrameDisplay window
+        # Create and display DataFrameDisplay window
         self.matrix_dialog = DataFrameDisplay(file_path=file_path)
         self.matrix_dialog.exec()
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    design = Design()  # create Design example
-    dialog = Dialog_Transmon(design=design)  # support design Instance passed to Dialog_Transmon
-
+    design = Design()  # Create Design instance
+    dialog = Dialog_Transmon(design=design)  # Pass design instance to Dialog_Transmon
 
     # Update the signal of the main design
     def updateMainDesign(updated_design):
-        print("主窗口设计已更新")
-
+        print("Main design has been updated")
 
     dialog.designUpdated.connect(updateMainDesign)
 
-    # display a dialog box
+    # Display a dialog box
     if dialog.exec() == QDialog.Accepted:
         pass
 
-        # exit from application program
+    # Exit from application program
     sys.exit(app.exec())

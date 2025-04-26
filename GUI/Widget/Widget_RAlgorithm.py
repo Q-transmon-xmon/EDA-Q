@@ -11,9 +11,9 @@ class Ui_Dialog_RAlgorithm(object):
     def setupUi(self, Dialog_RAlgorithm):
         Dialog_RAlgorithm.setObjectName("Dialog_RAlgorithm")
         Dialog_RAlgorithm.resize(419, 332)
-        # Set the font of the entire interface to Microsoft Yahei
+        # Set the font of the entire interface to Microsoft YaHei
         Dialog_RAlgorithm.setFont(QFont("Microsoft YaHei", 10.5))
-        self.settings = QSettings("MyCompany", "MyApp")  # initialization QSettings
+        self.settings = QSettings("MyCompany", "MyApp")  # Initialize QSettings
 
         self.buttonBox = QDialogButtonBox(Dialog_RAlgorithm)
         self.buttonBox.setGeometry(30, 280, 341, 32)
@@ -21,12 +21,12 @@ class Ui_Dialog_RAlgorithm(object):
 
         self.label = QLabel(Dialog_RAlgorithm)
         self.label.setGeometry(10, 60, 51, 25)
-        self.label.setText("算法：")  # Set label text
+        self.label.setText("Algorithm:")  # Set label text
 
-        # create"algorithm"Label and set text
+        # Create "Algorithm" label and set text
         self.label_algorithm = QLabel(Dialog_RAlgorithm)
         self.label_algorithm.setGeometry(10, 200, 181, 25)
-        self.label_algorithm.setText("芯片层：")  # Set the label text to"algorithm"
+        self.label_algorithm.setText("Chip Layer:")  # Set the label text to "Algorithm"
 
         self.lineEdit = QLineEdit(Dialog_RAlgorithm)
         self.lineEdit.setGeometry(80, 200, 181, 28)
@@ -49,7 +49,7 @@ class Ui_Dialog_RAlgorithm(object):
         self.loadInputs()  # Load previously saved data
 
     def retranslateUi(self, Dialog_RAlgorithm):
-        Dialog_RAlgorithm.setWindowTitle(QCoreApplication.translate("Dialog_RAlgorithm", "选择布线算法", None))
+        Dialog_RAlgorithm.setWindowTitle(QCoreApplication.translate("Dialog_RAlgorithm", "Select Routing Algorithm", None))
 
     def addRadioButton(self, text):
         """Add radio buttons to the layout"""
@@ -61,6 +61,7 @@ class Ui_Dialog_RAlgorithm(object):
 class Dialog_RAlgorithm(QDialog, Ui_Dialog_RAlgorithm):
 
     designUpdated = QtCore.Signal(object)
+
     def __init__(self, design):
         super(Dialog_RAlgorithm, self).__init__()
         self.design = design
@@ -68,7 +69,7 @@ class Dialog_RAlgorithm(QDialog, Ui_Dialog_RAlgorithm):
         self.settings = QSettings("MyCompany", "MyApp")
         self.loadInputs()  # Load input data
 
-        # Method of connecting and saving input
+        # Connect button click signal
         self.buttonBox.accepted.connect(self.Process_RAlgorithm)
         self.buttonBox.rejected.connect(self.reject)
 
@@ -80,7 +81,7 @@ class Dialog_RAlgorithm(QDialog, Ui_Dialog_RAlgorithm):
         """Loading and saving input box data display"""
         self.lineEdit.setText(self.settings.value("parameter_value", "", type=str))
 
-        # Loading the status of radio buttons
+        # Load the status of radio buttons
         for radio_btn in self.radioButtons:
             radio_btn.setChecked(self.settings.value(radio_btn.text(), False, type=bool))
 
@@ -96,12 +97,12 @@ class Dialog_RAlgorithm(QDialog, Ui_Dialog_RAlgorithm):
 
         self.chip_name = self.lineEdit.text()  # Save the input chip name
 
-        print(f"输入的参数: {self.chip_name}")
-        print("选中的单选按钮：", self.selected_algorithm)
+        print(f"Input parameter: {self.chip_name}")
+        print("Selected radio button:", self.selected_algorithm)
 
         self.design.routing(method=self.selected_algorithm, chip_name=self.chip_name)
         self.designUpdated.emit(self.design)  # Send design update signal
-        self.accept()  # close dialog boxes
+        self.accept()  # Close dialog box
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
@@ -109,12 +110,12 @@ if __name__ == "__main__":
     dialog = Dialog_RAlgorithm(design=design)
     # Update the signal of the main design
     def updateMainDesign(updated_design):
-        design=updated_design
-        print("主窗口设计已更新")
+        design = updated_design
+        print("Main design has been updated")
     dialog.designUpdated.connect(updateMainDesign)
 
     if dialog.exec() == QDialog.Accepted:
-        # clickOKAfter pressing the button, the parameters will be automatically processed and exit
+        # click OK After pressing the button, the parameters will be automatically processed and exit
         pass
 
     sys.exit(app.exec())

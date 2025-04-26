@@ -7,7 +7,7 @@ def get_module_Dict(dirpath, pre_path, exclusions: list = None):
     Get all modules in a specific directory
 
     Inputs:
-        path: The directory where the modules to be automatically imported are located
+        dirpath: The directory where the modules to be automatically imported are located
         pre_path: The prefix path for importing the modules
 
     Outputs:
@@ -17,8 +17,8 @@ def get_module_Dict(dirpath, pre_path, exclusions: list = None):
     # interface
     copy.deepcopy(exclusions)
 
-    # Input detection，__init__.pyNever within the scope of consideration。
-    if exclusions == None:
+    # Input detection, __init__.py is never within the scope of consideration.
+    if exclusions is None:
         exclusions = ["__init__.py"]
     else:
         exclusions.append("__init__.py")
@@ -32,23 +32,22 @@ def get_module_Dict(dirpath, pre_path, exclusions: list = None):
                 module_name = filename[:-3]  # drop file extension ".py"
             if filename.endswith(".pyd"):
                 module_name = filename[:-4]  # drop file extension ".pyd"
-            module = importlib.import_module(pre_path+module_name)
+            module = importlib.import_module(pre_path + module_name)
             module_Dict[module_name] = module
 
     return module_Dict
 
 def get_pack_Dict(dirpath, pre_path, exclusions: list = None):
     """
-        Get all packages in a specific directory
+    Get all packages in a specific directory
 
-        Input:
-            path: The directory containing the packages to be automatically imported
-            pre_path: The prefix path of the package where the class is located
+    Input:
+        dirpath: The directory containing the packages to be automatically imported
+        pre_path: The prefix path of the package where the class is located
 
-        Output:
-            pack_Dict: Dictionary of exported packages
+    Output:
+        pack_Dict: Dictionary of exported packages
     """
-
     
     # interface
     copy.deepcopy(exclusions)
@@ -58,7 +57,7 @@ def get_pack_Dict(dirpath, pre_path, exclusions: list = None):
     for pack_name in os.listdir(dirpath):
         pack_path = os.path.join(dirpath, pack_name)
         if is_package(pack_path):
-            pack = importlib.import_module(pre_path+pack_name)
+            pack = importlib.import_module(pre_path + pack_name)
             pack_Dict[pack_name] = pack
 
     return pack_Dict
@@ -72,7 +71,7 @@ def convert_to_snake_case(input_str):
     # Lowercase the first letter of the string
     input_str = input_str[0].lower() + input_str[1:]
     
-    # Insert an underline before uppercase letters，And convert to lowercase
+    # Insert an underline before uppercase letters, and convert to lowercase
     snake_case_str = ''.join(['_' + char.lower() if char.isupper() else char for char in input_str])
     
     return snake_case_str.lstrip('_')
@@ -128,7 +127,7 @@ def is_number(var):
     return isinstance(var, (int, float, complex))
 
 def get_filename_extension_from_path(path):
-    # useos.path.splitext()Split file names and extensions
+    # use os.path.splitext() to split file names and extensions
     file_name, file_extension = os.path.splitext(os.path.basename(path))
     return file_name, file_extension
 
@@ -142,23 +141,23 @@ def get_extension(path):
 
 # svg
 def save_svg(cell, width: float = 500, path: str = "./svg/temp/svg"):
-    """Take onecellSave as a certain widthsvg
+    """Save one cell as an svg with a certain width
 
-    input：
-        cell: gdspyofcell
-        width: 要保存ofsvgof宽度
+    input:
+        cell: gdspy cell
+        width: The width of the svg to be saved
     
-    input：
-        not have
+    output:
+        None
     """
     jg_and_create_path(path)
     cell_width = get_width(cell)
     if cell_width == 0:
-        raise ValueError("{}的宽度是0，无法生成svg！".format(cell.name))
+        raise ValueError(f"The width of {cell.name} is 0, cannot generate svg!")
         return False
     # print("width = {}, cell_width = {}".format(width, cell_width))
     cell.write_svg(path, scaling = width/cell_width)
-    print("svg文件保存在：{}".format(path))
+    print(f"svg file saved at: {path}")
     return True
 
 def get_width(cell):
@@ -178,13 +177,13 @@ def get_width(cell):
 
 # catalogue
 def jg_and_create_path(path):
-    """Determine if all directories in the path exist，If it does not exist, create it
+    """Determine if all directories in the path exist, if not, create them
 
-    input：
-        path: Does a directory exist
+    input:
+        path: The directory to check
 
-    output：
-        not have
+    output:
+        None
     """
     dirname = os.path.dirname(path)
     if not os.path.exists(dirname):
@@ -216,10 +215,10 @@ def get_file_info(file_path):
     }
 def jg_and_create_path_plus(path):
     if not os.path.exists(path):
-        # If the path does not exist，Create a directory or file
+        # If the path does not exist, create a directory or file
         if path.endswith('/'):  # If it is a directory
             os.makedirs(path)
-            print(f"目录 '{path}' 已创建。")
+            print(f"Directory '{path}' has been created.")
         else:  # If it is a file
             directory = os.path.dirname(path)
             if not os.path.exists(directory):
@@ -231,7 +230,7 @@ def jg_and_create_path_plus(path):
             else:
                 with open(path, 'w') as file:
                     file.write('')  # Create an empty file
-                print(f"文件 '{path}' 已创建。")
+                print(f"File '{path}' has been created.")
 
 def change_layer_of_entire_cell(cell, layer, datatype=None):
     # Get dependency cells recursively
@@ -245,7 +244,7 @@ def change_layer_of_entire_cell(cell, layer, datatype=None):
             # the same length and the desired layer number
             polygon.layers = [layer] * len(polygon.layers)
             # Proecessing datatype
-            if datatype != None:
+            if datatype is not None:
                 polygon.datatypes = [datatype] * len(polygon.layers)
         # Process all paths
         for path in c.paths:
@@ -259,33 +258,33 @@ def custom_hash(s):
     Hash a string to a number
     """
     result = 0
-    prime = 31  # Choose a prime number as the multiplication factor，Can reduce the probability of conflict
+    prime = 31  # Choose a prime number as the multiplication factor, can reduce the probability of conflict
 
     for char in s:
-        result = (result * prime + ord(char)) % (255)  # Prevent overflow，modulo
+        result = (result * prime + ord(char)) % (255)  # Prevent overflow, modulo
     return result
 
 def jg_dir(topo_pos0, topo_pos1):
     """
-    Judging based on two topological coordinatestopo_pos0existtopo_pos1The orientation
+    Judging based on two topological coordinates whether topo_pos0 is to the left, right, top, or bottom of topo_pos1
     """
     
     edge_sub = [topo_pos0[0] - topo_pos1[0], topo_pos0[1] - topo_pos1[1]]
-    if edge_sub == [-1, 0]:    # q0existq1On the left side
+    if edge_sub == [-1, 0]:    # topo_pos0 is to the left of topo_pos1
         return "left"
-    elif edge_sub == [1, 0]:    # q0existq1On the right side
+    elif edge_sub == [1, 0]:    # topo_pos0 is to the right of topo_pos1
         return "right"
-    elif edge_sub == [0, 1]:    # q0existq1Above it
+    elif edge_sub == [0, 1]:    # topo_pos0 is above topo_pos1
         return "top"
-    elif edge_sub == [0, -1]:    # q0existq1Below
+    elif edge_sub == [0, -1]:    # topo_pos0 is below topo_pos1
         return "bot"
     else:
-        raise ValueError("两个拓扑坐标不相邻！")
-    
+        raise ValueError("The two topological coordinates are not adjacent!")
+
 def delete_file_if_exists(path):
     """
-    Determine if the file exists，If it exists, delete it
-    :param file_path: File Path
+    Determine if the file exists, if it exists, delete it
+    :param path: File Path
     """
     if os.path.exists(path):
         os.remove(path)
@@ -383,7 +382,7 @@ def import_options(path):
         return None
     
 def get_file_name_from_path(path):
-    # useos.path.splitext()Split file names and extensions
+    # use os.path.splitext() to split file names and extensions
     file_name, file_extension = os.path.splitext(os.path.basename(path))
     return file_name, file_extension
 
@@ -429,7 +428,7 @@ def calculate_direction_angle(coord1, coord2):
     dx = x2 - x1
     dy = y2 - y1
 
-    # usemath.atan2Calculate direction angle
+    # use math.atan2 to calculate direction angle
     angle_rad = math.atan2(dy, dx)
     return angle_rad
 
@@ -550,12 +549,12 @@ def check_tuple(input_dict: Dict = Dict()):
         if isinstance(value, dict):
             output_dict[key] = convert_tuple_to_list(value)
         elif isinstance(value, tuple):
-            raise ValueError("{}的类型是元组：{}，应改为列表。".format(key, value))
+            raise ValueError(f"The type of {key} is tuple: {value}, it should be changed to a list.")
         elif isinstance(value, list):
             new_value = list()
             for op in value:
                 if isinstance(op, tuple):
-                    raise ValueError("{}中的元素类型为元组：{}，应该为列表。".format(key, value))
+                    raise ValueError(f"The type of element in {key} is tuple: {value}, it should be a list.")
                 else:
                     new_value.append(op)
             output_dict[key] = copy.deepcopy(new_value)
@@ -568,7 +567,7 @@ def import_list_from_txt(file_path):
     try:
         with open(file_path, 'r') as file:
             content = file.read()
-            # useevalFunction to convert a string into a list
+            # Use eval function to convert a string into a list
             my_list = eval(content)
             return my_list
     except FileNotFoundError:
@@ -711,7 +710,7 @@ def generate_gds_pos2(topo_positions, dist):
 
 def get_cell_bounding_box(cell):
     if not cell.polygons and not cell.references:
-        return None  # if Cell For empty，return None
+        return None  # if Cell is empty, return None
 
     # Initialize minimum and maximum coordinates
     min_x, min_y = float('inf'), float('inf')
@@ -726,7 +725,7 @@ def get_cell_bounding_box(cell):
             max_x = max(max_x, bbox[1][0])
             max_y = max(max_y, bbox[1][1])
 
-    # Traverse all references（CellReference and CellArray）
+    # Traverse all references (CellReference and CellArray)
     for ref in cell.references:
         bbox = ref.get_bounding_box()
         if bbox.any():
@@ -735,7 +734,7 @@ def get_cell_bounding_box(cell):
             max_x = max(max_x, bbox[1][0])
             max_y = max(max_y, bbox[1][1])
 
-    # If there is no effective enclosure box，return None
+    # If there is no effective bounding box, return None
     if min_x == float('inf'):
         return None
 
@@ -766,10 +765,10 @@ def caculate_qubits_parms(f_q=65, Ec=30):
     # Ec = e ** 2 / 2 / Cq * 1e15 / hbar  # Angular frequency, unit: MHz, angular frequency / 2π = frequency
 
     Ej = (f_q * 10 ** 9 + Ec) ** 2 / 8 / Ec
-    print("If fq =", f_q, 'GHz')
-    print("Then, Ej =", round((Ej / 10 ** 9), 2), "GHz")
+    print(f"If fq = {f_q} GHz")
+    print(f"Then, Ej = {round((Ej / 10 ** 9), 2)} GHz")
     Ic = Ej * h / phi0
-    print("Then, Ic =", round((Ic * 10 ** 9), 2), "nA")
+    print(f"Then, Ic = {round((Ic * 10 ** 9), 2)} nA")
     Rn = np.pi * 0.182 * 10 ** -3 / 2 / Ic
-    print("Then, Rn =", round(Rn, 4), "Ω")
+    print(f"Then, Rn = {round(Rn, 4)} Ω")
     return

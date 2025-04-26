@@ -9,7 +9,7 @@ class SelectionDialog(QDialog):
     def __init__(self, design):
         super().__init__()
         self.design = design
-        self.setWindowTitle("选择量子比特类型")
+        self.setWindowTitle("Select Qubit Type")
         self.setGeometry(100, 100, 300, 100)  # Set window size and initial position
 
         # Create main vertical layout
@@ -18,7 +18,7 @@ class SelectionDialog(QDialog):
         # Create horizontal layout
         button_layout = QHBoxLayout()
 
-        # create button
+        # Create buttons
         self.xmon_button = QPushButton("Xmon")
         self.transmon_button = QPushButton("Transmon")
 
@@ -26,7 +26,7 @@ class SelectionDialog(QDialog):
         self.xmon_button.setStyleSheet("border: 2px solid black; border-radius: 0px; padding: 10px;")
         self.transmon_button.setStyleSheet("border: 2px solid black; border-radius: 0px; padding: 10px;")
 
-        # Connection button click event
+        # Connect button click events
         self.xmon_button.clicked.connect(self.select_xmon)
         self.transmon_button.clicked.connect(self.select_transmon)
 
@@ -41,22 +41,22 @@ class SelectionDialog(QDialog):
         self.setLayout(main_layout)
 
         # Set window display position
-        self.move(400, 400)  # Set the top left corner position of the window to (200, 200)
+        self.move(400, 400)  # Set the top left corner position of the window to (400, 400)
 
     def select_xmon(self):
-        print("您选择了 Xmon")
+        print("You selected Xmon")
         self.design.generate_qubits(topology=True, qubits_type='Xmon')
         self.designUpdated.emit(self.design)  # Send design update signal
-        self.accept()  # close dialog boxes
+        self.accept()  # Close dialog box
 
     def select_transmon(self):
-        print("您选择了 Transmon")
+        print("You selected Transmon")
         self.design.generate_qubits(topology=True, qubits_type='Transmon')
         self.designUpdated.emit(self.design)
-        self.accept()  # close dialog boxes
+        self.accept()  # Close dialog box
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    design = Design()  # create Design example
-    dialog = SelectionDialog(design)  # support design Instance passed to SelectionDialog
+    design = Design()  # Create Design instance
+    dialog = SelectionDialog(design)  # Pass design instance to SelectionDialog
     dialog.exec()

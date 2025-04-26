@@ -35,7 +35,6 @@ class MainWindow(FramelessWindow):
         # Set the initial setting of the window design
         self.design = Design()
 
-
         # Limit the maximum and minimum size of the window
         self.setMinimumSize(QtCore.QSize(1420, 800))
         # self.setMaximumSize(QtCore.QSize(1920, 1080))
@@ -52,19 +51,19 @@ class MainWindow(FramelessWindow):
         menu_layout.setHorizontalSpacing(20)
 
         # Custom Button
-        btn1 = QtWidgets.QPushButton('算法定制拓扑')
-        btn2 = QtWidgets.QPushButton('自定义拓扑')
-        btn3 = QtWidgets.QPushButton('构建等效电路')
-        btn4 = QtWidgets.QPushButton('生成量子比特')
-        btn5 = QtWidgets.QPushButton('生成芯片层')
-        btn6 = QtWidgets.QPushButton('生成读取腔')
-        btn7 = QtWidgets.QPushButton('生成引脚')  # Add button，Placed after generating the reading cavity
-        btn8 = QtWidgets.QPushButton('生成线')
-        btn9 = QtWidgets.QPushButton('布线算法')
-        btn10 = QtWidgets.QPushButton('GDS版图修改')
-        btn11 = QtWidgets.QPushButton('仿真')
-        btn12 = QtWidgets.QPushButton('Others')  # newly addedOthersbutton，Placed after simulation
-        btn13 = QtWidgets.QPushButton('清空')
+        btn1 = QtWidgets.QPushButton('Algorithm Custom Topology')
+        btn2 = QtWidgets.QPushButton('Custom Topology')
+        btn3 = QtWidgets.QPushButton('Build Equivalent Circuit')
+        btn4 = QtWidgets.QPushButton('Generate Qubit')
+        btn5 = QtWidgets.QPushButton('Generate Chip Layer')
+        btn6 = QtWidgets.QPushButton('Generate Readout Cavity')
+        btn7 = QtWidgets.QPushButton('Generate Pins')  # Add button，Placed after generating the reading cavity
+        btn8 = QtWidgets.QPushButton('Generate Lines')
+        btn9 = QtWidgets.QPushButton('Routing Algorithm')
+        btn10 = QtWidgets.QPushButton('GDS Layout Modification')
+        btn11 = QtWidgets.QPushButton('Simulation')
+        btn12 = QtWidgets.QPushButton('Others')  # newly added Others button，Placed after simulation
+        btn13 = QtWidgets.QPushButton('Clear')
 
         # Set button name
         btn1.setObjectName('Algorithm')
@@ -78,7 +77,7 @@ class MainWindow(FramelessWindow):
         btn9.setObjectName('RoutingAlgorithm')
         btn10.setObjectName('GDS')
         btn11.setObjectName('Simulation')
-        btn12.setObjectName('Others')  # OthersThe name of the button
+        btn12.setObjectName('Others')  # Others The name of the button
         btn13.setObjectName('Clear')
 
         # Binding button event
@@ -93,7 +92,7 @@ class MainWindow(FramelessWindow):
         btn9.clicked.connect(self.MenuAffairs)
         btn10.clicked.connect(self.MenuAffairs)
         btn11.clicked.connect(self.MenuAffairs)
-        btn12.clicked.connect(self.MenuAffairs)  # bindingOthersbutton event
+        btn12.clicked.connect(self.MenuAffairs)  # binding Others button event
         btn13.clicked.connect(self.MenuAffairs)
 
         # Add buttons to the layout
@@ -117,7 +116,7 @@ class MainWindow(FramelessWindow):
         self.stackedWidget = QtWidgets.QStackedWidget()
 
         # Create different interfaces
-        topoInterface = QtWidgets.QLabel('topo Interface')
+        topoInterface = QtWidgets.QLabel('Topo Interface')
         CircuitInterface = QtWidgets.QLabel('Circuit Interface')
         GDSInterface = QtWidgets.QLabel('GDS Interface')
 
@@ -126,7 +125,7 @@ class MainWindow(FramelessWindow):
         self.gdsface = GDSInterface
 
         # Add sub interface
-        self.addSubInterface(topoInterface, 'topoInterface', 'topo')
+        self.addSubInterface(topoInterface, 'topoInterface', 'Topo')
         # self.addSubInterface(CircuitInterface, 'CircuitInterface', 'Circuit')
         self.addSubInterface(GDSInterface, 'GDSInterface', 'GDS')
 
@@ -141,7 +140,7 @@ class MainWindow(FramelessWindow):
         self.pivot.setCurrentItem(topoInterface.objectName())
 
         # Add zoom in button
-        self.zoomButton = QtWidgets.QPushButton("放大")
+        self.zoomButton = QtWidgets.QPushButton("Zoom In")
         self.zoomButton.setFixedSize(60, 30)
         self.zoomButton.setStyleSheet("position: absolute; bottom: 10px; right: 10px;")
         self.zoomButton.clicked.connect(self.onZoomButtonClicked)  # Bind click event
@@ -185,21 +184,21 @@ class MainWindow(FramelessWindow):
         elif currentWidget == self.gdsface:
             self.zoomGDSInterface()
         else:
-            print("未知界面")
+            print("Unknown interface")
 
     def zoomTopoInterface(self):
-        print("放大Topo界面")
-        # Implement hereTopoThe logic of enlarging the interface
+        print("Zoom in on Topo interface")
+        # Implement here Topo The logic of enlarging the interface
         self.design.topology.show_image()
 
     def zoomCircuitInterface(self):
-        print("放大Circuit界面")
-        # Implement hereCircuitThe logic of enlarging the interface
+        print("Zoom in on Circuit interface")
+        # Implement here Circuit The logic of enlarging the interface
         self.design.equivalent_circuit.show()
 
     def zoomGDSInterface(self):
-        print("放大GDS界面")
-        # Implement hereGDSThe logic of enlarging the interface
+        print("Zoom in on GDS interface")
+        # Implement here GDS The logic of enlarging the interface
         self.design.gds.show_gds()
 
 
@@ -207,53 +206,53 @@ class MainWindow(FramelessWindow):
         sender = self.sender()
         # Ensure that each window object is saved as an instance variable of the class
         if sender.objectName() == 'Topology':
-            print('自定义拓扑')
+            print('Custom Topology')
             self.page_topology = Dialog_Topology(design=self.design)
             self.page_topology.designUpdated.connect(self.updateMainDesign)
             self.page_topology.show()
         elif sender.objectName() == 'Circuit':
-            print('构建等效电路')
+            print('Build Equivalent Circuit')
             self.design.generate_equivalent_circuit()
             self.design.equivalent_circuit.show()
             # Not useful at the moment
             # self.show_circuit_image()  # Only displayed when clicked on the panel
         elif sender.objectName() == 'Qubit':
-            print('生成量子比特')
+            print('Generate Qubit')
             self.page_qubit = Dialog_Qubit(design=self.design)
             self.page_qubit.designUpdated.connect(self.updateMainDesign)
             self.page_qubit.show()
         elif sender.objectName() == 'ChipLayer':
-            print('生成芯片层')
+            print('Generate Chip Layer')
             self.page_chiplayer = Dialog_ChipLayer(design=self.design)
             self.page_chiplayer.designUpdated.connect(self.updateMainDesign)
             self.page_chiplayer.show()
         elif sender.objectName() == 'ReadingCavity':
-            print('生成读取腔')
+            print('Generate Readout Cavity')
             self.page_readingcavity = Dialog_RCavity(design=self.design)
             self.page_readingcavity.designUpdated.connect(self.updateMainDesign)
             self.page_readingcavity.show()
         elif sender.objectName() == 'GeneratePin':
-            print('生成引脚')
+            print('Generate Pins')
             self.page_pins = Dialog_pins(design=self.design)
             self.page_pins.designUpdated.connect(self.updateMainDesign)
             self.page_pins.show()
         elif sender.objectName() == 'GenerateLine':
-            print('生成线')
+            print('Generate Lines')
             self.page_generateline = Dialog_Line(design=self.design)
             self.page_generateline.designUpdated.connect(self.updateMainDesign)
             self.page_generateline.show()
         elif sender.objectName() == 'RoutingAlgorithm':
-            print('布线算法')
+            print('Routing Algorithm')
             self.page_Ralogrithm = Dialog_RAlgorithm(design=self.design)
             self.page_Ralogrithm.designUpdated.connect(self.updateMainDesign)
             self.page_Ralogrithm.show()
         elif sender.objectName() == 'GDS':
-            print('GDS版图修改')
+            print('GDS Layout Modification')
             self.page_gds = NestedDictViewer(design=self.design)
             self.page_gds.window_gds.designUpdated.connect(self.updateMainDesign)
             self.page_gds.show()
         elif sender.objectName() == 'Simulation':
-            print('仿真')
+            print('Simulation')
             self.page_simulation = Dialog_Simulation(design=self.design)
             self.page_simulation.designUpdated.connect(self.updateMainDesign)
             self.page_simulation.show()
@@ -263,8 +262,8 @@ class MainWindow(FramelessWindow):
             self.page_other.designUpdated.connect(self.updateMainDesign)
             self.page_other.show()
         elif sender.objectName() == 'Clear':
-            print('清空')
-            self.design=Design()
+            print('Clear')
+            self.design = Design()
 
 
     def addSubInterface(self, widget: QtWidgets.QLabel, objectName, text):
@@ -287,18 +286,18 @@ class MainWindow(FramelessWindow):
             return  # If the design has not been updated，Direct Return，Do not perform subsequent operations
 
         if objectName == 'topoInterface':
-            print("显示拓扑图像")
+            print("Display topology image")
             self.show_topology_image(show=True)  # Only displayed when this interface is activated
         elif objectName == 'CircuitInterface':
-            print("显示等效电路图像")
+            print("Display equivalent circuit image")
             self.show_circuit_image(show=True)  # Only displayed when this interface is activated
         elif objectName == 'GDSInterface':
-            print("显示GDS图像")
+            print("Display GDS image")
             self.show_gds_image(show=True)  # Only displayed when this interface is activated
 
     def _select_file(self, checked):
         fileDialog = QtWidgets.QFileDialog(self)
-        fileDialog.setWindowTitle('请选择文件')
+        fileDialog.setWindowTitle('Select File')
         fileDialog.setFileMode(QtWidgets.QFileDialog.FileMode.AnyFile)
         file_path, _ = fileDialog.getOpenFileName()
         print(file_path)
@@ -311,7 +310,7 @@ class MainWindow(FramelessWindow):
         """Slot to update the design in the main window when received from Dialog_Topology."""
         self.design = updated_design
         self.design_updated_flag = True  # Set the status flag to True
-        print("主窗口的设计已更新")
+        print("The design in the main window has been updated")
         # It may not be necessary to call the display image here
         self.show_topology_image(show=True)
         # self.show_gds_image(show=True)
@@ -325,7 +324,7 @@ class MainWindow(FramelessWindow):
         self.design.topology.save_image(path='./picture/topology.png')
         picture_path = './picture/topology.png'  # Image path
         if show and os.path.exists(picture_path):
-            print("显示拓扑图像")
+            print("Display topology image")
             self.show_picture(self.topoface, picture_path)
             # self.resetDesignUpdatedFlag()
 
@@ -334,7 +333,7 @@ class MainWindow(FramelessWindow):
         # self.design.equivalent_circuit.save_image(path='./picture/circuit.png')
         circuit_picture_path = './picture/circuit.png'
         if show and os.path.exists(circuit_picture_path):
-            print("显示等效电路图像")
+            print("Display equivalent circuit image")
             self.show_picture(self.circuitface, circuit_picture_path)
             self.resetDesignUpdatedFlag()
 
@@ -343,15 +342,15 @@ class MainWindow(FramelessWindow):
         self.design.gds.save_svg(path='./picture/gds.svg')
         gds_picture_path = './picture/gds.svg'
         if show and os.path.exists(gds_picture_path):
-            print("显示GDS图像")
+            print("Display GDS image")
             self.show_picture(self.gdsface, gds_picture_path)
             # self.show_topology_image(show=True)
             self.resetDesignUpdatedFlag()
 
     def show_picture(self, label, picture_path):
-        label.resize(500, 500)  # ensurelabelThe size is sufficient to display the image
+        label.resize(500, 500)  # ensure label The size is sufficient to display the image
         label.setPixmap(QtGui.QPixmap(picture_path))
-        print(f"显示图片: {picture_path}")  # debug information，Confirm the path of the displayed image
+        print(f"Display image: {picture_path}")  # debug information，Confirm the path of the displayed image
 
 
 if __name__ == '__main__':

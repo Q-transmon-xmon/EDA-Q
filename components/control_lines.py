@@ -5,57 +5,57 @@ import copy
 
 class ControlLines(CmpntsBase):
     """
-    ControlLinesclass，Inherited fromCmpntsBase，Used for managing and operating control line components。
+    ControlLines class, inherited from CmpntsBase, used for managing and operating control line components.
     """
 
     def __init__(self, **init_ops):
         """
-        initializationControlLinesobject。
+        Initialize the ControlLines object.
 
-        input：
-            init_ops: dict，initialization所需的参数。
+        Input:
+            init_ops: dict, parameters required for initialization.
 
-        output：
-            not have
+        Output:
+            None
         """
         self.initialization(**init_ops)  # Call initialization method
         return
     
     def initialization(self, **init_ops):
         """
-        Initialize the set of control line components。
+        Initialize the set of control line components.
 
-        input：
-            init_ops: dict，Generate initialization parameters for control line components。
+        Input:
+            init_ops: dict, parameters for generating control line components.
 
-        output：
-            not have
+        Output:
+            None
         """
         # Initialize component name list
         self.cmpnt_name_list = []
-        # Options for calling functional modules to generate control line components
+        # Call the function module to generate options for control line components
         options = func_modules.ctls.generate_control_lines(**init_ops)
         self.inject_options(options)  # Inject generated parameters
         return
     
     def mirror_ControlLine(self, name_list):
         """
-        Mirror the specified control line components（Horizontal mirroring）。
+        Mirror the specified control line components (horizontal mirroring).
 
-        input：
-            name_list: list，Contains a list of control line names that need to be mirrored。
+        Input:
+            name_list: list, contains the names of control lines that need to be mirrored.
 
-        output：
-            not have
+        Output:
+            None
         """
-        # Get the parameters of the current control line component
+        # Get the parameters of the current control line components
         ctls_ops = self.options
         for name in name_list:
             # Generate new names for the mirrored control lines
             new_name = name + "_mirror"
-            ctl_ops = copy.deepcopy(ctls_ops[name])  # Obtain the parameters of the original control line
-            new_ctl_ops = copy.deepcopy(ctl_ops)  # Create a parameter copy of the mirror control line
-            new_ctl_ops.name = new_name  # Set a new name for the mirror control line
+            ctl_ops = copy.deepcopy(ctls_ops[name])  # Get the parameters of the original control line
+            new_ctl_ops = copy.deepcopy(ctl_ops)  # Create a copy of the mirrored control line parameters
+            new_ctl_ops.name = new_name  # Set a new name for the mirrored control line
 
             # Mirror the path of the control line
             path = copy.deepcopy(ctl_ops.path)
@@ -63,7 +63,7 @@ class ControlLines(CmpntsBase):
             for pos in path:
                 new_pos = (-pos[0], pos[1])  # Horizontal mirror operation
                 new_path.append(copy.deepcopy(new_pos))
-            new_ctl_ops.path = copy.deepcopy(new_path)  # Update the path of the image
+            new_ctl_ops.path = copy.deepcopy(new_path)  # Update the path of the mirrored control line
 
             # Add the mirrored control line parameters to the component collection
             ctls_ops[new_name] = copy.deepcopy(new_ctl_ops)

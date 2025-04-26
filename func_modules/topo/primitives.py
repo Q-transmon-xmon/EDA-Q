@@ -22,24 +22,24 @@ def generate_topo_positions(qubits_num, topo_col: int = None, topo_row: int = No
     if topo_col is None and topo_row is None:
         topo_col = math.ceil(math.sqrt(qubits_num))
         topo_row = math.ceil(qubits_num/topo_col)
-        print("未指定拓扑的行列数，默认col = {}, row = {}".format(topo_col, topo_row))
+        print(f"Number of columns and rows not specified. Default col = {topo_col}, row = {topo_row}")
     elif topo_col is None:
         topo_col = math.ceil(qubits_num/topo_row)
-        print("计算得topo_col = {}".format(topo_col))
+        print(f"Calculated topo_col = {topo_col}")
     elif topo_row is None:
         topo_row = math.ceil(qubits_num/topo_col)
-        print("计算得topo_row = {}".format(topo_row))
+        print(f"Calculated topo_row = {topo_row}")
     else:
         if topo_col*topo_row < qubits_num:
-            raise ValueError("拓扑的行列数不足以容纳量子比特：\n \
-                             qubits_num = {}, topo_col = {}, topo_row = {}".format(qubits_num, topo_col, topo_row))
+            raise ValueError(f"The number of rows and columns in the topology is insufficient to accommodate the qubits:\n \
+                             qubits_num = {qubits_num}, topo_col = {topo_col}, topo_row = {topo_row}")
 
     # Generate coordinates
     positions = Dict()
     idx = 0
     for y in range(topo_row):
         for x in range(topo_col):
-            positions["q"+str(idx)] = (x, y)
+            positions[f"q{idx}"] = (x, y)
             idx += 1
             if idx == qubits_num:
                 break
@@ -62,24 +62,24 @@ def generate_topo_positions_col_row(qubits_num, topo_col: int = None, topo_row: 
     if topo_col is None and topo_row is None:
         topo_col = math.ceil(math.sqrt(qubits_num))
         topo_row = math.ceil(qubits_num/topo_col)
-        print("未指定拓扑的行列数，默认col = {}, row = {}".format(topo_col, topo_row))
+        print(f"Number of columns and rows not specified. Default col = {topo_col}, row = {topo_row}")
     elif topo_col is None:
         topo_col = math.ceil(qubits_num/topo_row)
-        print("计算得topo_col = {}".format(topo_col))
+        print(f"Calculated topo_col = {topo_col}")
     elif topo_row is None:
         topo_row = math.ceil(qubits_num/topo_col)
-        print("计算得topo_row = {}".format(topo_row))
+        print(f"Calculated topo_row = {topo_row}")
     else:
         if topo_col*topo_row < qubits_num:
-            raise ValueError("拓扑的行列数不足以容纳量子比特：\n \
-                             qubits_num = {}, topo_col = {}, topo_row = {}".format(qubits_num, topo_col, topo_row))
+            raise ValueError(f"The number of rows and columns in the topology is insufficient to accommodate the qubits:\n \
+                             qubits_num = {qubits_num}, topo_col = {topo_col}, topo_row = {topo_row}")
 
     # Generate coordinates
     positions = Dict()
     idx = 0
     for y in range(topo_row):
         for x in range(topo_col):
-            positions["q"+str(idx)] = (x, y)
+            positions[f"q{idx}"] = (x, y)
             idx += 1
             if idx == qubits_num:
                 break
@@ -123,10 +123,10 @@ def generate_random_edges(positions, edges_num: int = None):
     max_edges_num = len(full_edges)
     if edges_num is None:
         edges_num = random.randint(1, max_edges_num)
-    print("随机生成拓扑边的数量是{}...".format(edges_num))
+    print(f"Randomly generating {edges_num} topology edges...")
     # outlier detection
     if edges_num > max_edges_num:
-        print("设置的边太多，自动降为能容纳边数的最大值: {}".format(max_edges_num))
+        print(f"The number of edges is too high. Automatically reducing to the maximum number of edges that can be accommodated: {max_edges_num}")
         edges_num = max_edges_num
     # take a sample
     edges = random.sample(full_edges, edges_num)
@@ -144,7 +144,7 @@ def to_random_edges_full_connected(topo_poss):
     """
 
     # Reminder information
-    print("随机生成拓扑边（连通图）...")
+    print("Randomly generating topology edges (connected graph)...")
 
     # Call method to generate connected topological edges
     topo_edges = toolbox.generate_connected_edges(topo_poss)
@@ -175,7 +175,7 @@ def cp_lines_update_topo_edges(coupling_lines, topo_edges):
     # Update new topology edges
     for edge in new_topo_edges:
         if edge not in topo_edges:
-            print("自动删除边{}...".format(edge))
+            print(f"Automatically removing edge {edge}...")
 
     return copy.deepcopy(new_topo_edges)
 
@@ -196,16 +196,16 @@ def generate_hex_pos(num):
     positions = Dict()
 
     if num == 0:
-        raise ValueError("num不能为0")
+        raise ValueError("num cannot be 0")
     
     if not isinstance(num, int):
-        raise ValueError("num必须是整数")
+        raise ValueError("num must be an integer")
     
     if num < 0:
-        raise ValueError("num必须大于0")
+        raise ValueError("num must be greater than 0")
     
     if num > 7:
-        raise ValueError("num现在不能大于7")
+        raise ValueError("num cannot be greater than 7 for now")
     
     # The center point of a hexagon
     base_poses = [(0, 0)]
@@ -225,20 +225,12 @@ def generate_hex_pos(num):
         for angle in angles:
             pos = (base_pos[0]+length*math.cos(angle), base_pos[1]+length*math.sin(angle))
             if not panduan_shifou_yijingyou_zhege_dian(positions, pos):
-                positions["q{}".format(qubits_idx)] = copy.deepcopy(pos)
+                positions[f"q{qubits_idx}"] = copy.deepcopy(pos)
                 qubits_idx += 1
 
         num -= 1
         base_pos_idx += 1
 
-    
-
-    # kuozhan_idx = 0
-    
-    # def kuozhan_base_pos():
-    #     kuozhan_idx += 1
-    #     return
-    
     return positions
 
 def panduan_shifou_yijingyou_zhege_dian(positions, pos):
@@ -277,7 +269,7 @@ def generate_hex_full_edges(positions):
             # Determine if they are the same point
             if q == qq:
                 continue
-            # Determine if the distance is1
+            # Determine if the distance is 1
             dist = calculate_distance(positions[q], positions[qq])
             if not are_floats_equal(1, dist):
                 continue

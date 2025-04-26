@@ -192,7 +192,7 @@ def generate_tmls(qubits_ops, rdls_ops, pins_ops, tmls_type, chip_name):
     Output:
     tmls_ops: Dictionary of generated transmission line operation parameters.
     """
-    print("Control_off_chip策略生成传输线...")
+    print("Generate transmission lines using the Control_off_chip strategy...")
 
     # Interface
     topo_poss = Dict()
@@ -235,7 +235,7 @@ def generate_tmls(qubits_ops, rdls_ops, pins_ops, tmls_type, chip_name):
         wiring_right_gap = wiring_right_distance / (right_num + upper_num / 2 + 1)
 
         if (wiring_left_gap < 50 or wiring_right_gap < 50):
-            raise ValueError("前芯片尺寸导致传输线距离过短。")
+            raise ValueError("The previous chip size resulted in transmission lines being too short.")
 
         for i in range(int(upper_num / 2)):
             start_pos = pins["pin_upper_{}".format(i)].pos

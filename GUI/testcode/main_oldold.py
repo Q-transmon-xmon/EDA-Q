@@ -119,7 +119,7 @@ class MyMainWindow(QMainWindow):
             self._update_main_design()
 
     def _update_main_design(self):
-        """pass through GlobalState Get the current design instance"""
+        """Retrieve the current design instance through GlobalState"""
         current_name = global_state.get_current_design_name()  # Using encapsulated retrieval methods
         design_instance = global_state.get_design(current_name)  # Obtain design instances through interfaces
 
@@ -129,7 +129,7 @@ class MyMainWindow(QMainWindow):
             # Update display area
             self._update_display_area(design_instance)
         else:
-            logging.warning(f"当前设计 '{current_name}' 不存在")
+            logging.warning(f"Design '{current_name}' does not exist")
 
     def _update_display_area(self, design_instance: Design) -> None:
         """Update display area content"""
@@ -138,26 +138,26 @@ class MyMainWindow(QMainWindow):
             design_instance.topology.save_image(path='./picture/topology.png')
             self.display_area.topo_tab.show_image('./picture/topology.png', show=True)
 
-            # Save and displayGDSimage
+            # Save and display GDS image
             design_instance.gds.save_svg(path='./picture/gds.svg')
             self.display_area.gds_tab.show_image('./picture/gds.svg', show=True)
         except Exception as e:
-            logging.error(f"显示图像失败: {e}")
+            logging.error(f"Failed to display image: {e}")
 
     def update_design_instance(self, design_name: str, updated_design: Design) -> None:
-        """pass through GlobalState Update design examples"""
+        """Update design instances through GlobalState"""
         if global_state.design_exists(design_name):  # Using encapsulated inspection methods
             global_state.update_design(design_name, updated_design)
-            logging.info(f"设计 '{design_name}' 已更新。")
+            logging.info(f"Design '{design_name}' has been updated.")
         else:
-            logging.warning(f"设计 '{design_name}' 不存在，无法更新。")
+            logging.warning(f"Design '{design_name}' does not exist and cannot be updated.")
 
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    app.setFont(QFont("Segoe UI", 10))
+    if __name__ == "__main__":
+        app = QApplication(sys.argv)
+        app.setFont(QFont("Segoe UI", 10))
 
-    window = MyMainWindow()
-    window.show()
+        window = MyMainWindow()
+        window.show()
 
-    sys.exit(app.exec_())
+        sys.exit(app.exec_())

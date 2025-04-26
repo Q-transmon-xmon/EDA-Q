@@ -14,7 +14,7 @@ from api.design import Design
 class NestedDictViewer(QMainWindow):
     def __init__(self, design):
         super().__init__()
-        self.setWindowTitle("GDS版图修改")
+        self.setWindowTitle("GDS Layout Modification")
         self.setGeometry(100, 100, 800, 600)
 
         # Set the font for the entire interface
@@ -48,10 +48,10 @@ class NestedDictViewer(QMainWindow):
         self.layout.addWidget(self.tree)
         self.layout.addWidget(self.scroll)
 
-        # create Window_Gds example
+        # Create Window_Gds instance
         self.window_gds = Window_Gds(design, self.tree, self.content_layout)
 
-        # Connection window size change signal
+        # Connect window size change signal
         self.central_widget.resizeEvent = self.on_resize
 
     def on_resize(self, event):
@@ -75,7 +75,7 @@ class Window_Gds(QtCore.QObject):
         # Fill in tree control
         self.populate_tree(self.data)
 
-        # joining signal
+        # Connect signal
         self.tree.itemClicked.connect(self.on_item_clicked)
 
     def populate_tree(self, data, parent=None):
@@ -133,7 +133,7 @@ class Window_Gds(QtCore.QObject):
                 'is_numpy': isinstance(value, np.ndarray)
             }
 
-            # Create tags and input boxes
+            # Create labels and input boxes
             line_edit = QLineEdit(str(value))
             line_edit.setMinimumWidth(300)
             line_edit.setProperty("path_key", path_key)
@@ -142,7 +142,7 @@ class Window_Gds(QtCore.QObject):
 
         # Add Save button
         if dict_data:
-            save_button = QPushButton("保存")
+            save_button = QPushButton("Save")
             save_button.clicked.connect(self.save_changes)
             self.content_layout.addRow(QLabel(), save_button)
             self.content_layout.setAlignment(save_button, Qt.AlignRight)
@@ -159,9 +159,9 @@ class Window_Gds(QtCore.QObject):
         """Resolve input values based on the original type"""
         try:
             if original_info['is_numpy']:
-                # handlenumpyarray
+                # Handle numpy array
                 try:
-                    # Attempt to evaluate the string asPythonexpression
+                    # Attempt to evaluate the string as a Python expression
                     value = eval(text)
                     return np.array(value, dtype=original_info['value'].dtype)
                 except:
@@ -169,13 +169,13 @@ class Window_Gds(QtCore.QObject):
             elif original_info['type'] == bool:
                 return text.lower() in ('true', '1', 'yes', 'y', 't')
             elif original_info['type'] == int:
-                return int(float(text))  # Allow decimal point input，But convert to an integer
+                return int(float(text))  # Allow decimal point input, but convert to an integer
             elif original_info['type'] == float:
                 return float(text)
             elif original_info['type'] == str:
                 return text
             else:
-                # For other types，Try usingeval
+                # For other types, try using eval
                 try:
                     return eval(text)
                 except:
@@ -195,7 +195,7 @@ class Window_Gds(QtCore.QObject):
         new_value = self.parse_value(text, original_info)
 
         if new_value is not None:
-            # update data
+            # Update data
             current_dict = self.data
             path_parts = path_key.split('.')
             for part in path_parts[:-1]:
@@ -217,9 +217,9 @@ class Window_Gds(QtCore.QObject):
                 self.on_item_clicked(self.current_item, 0)
 
             # Display success message
-            QMessageBox.information(None, "成功", "更改已保存")
+            QMessageBox.information(None, "Success", "Changes have been saved")
         except Exception as e:
-            QMessageBox.critical(None, "错误", f"保存失败: {str(e)}")
+            QMessageBox.critical(None, "Error", f"Failed to save: {str(e)}")
 
 
 if __name__ == "__main__":
@@ -234,7 +234,7 @@ if __name__ == "__main__":
     def updateMainDesign(updated_design):
         design = updated_design
         design.topology.show_image()
-        print("主窗口设计已更新")
+        print("Main design has been updated")
 
 
     viewer.window_gds.designUpdated.connect(updateMainDesign)

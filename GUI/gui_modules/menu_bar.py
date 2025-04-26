@@ -374,11 +374,11 @@ class MenuBarManager(QObject):
             return
 
         # Add Component Type Input Dialogue Box
-        from PyQt5.QtWidgets import QInputDialog
+        from PyQt5.QtWidgets import QInputDialog, QMessageBox
         component_type, ok = QInputDialog.getText(
             self.parent,
-            "组件类型",
-            "请输入组件大类名称（如 cpw_components）:",
+            "Component Type",
+            "Enter the component category name (e.g., cpw_components):",
             text="cpw_components"
         )
 
@@ -386,27 +386,28 @@ class MenuBarManager(QObject):
             return
 
         try:
-            # Use a new oneGDSprocessor
+            # Use a new GDS processor
             result = GDSProcessor.parse_gds(path, component_type)
             if result:
                 QMessageBox.information(
                     self.parent,
-                    "导入成功",
-                    f"GDS文件已成功解析并添加到 {component_type} 类别！"
+                    "Import Successful",
+                    f"The GDS file has been successfully parsed and added to the {component_type} category!"
                 )
             else:
                 QMessageBox.warning(
                     self.parent,
-                    "导入警告",
-                    "GDS文件解析完成但未生成有效组件"
+                    "Import Warning",
+                    "The GDS file was parsed but no valid components were generated."
                 )
         except Exception as e:
             QMessageBox.critical(
                 self.parent,
-                "导入错误",
-                f"导入失败: {str(e)}"
+                "Import Error",
+                f"Import failed: {str(e)}"
             )
+
     def _handle_lambda4_frequency(self):
-        """handleλ/4Frequency calculation"""
+        """Handle λ/4 Frequency calculation"""
         dialog = LambdaQuarterFrequencyDialog(self.parent)
         dialog.exec_()

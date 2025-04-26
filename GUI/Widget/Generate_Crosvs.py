@@ -21,7 +21,7 @@ class Ui_Dialog:
         self.inputLayout.setSpacing(10)  # Set the spacing between controls within the input box layout
 
         # Create tags and input boxes
-        self.createLabeledInput("芯片层名称:")
+        self.createLabeledInput("Chip layer name:")
 
         # Add input box layout to the main layout
         self.mainLayout.addLayout(self.inputLayout)

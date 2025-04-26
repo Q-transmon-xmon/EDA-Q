@@ -114,10 +114,10 @@ def change_qubit_options(txt_path, qcsv_path, qubit_name, value):
         data_list[index_to_modify][3] = str(round(float(value) * 10 ** -15, 17))
         # Update information in the csv file
         update_csv_cell_qubit(qcsv_path, str(qubit_name), 2, value)
-        print(f"{qubit_name.lower()}的电容值已成功更新。")
+        print(f"The capacitance value of {qubit_name.lower()} has been successfully updated.")
 
     else:
-        print(f"未找到要修改的{qubit_name.lower()}对应的行。")
+        print(f"No corresponding row for {qubit_name.lower()} was found.")
 
     with open(txt_path, 'w') as file:
         for item in data_list:
@@ -159,9 +159,9 @@ def change_coupling_options(txt_path, rcsv_path, coupling_line_name, op_name, op
             data_list[index_to_modify][3] = str(round(float(op_value) * 10 ** -15, 17))
             # Update information in the csv file
             update_csv_cell_resonator(rcsv_path, str(coupling_line_name), 2, op_value)
-            print(f"{coupling_line_name}的电容值已成功更新。")
+            print(f"The capacitance value of {coupling_line_name} has been successfully updated.")
         else:
-            print(f"未找到要修改的{coupling_line_name}对应的行。")
+            print(f"No corresponding row for {coupling_line_name} was found.")
     elif op_name.lower() == 'l':
         # Find the index of the line to modify
         index_to_modify = -1
@@ -176,10 +176,10 @@ def change_coupling_options(txt_path, rcsv_path, coupling_line_name, op_name, op
             data_list[index_to_modify][3] = str(round(float(op_value) * 10 ** -9, 11))
             # Update information in the csv file
             update_csv_cell_resonator(rcsv_path, str(coupling_line_name), 3, op_value)
-            print(f"{coupling_line_name}的电感值已成功更新。")
+            print(f"The inductance value of {coupling_line_name} has been successfully updated.")
 
         else:
-            print(f"未找到要修改的{coupling_line_name}对应的行。")
+            print(f"No corresponding row for {coupling_line_name} was found.")
 
     with open(txt_path, 'w') as file:
         for item in data_list:
@@ -585,12 +585,6 @@ def link_circuit_Vertical_positive(x1, y1, num, txt_path, rcsv_path):
     C_Vertical_circuit(x1, y1 + 3, 3e-15, txt_path=txt_path)
 
 
-# def clear_file(file_path):
-#     if os.path.exists(file_path):
-#         with open(file_path, 'w') as file:
-#             file.truncate(0)
-
-# Modify csv data
 def update_csv_cell_qubit(file_path, target_row, target_column, new_value):
     """
     Update the cell data in the qubit csv file.

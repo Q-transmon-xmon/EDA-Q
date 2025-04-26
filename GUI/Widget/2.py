@@ -11,7 +11,7 @@ from api.design import Design
 class NestedDictViewer(QMainWindow):
     def __init__(self, design):
         super().__init__()
-        self.setWindowTitle("GDS版图修改")
+        self.setWindowTitle("Modification of GDS Layout")
         self.setGeometry(100, 100, 800, 600)
 
         # Set the font for the entire interface
@@ -126,7 +126,7 @@ class Window_Gds(QtCore.QObject):
 
         # Add Save button
         if dict_data:  # If the dictionary is not empty
-            save_button = QPushButton("保存")
+            save_button = QPushButton("Save")
             save_button.clicked.connect(self.save_changes)
             self.content_layout.addRow(QLabel(), save_button)
             self.content_layout.setAlignment(save_button, Qt.AlignRight)  # Place the save button in the bottom right corner

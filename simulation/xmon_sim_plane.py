@@ -1071,12 +1071,12 @@ def simulation(qubit, path):
 
     if path == Dict() or path is None:
         path = "C:/sim_proj/PlaneXmon_sim/Xmon_random_capacity_{}.txt".format(q_name)    # Default path
-        print("默认电容矩阵的保存路径为{}".format(path))
+        print("The default save path for the capacitor matrix is {}".format(path))
     import toolbox
     toolbox.jg_and_create_path_plus(path)
 
     oDesign.ExportMatrixData(path, "C", "", "Setup:LastAdaptive", "Original", "ohm", "nH", "fF", "mSie", 5000000000, "Maxwell,Spice,Couple", 0, False, 15, 20, 1)
-    print("电容矩阵已经保存到{}".format(path))
+    print("The capacitor matrix has been saved to {}".format(path))
 
     p=pathlib.Path(path)
     m=p.read_text().split('\n')

@@ -17,14 +17,17 @@ from GUI.gui_modules.global_state import global_state
 from GUI.gui_modules.Design_options import DesignOptions
 from GUI.gui_modules.global_state import global_state
 from GUI.gui_modules.styles import set_stylesheet
+
+
 class AppController:
-    """Business logic controller，Handling data operations and complex interactions"""
+    """Business logic controller, Handling data operations and complex interactions"""
 
     def __init__(self, window):
         self.window = window
         self.design_options = DesignOptions(window)
         self._init_global_design()
         self._connect_business_signals()
+
     def _init_global_design(self):
         """Initialize global design instance"""
         if not global_state.design_exists("Initial Design"):
@@ -52,8 +55,8 @@ class AppController:
                 self._update_component_library(design)
                 self._update_display(design)
             except Exception as e:
-                logging.error(f"界面更新失败: {str(e)}")
-                self.window.statusBar().showMessage(f"错误: {str(e)}", 5000)
+                logging.error(f"Interface update failed: {str(e)}")
+                self.window.statusBar().showMessage(f"Error: {str(e)}", 5000)
 
     def _update_component_library(self, design: Design):
         """Update component library content"""
@@ -68,4 +71,4 @@ class AppController:
             self.window.display_area.topo_tab.show_image('./picture/topology.png')
             self.window.display_area.gds_tab.show_image('./picture/gds.svg')
         except Exception as e:
-            logging.error(f"图像显示失败: {str(e)}")
+            logging.error(f"Image display failed: {str(e)}")

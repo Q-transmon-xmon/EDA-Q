@@ -11,7 +11,6 @@ PROJ_PATH = os.path.dirname(GUI_PATH)
 sys.path.append(GUI_PATH)
 sys.path.append(PROJ_PATH)
 
-
 from PySide6.QtGui import QFont
 from api.design import Design
 from GUI.Widget.Topo_Node import Dialog_Node
@@ -23,7 +22,7 @@ class Ui_Dialog_Topology(object):
     def setupUi(self, Dialog_Topology):
         Dialog_Topology.setObjectName("Dialog_topology")
         Dialog_Topology.resize(500, 300)
-        # Set the font of the entire interface to Microsoft Yahei
+        # Set the font of the entire interface to Microsoft YaHei
         Dialog_Topology.setFont(QFont("Microsoft YaHei", 10.5))
         # Create a main layout
         self.mainLayout = QtWidgets.QVBoxLayout(Dialog_Topology)
@@ -67,10 +66,10 @@ class Ui_Dialog_Topology(object):
 
     def retranslateUi(self, Dialog_Topology):
         _translate = QtCore.QCoreApplication.translate
-        Dialog_Topology.setWindowTitle(_translate("Dialog_topology", "自定义拓扑"))
-        self.pushButton.setText(_translate("Dialog_topology", "拓扑节点生成"))
-        self.pushButton_2.setText(_translate("Dialog_topology", "随机化拓扑边设计"))
-        self.pushButton_3.setText(_translate("Dialog_topology", "拓扑边定制设计"))
+        Dialog_Topology.setWindowTitle(_translate("Dialog_topology", "Custom Topology"))
+        self.pushButton.setText(_translate("Dialog_topology", "Generate Topology Nodes"))
+        self.pushButton_2.setText(_translate("Dialog_topology", "Randomize Topology Edges"))
+        self.pushButton_3.setText(_translate("Dialog_topology", "Customize Topology Edges"))
 
 
 class Dialog_Topology(QtWidgets.QDialog, Ui_Dialog_Topology):
@@ -102,14 +101,14 @@ class Dialog_Topology(QtWidgets.QDialog, Ui_Dialog_Topology):
 
     def updateDesign(self, updated_design):
         self.design = updated_design
-        print("topology中的设计已更新")
+        print("Design updated in topology")
         # self.design.topology.show_image()
-        self.designUpdated.emit(self.design)  # emit a signal，Transfer the updated design
+        self.designUpdated.emit(self.design)  # Emit a signal, transfer the updated design
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     dialog = Dialog_Topology(design=Design())
-    dialog.designUpdated.connect(lambda updated_design: print("主窗口接收到更新后的设计!"))
+    dialog.designUpdated.connect(lambda updated_design: print("Main window received the updated design!"))
     dialog.show()
     sys.exit(app.exec())
