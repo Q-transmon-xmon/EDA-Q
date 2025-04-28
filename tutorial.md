@@ -16,6 +16,8 @@ This tutorial introduces the usage of EDA-Q.
 - [Auto Routing](#auto-routing)
 - [Simulation](#simulation)
 - [Modify The Gds Layout](#modify-the-gds-layout)
+- [Calculation of physical parameters](#calculation-of-physical-parameters)
+- [Other Functions](#other-functions)
 
 ## Basic Interface
 
@@ -123,6 +125,18 @@ design.equivalent_circuit.find_coupling_options(coupling_line_name="c21", op_nam
 
 # Save the equivalent circuit diagram as an image.
 design.equivalent_circuit.save_image(path="./picture/equivalent_circuit.png")  # This feature currently has errors.
+
+# Calculate the eigenfrequency.
+design.equivalent_circuit.call_eigenfrequencies()
+
+# Calculate the anharmonicities
+design.equivalent_circuit.call_anharmonicities()
+
+# Calculate the loss rates.
+design.equivalent_circuit.call_loss_rates()
+
+# Calculating the Kerr parameters.
+design.equivalent_circuit.call_kerr()
 ```
 ## Generate Qubits
 

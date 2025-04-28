@@ -8,6 +8,7 @@ import equ_circ.equ_circ_old
 import func_modules
 import copy
 import numpy as np
+import qucat
 
 class EquivalentCircuit(Base):
     def __init__(self, **init_ops):
@@ -93,6 +94,15 @@ class EquivalentCircuit(Base):
                                    txt_path=self.options_path, 
                                    qcsv_path=self.qcsv_path, 
                                    rcsv_path=self.rcsv_path)
+        
+        #from equ_circ.qucat import GUI
+        from qucat import GUI
+
+        self.qucat_cir = GUI(self.options_path,  # Location of the circuit file
+               edit=True,  # Open the GUI to edit the circuit
+               plot=True,  # Plot the circuit after editing
+               print_network=False  # Do not print the network
+               )
         return
 
     def show(self):
@@ -239,3 +249,22 @@ class EquivalentCircuit(Base):
             return False
         else:
             return True
+        
+    def call_eigenfrequencies(self, **kwargs):
+        EF = self.qucat_cir.eigenfrequencies(**kwargs)
+        return EF
+    
+    def call_loss_rates(self, **kwargs):
+        LR = self.qucat_cir.loss_rates(**kwargs)
+        return LR
+
+    def call_anharmonicities(self, **kwargs):
+        AH = self.qucat_cir.anharmonicities(**kwargs)
+        return AH
+    
+    def call_kerr(self, **kwargs):
+        KR = self.qucat_cir.kerr(**kwargs)
+        return KR
+    
+
+    
