@@ -37,6 +37,8 @@ def simulation(qubit, path):
     """
     ############################### Interface ########################################
     # a = Xmon(x=0,y=0,Q_name='123')      # Instantiate once
+    import toolbox
+    toolbox.show_options(qubit)
     q_name = qubit.name
     width = qubit.cross_width
     height = qubit.cross_height

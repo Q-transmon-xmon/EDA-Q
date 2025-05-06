@@ -637,6 +637,7 @@ class Gds(GdsBase):
     def auto_generate_air_bridge4(self, line_type, line_name, spacing=120, chip_name="chip3", width=10, air_bridge_type="AirBridgeNb"):
         """
         Automatically generate an air bridge (advanced version).
+        This version can automatically detect and optimize the overlap of AirBridgeNb.
 
         Input:
             line_type: str, the type of line, supports "control_lines" or "transmission_lines".
@@ -674,6 +675,25 @@ class Gds(GdsBase):
                                                                          air_bridge_type=air_bridge_type)
         gds_ops.air_bridges = copy.deepcopy(ab_ops)
         self.inject_options(gds_ops)
+        return
+    
+    def optimize_air_bridges_layout(self):
+        """
+        Automatically optimize air bridges layout.
+
+        Input:
+            None
+
+        Output:
+            None
+        """
+
+        # parameters preparation
+        gds_ops = self.options
+
+        # operation
+        new_gds_ops = func_modules.air_bridges.optimize_air_bridges_layout(gds_ops)
+        self.inject_options(new_gds_ops)
         return
     
     def get_gds_bounding_box(self):

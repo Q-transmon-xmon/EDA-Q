@@ -16,6 +16,7 @@ This tutorial introduces the usage of EDA-Q.
 - [Auto Routing](#auto-routing)
 - [Simulation](#simulation)
 - [Modify The Gds Layout](#modify-the-gds-layout)
+- [Add Air Bridges](#add-air-bridges)
 - [Calculation of physical parameters](#calculation-of-physical-parameters)
 - [Other Functions](#other-functions)
 
@@ -215,6 +216,14 @@ options = Dict(
     subtract_height=600
 )
 design.generate_qubits(topo_positions=True, qubits_type="Transmon", geometric_ops=options)
+
+design.gds.generate_qubits_1(num: int,
+                             num_cols: int,
+                             num_rows: int,
+                             type: str = "Transmon",
+                             chip: str = "default_layer",
+                             dist: int = 2000,
+                             geometric_options: Dict = Dict())
 ```
 ## Generate Chip
 
@@ -236,6 +245,8 @@ design.generate_chip(qubits=True, chip_name="chip0", dist=4000)
 
 # Use the center point of the quantum bit layout as the chip center point, specify the chip name, and define the chip height and width
 design.generate_chip(qubits=True, chip_name="chip0", height=20000, width=20000)
+
+design.copy_chip(old_chip_name="chip0", new_chip_name="chip1")
 ```
 ## Generate Coupling Lines
 ```python
@@ -329,10 +340,10 @@ design.routing(method="Flipchip_routing",
 ## Simulation
 ```python
 # Perform capacitance simulation for Xmon-type qubits in a flip-chip structure
-design.simulation(sim_module="Flipchip_Xmon", ctl_name="charge_line_0", q_name="q0")
+design.simulation(sim_module="Flipchip_Xmon", ctl_name="control_lines_0", q_name="q0")
 
 # Perform capacitance simulation for Xmon-type qubits in a flip-chip structure and specify the path to save the capacitance matrix
-design.simulation(sim_module="Flipchip_Xmon", ctl_name="charge_line_0", q_name="q0", path="./results.txt")
+design.simulation(sim_module="Flipchip_Xmon", ctl_name="control_lines_0", q_name="q0", path="./results.txt")
 
 # Perform capacitance simulation for Xmon-type qubits in a planar structure
 design.simulation(sim_module="PlaneXmonSim", qubit_name="q0")
@@ -409,6 +420,30 @@ op1 = Dict(
 )
 options_list = [op0, op1]
 design.gds.qubits.batch_add(options_list=options_list)
+```
+
+### Add Air Bridges
+
+```python
+#define an air_bridge
+option = Dict(
+    name=f"air_bridge_line_{i}_{j}",
+    type=air_bridge_type,
+    chip=chip_type,
+    gds_pos=gds_pos,
+    rotation=angle
+)
+
+#add new air_bridge on a concret line(based on line_type and line_name)
+design.gds.auto_generate_air_bridge3(line_type="control_lines",
+                                     line_name="charge_line1",
+                                     spacing=spacing,
+                                     chip_name="chip0",
+                                     width=8,
+                                     air_bridge_type="AirbridgeNb")
+
+#optimize air_bridges layout
+design.gds.optimize_air_bridges_layout()
 ```
 
 ## Calculation of physical parameters

@@ -3,8 +3,7 @@ import copy
 import toolbox
 
 from func_modules.air_bridges import air_bridge_lzh
-from func_modules.air_bridges import air_bridge_yxh
-from func_modules.air_bridges import generate_air_bridges
+from func_modules.air_bridges import optimize_air_bridges_layout_code
 
 import toolbox
 import copy
@@ -38,3 +37,6 @@ def auto_generate_air_bridges_ops2(gds_ops,
                                                              chip_name=chip_name, 
                                                              width=width, 
                                                              air_bridge_type=air_bridge_type)
+
+def optimize_air_bridges_layout(gds_ops):
+    return optimize_air_bridges_layout_code.optimize_air_bridges_layout(gds_ops)
