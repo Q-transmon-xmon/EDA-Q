@@ -344,7 +344,7 @@ def show_result(path):
     C2S = Cg[1] + Cbus[1]
     Cq = Cs + C1S * C2S / (C1S + C2S)
     print(f"Cq={str(round(Cq, 2)) + 'fF'}")
-    EC_a = e ** 2 / (2 * Cq * 1e15) / hbar  # Angular frequency, unit MHz
+    EC_a = e ** 2 / (2 * Cq * 1e-15) / hbar  # Angular frequency, unit MHz
     EC = EC_a / (2 * np.pi * 1e6)
     print(f"EC={str(round(EC, 2)) + 'MHz'}")
 
