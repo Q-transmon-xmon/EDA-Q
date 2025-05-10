@@ -1,1 +1,0 @@
-{"topology": {"positions": {}, "edges": []}, "gds": {"air_bridges": {}, "chips": {}, "control_lines": {}, "coupling_lines": {}, "cross_overs": {}, "indium_bumps": {}, "others": {}, "pins": {}, "qubits": {}, "readout_lines": {}, "transmission_lines": {}}, "tag": {}}

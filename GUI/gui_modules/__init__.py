@@ -13,11 +13,11 @@ PROJ_PATH = os.path.dirname(GUI_PATH)
 sys.path.append(GUI_PATH)
 sys.path.append(PROJ_PATH)
 
-from GUI.gui_modules.menu_bar import MenuBarManager
-from GUI.gui_modules.tool_bar import ToolBarManager
-from GUI.gui_modules.design_manager import DesignManager
-from GUI.gui_modules.Component_Library import ComponentLibrary
-from GUI.gui_modules.display_area import DisplayArea
+from GUI.gui_modules.Menu.menu_bar import MenuBarManager
+from GUI.gui_modules.Tool.tool_bar import ToolBarManager
+from GUI.gui_modules.Manager.design_manager import DesignManager
+from GUI.gui_modules.Component.Component_Library import ComponentLibrary
+from GUI.gui_modules.Display.display_area import DisplayArea
 
 __all__ = [
     'MenuBarManager',

@@ -2,6 +2,8 @@ import sys
 import os
 import logging
 
+from GUI.icons.path_manager import get_icon_path
+
 # Retrieve the directory where the current script is located
 current_path = os.path.dirname(os.path.abspath(__file__))
 GUI_PATH = os.path.dirname(current_path)
@@ -20,10 +22,9 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt
 from api.design import Design
 from GUI.gui_modules import DesignManager, MenuBarManager, ComponentLibrary, ToolBarManager
-from GUI.gui_modules.display_area import DisplayArea
-from GUI.gui_modules.styles import set_stylesheet
-from GUI.gui_modules.Design_options import DesignOptions
-from GUI.gui_modules.global_state import global_state
+from GUI.gui_modules.Display.display_area import DisplayArea
+from GUI.gui_modules.Global.styles import set_stylesheet
+from GUI.gui_modules.Global.global_state import global_state
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -57,20 +58,11 @@ class MyMainWindow(QMainWindow):
         self.display_area = DisplayArea(parent=self)
 
         # Manager class components
-        self.design_options = DesignOptions(self)
         self.toolbar_manager = ToolBarManager(self)
         self.menu_manager = MenuBarManager(parent=self)
         # Set window icon
-        # Get the absolute path directory of the current script
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        # Get the parent directory (assuming the icon is in the icons folder of the parent directory)
-        parent_dir = os.path.dirname(current_dir)
-        # Dynamically construct the icon path (based on the parent directory)
-        icon_path = os.path.join(parent_dir, "icons", "logo", "logo.png")
-        # Check if the path exists
-        if not os.path.exists(icon_path):
-            raise FileNotFoundError(f"Icon file not found: {icon_path}")
-        self.setWindowIcon(QIcon(icon_path))
+        icon_path = get_icon_path("logo", "logo.png")
+        self.setWindowIcon(QIcon(str(icon_path)))
 
     def _setup_ui(self):
         """Construct the user interface"""
