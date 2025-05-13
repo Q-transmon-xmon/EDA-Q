@@ -1,4 +1,4 @@
-# EDA-Q v0.10.0
+# EDA-Q v0.10.1
 
 [![](https://img.shields.io/badge/homepage-EDA_Q-orange)](https://github.com/Q-transmon-xmon/EDA-Q)
 
