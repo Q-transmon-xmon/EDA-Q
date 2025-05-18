@@ -2,8 +2,6 @@ import sys
 import os
 import logging
 
-from GUI.icons.path_manager import get_icon_path
-
 # Retrieve the directory where the current script is located
 current_path = os.path.dirname(os.path.abspath(__file__))
 GUI_PATH = os.path.dirname(current_path)
@@ -13,6 +11,7 @@ PROJ_PATH = os.path.dirname(GUI_PATH)
 sys.path.append(GUI_PATH)
 sys.path.append(PROJ_PATH)
 
+from GUI.icons.path_manager import get_icon_path
 # Import module
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import (
