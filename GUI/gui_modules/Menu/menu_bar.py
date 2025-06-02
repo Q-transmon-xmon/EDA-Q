@@ -26,6 +26,7 @@ class MenuBarManager(QObject):
     save_as_requested = pyqtSignal(str)  # Signal for save as path
     toggle_design_manager = pyqtSignal(bool)  # Signal for design manager visibility
     toggle_component_lib = pyqtSignal(bool)  # Signal for component library visibility
+    toggle_python_interpreter = pyqtSignal(bool) # Signal for python interpreter visibility
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -55,7 +56,8 @@ class MenuBarManager(QObject):
             ],
             "View": [
                 self._create_checkable_action("Show Design Manager", True, self._toggle_design_manager),
-                self._create_checkable_action("Show Component Library", True, self._toggle_component_lib)
+                self._create_checkable_action("Show Component Library", True, self._toggle_component_lib),
+                self._create_checkable_action("Show Python Interpreter", True, self._toggle_python_interpreter)
             ],
             "Tools": [
                 # Add Physical Calculation submenu
@@ -293,6 +295,10 @@ class MenuBarManager(QObject):
         """Toggle component library visibility"""
         self.toggle_component_lib.emit(state)
 
+    def _toggle_python_interpreter(self, state):
+        """Toggle python interpreter visibility"""
+        self.toggle_python_interpreter.emit(state)
+
     # endregion
 
     # region Tool and Help operations
@@ -306,7 +312,8 @@ class MenuBarManager(QObject):
 
     def _handle_documentation(self):
         """Open local documentation"""
-        doc_path = os.path.abspath("../../tutorial.pdf")
+        cur_dir = os.path.dirname(os.path.abspath(__file__))
+        doc_path = os.path.join(cur_dir, "../../tutorial.pdf")
         if os.path.exists(doc_path):
             QDesktopServices.openUrl(QUrl.fromLocalFile(doc_path))
         else:

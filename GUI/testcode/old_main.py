@@ -22,6 +22,7 @@ from PyQt5.QtCore import Qt
 from api.design import Design
 from GUI.gui_modules import DesignManager, MenuBarManager, ComponentLibrary, ToolBarManager
 from GUI.gui_modules.Display.display_area import DisplayArea
+from GUI.gui_modules.Command.Python_Interpreter import PythonInterpreter
 from GUI.gui_modules.Global.styles import set_stylesheet
 from GUI.gui_modules.Global.global_state import global_state
 
@@ -37,6 +38,7 @@ class MyMainWindow(QMainWindow):
         self.node_dialog = None
         self.design_manager_visible = True  # Design manager is visible by default
         self.component_lib_visible = True  # Component library is visible by default
+        self.python_interpreter_visible = True  # Python interpreter is visible by default
 
         # Initialize global design
         initial_design = Design()
@@ -59,6 +61,10 @@ class MyMainWindow(QMainWindow):
         # Manager class components
         self.toolbar_manager = ToolBarManager(self)
         self.menu_manager = MenuBarManager(parent=self)
+
+        # Python Interperter    
+        self.python_interperter = PythonInterpreter(self)
+
         # Set window icon
         icon_path = get_icon_path("logo", "logo.png")
         self.setWindowIcon(QIcon(str(icon_path)))
@@ -106,9 +112,14 @@ class MyMainWindow(QMainWindow):
         left_splitter.setMaximumWidth(530)  # Maximum width 500px
         left_splitter.setSizes([200, 400])  # Initial height allocation: Design Manager 200px, Component Library 400px
 
-        # Right display area
+        # Right vertical splitter
+        right_splitter = QSplitter(Qt.Vertical)
+        right_splitter.addWidget(self.display_area)
+        right_splitter.addWidget(self.python_interperter)
+        
+        # add left and right splitter to main splitter 
         main_splitter.addWidget(left_splitter)
-        main_splitter.addWidget(self.display_area)
+        main_splitter.addWidget(right_splitter)
 
         # Set main splitter parameters
         main_splitter.setSizes([300, 700])  # Initial width allocation: left 300px, right 700px
@@ -129,6 +140,7 @@ class MyMainWindow(QMainWindow):
         # Menu bar view toggle signals
         self.menu_manager.toggle_design_manager.connect(self.toggle_design_manager)
         self.menu_manager.toggle_component_lib.connect(self.toggle_component_library)
+        self.menu_manager.toggle_python_interpreter.connect(self.toggle_python_interpreter)
 
     # region View Control Functions
     def toggle_design_manager(self, visible: bool):
@@ -141,6 +153,12 @@ class MyMainWindow(QMainWindow):
         """Toggle the visibility of the component library"""
         self.component_lib_visible = visible
         self.component_library.setVisible(visible)
+        self._adjust_layout()
+
+    def toggle_python_interpreter(self, visible: bool):
+        """Toggle the visibility of the python interpreter"""
+        self.python_interpreter_visible = visible
+        self.python_interperter.setVisible(visible)
         self._adjust_layout()
 
     def _adjust_layout(self):

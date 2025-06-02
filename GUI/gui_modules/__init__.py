@@ -18,11 +18,13 @@ from GUI.gui_modules.Tool.tool_bar import ToolBarManager
 from GUI.gui_modules.Manager.design_manager import DesignManager
 from GUI.gui_modules.Component.Component_Library import ComponentLibrary
 from GUI.gui_modules.Display.display_area import DisplayArea
+from GUI.gui_modules.Command.Python_Interpreter import PythonInterpreter
 
 __all__ = [
     'MenuBarManager',
     'ToolBarManager',
     'DesignManager',
     'ComponentLibrary',
-    'DisplayArea'
+    'DisplayArea',
+    'PythonInterpreter'
 ]
