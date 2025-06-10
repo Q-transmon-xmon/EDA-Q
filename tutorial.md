@@ -18,6 +18,7 @@ This tutorial introduces the usage of EDA-Q.
 - [Modify The Gds Layout](#modify-the-gds-layout)
 - [Add Air Bridges](#add-air-bridges)
 - [Calculation of physical parameters](#calculation-of-physical-parameters)
+- [scqubits](#scqubits)
 - [Other Functions](#other-functions)
 
 ## Basic Interface
@@ -463,4 +464,91 @@ add_component_temporarily(path, components_type)
 import gds_analysis
 layout_file_path = "./Fsim_gate.gds"
 gds_analysis.read_chip(layout_file_path)
+```
+
+## scqubits
+```python
+# Initialize a transmon qubit
+scTransmon(EJ=30, EC=1.2, ng=0.3, ncut=30)
+
+# Returns Hamiltonian in the charge basis.If True, the energy eigenspectrum is computed
+scHamiltonian(Transmon=transmon,para=False)
+
+# Calculates eigenvalues using scipy.linalg.eigh, returns numpy array of eigenvalues
+scEigenvals(Transmon=transmon, evalscount=6, file=None, returnspectrumdata=False)
+
+# Calculates eigenvalues and corresponding eigenvectors using scipy.linalg.eigh. Returns two numpy arrays containing the eigenvalues and eigenvectors, respectively
+scEigensys(Transmon=transmon, evalscount=6, file=None, returnspectrumdata =False)
+
+# Calculates eigenvalues/eigenstates for a varying system parameter, given an array of parameter values
+scGet_spectrum_vs_paramvals(Transmon=transmon, param_name='EJ', param_vals=[30,30.1,30.2], evalscount=6, subtractground=False, geteigenstates=False, file=None, numcpus=None)
+
+# Return the transmon wave function in number basis
+scNumberbasis_wavefunction(Transmon=transmon, para=None, whichnum=0)
+
+# Return the transmon wave function in phase basis
+scWavefunction(Transmon=transmon, para=None, whichnum=0, phigrid=None)
+
+# Plots transmon wave function in charge basis
+scPlot_n_wavefunction(Transmon=transmon, para=None, smode='real', whichnum=0, n_range=None)
+
+# Alias for plot_wavefunction
+scPlot_phi_wavefunction(Transmon=transmon, para=None, whichnum=0, phogrid=None, smod='abs_sqr', caling=None)
+
+# Returns charge operator n in the charge or eigenenergy basis
+scN_operator(Transmon=transmon, para=False)
+
+# Returns operator exp_i_phi in the charge or eigenenergy basis
+scExp_i_phi_operator(Transmon=transmon, para=False)
+
+# Returns operator cos phi in the charge or eigenenergy basis
+scCos_phi_operator(Transmon=transmon, para=False)
+
+# Returns operator sin phi in the charge or eigenenergy basis
+scSin_phi_operator(Transmon=transmon, para=False)
+
+# Returns table of matrix elements for operator with respect to the eigenstates of the qubit
+scMatrixelement_table(Transmon=transmon, op='n_operator', evec=None, evalscount=6, file=None, returndatastore=False)
+
+# Plots matrix elements for operator
+scPlot_matrixelements(Transmon=transmon, op='n_operator', evec=None, evalscount=6, smode='abs', shownumbers=False, s3d=True)
+
+# Calculates matrix elements for a varying system parameter, given an array of parameter values
+scGet_matelements_vs_paramvals(Transmon=transmon, op='n_operator', paramname='EJ', paramvals=[30,30.1,30.2], evalscount=6, numcpus=None)
+
+# Generates a simple plot of a set of eigenvalues as a function of one parameter
+scPlot_matelem_vs_paramvals(Transmon=transmon, op='n_operator', paramname='EJ', paramvals=[30,30.1,30.2], selectelems=4, smode='abs', numcpus=None)
+
+# Show plots of coherence for various channels supported by the qubit as they vary as a function of a changing parameter
+scPlot_coherence_vs_paramvals(Transmon=transmon, op='n_operator', paramname='EJ', paramvals=[30,30.1,30.2], noisechannels=None, 
+commonnoiseoptions=None, spectrumdata=None, scale1=1, numcpus=None)
+
+# Plot effective T1 coherence time (rate) as a function of changing parameter
+scPlot_t1_effective_vs_paramvals(Transmon=transmon, op='n_operator', paramname='EJ', paramvals=[30,30.1,30.2], noisechannels=None, 
+commonnoiseoptions=None, spectrumdata=None, getrate=None, scale1=1, numcpus=None)
+
+# Plot effective T2 coherence time (rate) as a function of changing parameter
+scPlot_t2_effective_vs_paramvals(Transmon=transmon, op='n_operator', paramname='EJ', paramvals=[30,30.1,30.2], noisechannels=None, 
+commonnoiseoptions=None, spectrumdata=None, getrate=None, scale1=1, numcpus=None)
+
+# Calculate the transition time (or rate) using Fermi’s Golden Rule due to a noise channel with a spectral density spectral_density and system noise operator noise_op
+scT1(Transmon=transmon, i=0, j=1, noise_op, spectral_density=lorentzian_spectrum, t=0.015, total1=True, esys1=None, getrate=False)
+
+# T1 due to dielectric dissipation in the Josephson junction capacitances
+scT1_capacitive(Transmon=transmon, ii=1, jj=0, Qcap=None, t=0.015, total1=True, esys1=None, getrate=False, noiseop=None, branchparams=None)
+
+# Noise due to charge coupling to an impedance (such as a transmission line)
+scT1_charge_impedance(Transmon=transmon, ii=1, jj=0, zz=50, t=0.015, total1=True, esys1=None, getrate=False, noiseop=None)
+
+# Calculate the effective T1 time (or rate)
+scT1_effective(Transmon=transmon, noisechannels=None, commonnoiseoptions=None, esys1=None, getrate=False)
+
+# Calculate the effective T2 time (or rate)
+scT2_effective(Transmon=transmon, noisechannels=None, commonnoiseoptions=None, esys1=None, getrate=False)
+
+# Calculate the 1/f dephasing time (or rate) due to arbitrary noise source
+scTphi_1_over_f(Transmon=transmon, Anoise=1.0, ii=0, jj=1, noiseop, esys1=None, getrate=False)
+
+# Calculate the 1/f dephasing time (or rate) due to critical current noise
+scTphi_1_over_f_cc(Transmon=transmon, Anoise=1e-07, ii=0, jj=1, esys1=None, getrate=False)
 ```
