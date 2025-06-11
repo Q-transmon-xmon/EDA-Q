@@ -9,7 +9,7 @@ from components.pins import Pins
 from components.qubits import Qubits
 from components.readout_lines import ReadoutLines
 from components.transmission_lines import TransmissionLines
-
+from components.cover_bridges import CoverBridges
 module_name_list = ["air_bridges",
                     "chips",
                     "control_lines",
@@ -20,4 +20,5 @@ module_name_list = ["air_bridges",
                     "pins",
                     "qubits",
                     "readout_lines",
-                    "transmission_lines"]
+                    "transmission_lines",
+                    "cover_bridges"]

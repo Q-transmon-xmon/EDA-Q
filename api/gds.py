@@ -634,6 +634,48 @@ class Gds(GdsBase):
         self.inject_options(gds_ops)
         return
     
+    def auto_add_tunnel_bridges(self, line_type, line_name, spacing=120, chip_name="chip3", width=10, tunnel_bridge_type="CoverBridge"):
+        """
+        Automatically generate an air bridge (advanced version).
+
+        Input:
+            line_type: str, the type of line, supports "control_lines" or "transmission_lines".
+            line_name: str, the name of the line.
+            spacing: float, the spacing of the air bridge, default is 120.
+            chip_name: str, the name of the chip, default is "chip3".
+            width: float, the width of the air bridge, default is 10.
+            air_bridge_type: str, the type of air bridge, default is "AirBridgeNb".
+
+        Output:
+            None
+        """
+        allow_type_list = ["control_lines", "transmission_lines"]
+        if line_type not in allow_type_list:
+            raise ValueError("Automatic generation of air bridges for {} has not been developed.".format(line_type))
+        
+        gds_ops = self.options
+        line_ops = copy.deepcopy(gds_ops[line_type][line_name])  # Get line parameters
+        
+        if "pos" in line_ops.keys():
+            path = gds_ops[line_type][line_name].pos
+        elif "path" in line_ops.keys():
+            path = gds_ops[line_type][line_name].path
+        else:
+            #print(line_ops.keys())
+            raise ValueError("The selected component properties do not have pos or path, unable to automatically generate an air bridge.")
+
+        corner_radius = gds_ops[line_type][line_name].corner_radius
+        ab_ops = func_modules.tunnel_bridges.auto_generate_tunnel_bridges_ops(gds_ops=gds_ops,
+                                                                        line_type=line_type,
+                                                                        line_name=line_name,
+                                                                        spacing=spacing,
+                                                                        chip_name=chip_name,
+                                                                        width=width,
+                                                                        tunnel_bridge_type=tunnel_bridge_type)
+        gds_ops.cover_bridges = copy.deepcopy(ab_ops)
+        self.inject_options(gds_ops)
+        return
+    
     def auto_generate_air_bridge4(self, line_type, line_name, spacing=120, chip_name="chip3", width=10, air_bridge_type="AirBridgeNb"):
         """
         Automatically generate an air bridge (advanced version).

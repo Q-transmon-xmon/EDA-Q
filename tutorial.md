@@ -18,6 +18,7 @@ This tutorial introduces the usage of EDA-Q.
 - [Modify The Gds Layout](#modify-the-gds-layout)
 - [Add Air Bridges](#add-air-bridges)
 - [Calculation of physical parameters](#calculation-of-physical-parameters)
+- [Add Tunnel Bridges](#add-tunnel-bridges)
 - [Other Functions](#other-functions)
 
 ## Basic Interface
@@ -452,6 +453,33 @@ design.gds.optimize_air_bridges_layout()
 toolbox.caculate_qubits_parms(f_q=65, Ec=30)
 ```
 
+### Add Air Bridges
+
+```python
+#define an air_bridge
+option =  Dict( name="Bridgecover_line{}".format(i),
+    type= tunnel_bridge_type,
+    chip = "chip3",
+    outline = [], 
+    path = tmp_pos,  
+    corner_radius = bend_radius,
+    width = width1,
+    gap = gap,
+    line1_in = line1_in,
+    line1_out = line1_out,
+    line2_in = line2_in,
+    line2_out = line2_out,
+    angle = angle - np.pi/2,
+    line = 1)
+
+#add new tunnel_bridges on a concret line(based on line_type and line_name)
+design.gds.auto_add_tunnel_bridges(line_type="control_lines",
+                                     line_name="charge_line1",
+                                     spacing=spacing,
+                                     chip_name="chip0",
+                                     width=8,
+                                     tunnel_bridge_type="CoverBridge")
+```
 ## Other functions
 ```python
 # Temporarily add a single component
