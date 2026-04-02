@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "_comment": "Sensitive geometric parameters have been redacted. Structure preserved for API compatibility.",
+  "profiles": {
+    "default": {
+      "routing": {
+        "method": "Flipchip_routing",
+        "chip_name": "chip0",
+        "pins_type": "LaunchPad",
+        "tmls_type": "TransmissionPath",
+        "ctls_type": "ChargeLine",
+        "pins_geometric_ops": {
+          "trace_width": 0.0,
+          "trace_gap": 0.0,
+          "taper_height": 0.0,
+          "pad_width": 0.0,
+          "pad_height": 0.0,
+          "pad_gap": 0.0,
+          "orientation": 0,
+          "start_straight": 0.0,
+          "distance_to_chip": 0.0,
+          "distance_to_qubits": 0.0
+        }
+      },
+      "generation_defaults": {
+        "qubits": {
+          "qubits_type": "Transmon",
+          "chip_name": "chip0",
+          "dist": 0.0
+        },
+        "coupling_lines": {
+          "cpls_type": "CouplingLineStraight",
+          "chip_name": "chip0"
+        },
+        "readout_lines": {
+          "rdls_type": "ReadoutCavityFlipchip",
+          "chip_name": "chip0"
+        },
+        "chips": {
+          "chip_name": "chip0",
+          "chip_type": "RecChip"
+        }
+      }
+    }
+  }
+}

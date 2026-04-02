@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "_comment": "Sensitive process parameters have been redacted. Structure preserved for API compatibility.",
+  "layers": [
+    {
+      "layer_id": "layer1",
+      "name": "Base Circuit Layer",
+      "purpose": "Base circuit pattern",
+      "process_range": "REDACTED",
+      "gds_layer": 1,
+      "gds_datatype": 0
+    },
+    {
+      "layer_id": "layer2",
+      "name": "Josephson Junction Layer",
+      "purpose": "Josephson junction pattern",
+      "process_range": "REDACTED",
+      "gds_layer": 2,
+      "gds_datatype": 0
+    },
+    {
+      "layer_id": "layer3",
+      "name": "Air Bridge Pillar Layer",
+      "purpose": "Air bridge pillar topology",
+      "process_range": "REDACTED",
+      "gds_layer": 3,
+      "gds_datatype": 0
+    },
+    {
+      "layer_id": "layer4",
+      "name": "Air Bridge Span Layer",
+      "purpose": "Air bridge span topology",
+      "process_range": "REDACTED",
+      "gds_layer": 4,
+      "gds_datatype": 0
+    },
+    {
+      "layer_id": "layer5",
+      "name": "Indium Bump Layer",
+      "purpose": "Indium bump topology",
+      "process_range": "REDACTED",
+      "gds_layer": 5,
+      "gds_datatype": 0
+    }
+  ]
+}

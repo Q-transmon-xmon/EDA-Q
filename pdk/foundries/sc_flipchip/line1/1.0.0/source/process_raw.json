@@ -1,0 +1,47 @@
+{
+  "_comment": "This is the raw source file. All sensitive process parameters have been redacted. Structure preserved for reference only.",
+  "layer_information": [
+    {
+      "layer_id": "layer1",
+      "layer_name": "Base Circuit Layer",
+      "purpose": "Base circuit pattern",
+      "process_range": "REDACTED"
+    },
+    {
+      "layer_id": "layer2",
+      "layer_name": "Josephson Junction Layer",
+      "purpose": "Josephson junction pattern",
+      "process_range": "REDACTED"
+    },
+    {
+      "layer_id": "layer3",
+      "layer_name": "Air Bridge Pillar Layer",
+      "purpose": "Air bridge pillar topology",
+      "process_range": "REDACTED"
+    },
+    {
+      "layer_id": "layer4",
+      "layer_name": "Air Bridge Span Layer",
+      "purpose": "Air bridge span topology",
+      "process_range": "REDACTED"
+    },
+    {
+      "layer_id": "layer5",
+      "layer_name": "Indium Bump Layer",
+      "purpose": "Indium bump topology",
+      "process_range": "REDACTED"
+    }
+  ],
+  "design_rules": {
+    "DCR_rules": {
+      "minimum_linewidth": "REDACTED",
+      "minimum_spacing": "REDACTED",
+      "metal_stack_relation": "Bottom layer is base circuit metal film, upper layers include air bridges, indium bumps, and Josephson junctions"
+    },
+    "JJ_size_rules": "Size must be determined in conjunction with deposition and oxidation conditions to meet design resistance requirements",
+    "bridge_width_requirement": "REDACTED",
+    "required_alignment_marks": "Layers 2-5 require alignment marks relative to previous layers, typically placed on layer1",
+    "OPC": "Josephson junctions undergo OPC processing"
+  },
+  "process_list": "REDACTED - All process steps, equipment details, and target specifications have been removed"
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "_comment": "Sensitive design rule values have been redacted. Structure preserved for API compatibility.",
+  "hard_rules": {
+    "min_linewidth_um": {
+      "scope": "layer1",
+      "value": 0.0,
+      "source": "Design Rules - DCR Rules - Minimum Linewidth (REDACTED)"
+    },
+    "min_spacing_um": {
+      "scope": "layer1",
+      "value": 0.0,
+      "source": "Design Rules - DCR Rules - Minimum Spacing (REDACTED)"
+    }
+  },
+  "guidance_rules": {
+    "metal_stack_relation": "Bottom layer is base circuit metal film, upper layers include air bridges, indium bumps, and Josephson junctions",
+    "jj_size_rule": "Size must be determined in conjunction with deposition and oxidation conditions to meet design resistance requirements",
+    "bridge_width_requirement": "Air bridges generally require aspect ratio constraints (REDACTED)",
+    "alignment_mark": "Layers 2-5 require alignment marks relative to previous layers, typically placed on layer1",
+    "opc": "Josephson junctions undergo OPC processing"
+  }
+}

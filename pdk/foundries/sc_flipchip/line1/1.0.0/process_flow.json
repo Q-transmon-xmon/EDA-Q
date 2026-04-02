@@ -1,0 +1,628 @@
+{
+  "schema_version": "1.0.0",
+  "_comment": "Sensitive process parameters, equipment details, and target specifications have been redacted. Structure and workflow preserved for API compatibility.",
+  "processes": [
+    {
+      "process_no": 1000,
+      "name": "Wafer Inspection",
+      "related_layer_id": null,
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Pre-fabrication wafer inspection",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 2000,
+      "name": "Wafer Loading",
+      "related_layer_id": null,
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Laser marking for batch and wafer number",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 3000,
+      "name": "Wafer Cleaning",
+      "related_layer_id": null,
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Cleaning pre-treatment",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Piranha cleaning",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "300",
+          "name": "SC1 cleaning",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "400",
+          "name": "SC2 cleaning",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "450",
+          "name": "HF/BOE cleaning (Si)",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "500",
+          "name": "Post-cleaning treatment",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "600",
+          "name": "Drying process",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "700",
+          "name": "Quality inspection",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 4000,
+      "name": "Base Layer Film Growth",
+      "related_layer_id": "layer1",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Film deposition",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "XRD characterization",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "300",
+          "name": "Resistance measurement",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "400",
+          "name": "AFM characterization",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "500",
+          "name": "Quality inspection",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 5000,
+      "name": "Base Circuit Lithography",
+      "related_layer_id": "layer1",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Spin coating",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Baking",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "300",
+          "name": "Exposure",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "400",
+          "name": "Development",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "500",
+          "name": "Post-exposure bake",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "600",
+          "name": "Quality inspection (CD/overlay/profile)",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 6000,
+      "name": "Base Circuit Etching",
+      "related_layer_id": "layer1",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Etching",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Plasma cleaning",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "300",
+          "name": "Resist stripping and cleaning",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "400",
+          "name": "Quality inspection (CD/profile)",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 7000,
+      "name": "Base Circuit Cleaning",
+      "related_layer_id": "layer1",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Piranha cleaning",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "HF/BOE cleaning",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "300",
+          "name": "Post-cleaning treatment",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "400",
+          "name": "Quality inspection",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 8000,
+      "name": "Josephson Junction Lithography",
+      "related_layer_id": "layer2",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Spin coating - bottom layer resist",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "150",
+          "name": "Baking 1",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Spin coating - top layer resist",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "250",
+          "name": "Baking 2",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "300",
+          "name": "Spin coating - conductive layer",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "350",
+          "name": "Baking 3",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "400",
+          "name": "E-beam exposure",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "500",
+          "name": "Development",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "600",
+          "name": "UV cleaning",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "700",
+          "name": "Quality inspection (CD/overlay/profile)",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 9000,
+      "name": "Josephson Junction Deposition",
+      "related_layer_id": "layer2",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Film deposition",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Quality inspection",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 10000,
+      "name": "Resist Stripping and Liftoff",
+      "related_layer_id": "layer2",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Liftoff cleaning",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Quality inspection",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 11000,
+      "name": "Electrical Testing",
+      "related_layer_id": "layer2",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Electrical characterization",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 12000,
+      "name": "Air Bridge Pillar Lithography",
+      "related_layer_id": "layer3",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Spin coating",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Baking",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "300",
+          "name": "Exposure",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "400",
+          "name": "Development",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "500",
+          "name": "Reflow bake",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "600",
+          "name": "Quality inspection (CD/overlay/profile)",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 13000,
+      "name": "Air Bridge Deposition",
+      "related_layer_id": "layer3",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Film deposition",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Quality inspection",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 14000,
+      "name": "Air Bridge Span Lithography",
+      "related_layer_id": "layer4",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Spin coating",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Baking",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "300",
+          "name": "Exposure",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "400",
+          "name": "Development",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "500",
+          "name": "Post-exposure bake",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "600",
+          "name": "Quality inspection (CD/overlay/profile)",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 15000,
+      "name": "Air Bridge Etching",
+      "related_layer_id": "layer4",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Etching",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Plasma cleaning",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "300",
+          "name": "Cleaning",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "400",
+          "name": "Quality inspection",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 16000,
+      "name": "Electrical Testing",
+      "related_layer_id": "layer4",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Electrical characterization",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 17000,
+      "name": "Indium Bump Lithography",
+      "related_layer_id": "layer5",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Spin coating",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Baking",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "300",
+          "name": "Exposure",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "400",
+          "name": "Development",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "500",
+          "name": "Post-exposure bake",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "600",
+          "name": "Quality inspection (CD/overlay/profile)",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 18000,
+      "name": "Indium Bump Deposition",
+      "related_layer_id": "layer5",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Film deposition",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Quality inspection",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 19000,
+      "name": "Indium Bump Liftoff",
+      "related_layer_id": "layer5",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Liftoff cleaning",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Quality inspection",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 20000,
+      "name": "Electrical Testing",
+      "related_layer_id": "layer5",
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Electrical characterization",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 21000,
+      "name": "Die Dicing",
+      "related_layer_id": null,
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Protective coating",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Die dicing",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "300",
+          "name": "Cleaning",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "400",
+          "name": "UV cleaning",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "500",
+          "name": "Quality inspection",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 22000,
+      "name": "Die Selection",
+      "related_layer_id": null,
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Electrical characterization",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Quality inspection",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 23000,
+      "name": "Die Bonding",
+      "related_layer_id": null,
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Plasma cleaning",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Flip-chip bonding",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "300",
+          "name": "Quality inspection",
+          "equipment": "REDACTED"
+        }
+      ]
+    },
+    {
+      "process_no": 24000,
+      "name": "Die Packaging",
+      "related_layer_id": null,
+      "target": "REDACTED",
+      "steps": [
+        {
+          "step_no": "100",
+          "name": "Wire bonding",
+          "equipment": "REDACTED"
+        },
+        {
+          "step_no": "200",
+          "name": "Quality inspection",
+          "equipment": "REDACTED"
+        }
+      ]
+    }
+  ]
+}

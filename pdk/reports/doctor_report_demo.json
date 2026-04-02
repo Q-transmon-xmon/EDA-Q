@@ -1,0 +1,16 @@
+{
+  "ok": 1,
+  "failed": 0,
+  "targets": [
+    {
+      "pdk_id": "sc_flipchip_line1",
+      "version": "1.0.0",
+      "status": "ok",
+      "errors": [],
+      "warnings": [],
+      "infos": [
+        "Overlay applied successfully."
+      ]
+    }
+  ]
+}

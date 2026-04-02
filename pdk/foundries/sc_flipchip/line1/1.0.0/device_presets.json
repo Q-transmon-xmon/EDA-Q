@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "layer_binding": {
+    "qubits": "layer1",
+    "coupling_lines": "layer1",
+    "readout_lines": "layer1",
+    "control_lines": "layer1",
+    "transmission_lines": "layer1",
+    "jj_jodan": "layer2",
+    "air_bridges": "layer3",
+    "cover_bridges": "layer4",
+    "indium_bumps": "layer5"
+  },
+  "recommended_types": {
+    "qubits": "Transmon",
+    "readout_lines": "ReadoutCavityFlipchip",
+    "pins": "LaunchPad",
+    "control_lines": "ChargeLine",
+    "transmission_lines": "TransmissionPath",
+    "jj_jodan": "JjDolan1",
+    "indium_bumps": "IndiumBump"
+  }
+}

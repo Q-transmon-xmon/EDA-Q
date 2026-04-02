@@ -1,0 +1,34 @@
+{
+  "overlay_id": "demo_flipchip_project",
+  "description": "Example project overlay for line1 process.",
+  "_comment": "Sensitive parameter values have been redacted.",
+  "base_pdk": {
+    "pdk_id": "sc_flipchip_line1",
+    "version": "1.0.0"
+  },
+  "target_profile": "default",
+  "overrides": {
+    "routing_profile": {
+      "profiles": {
+        "default": {
+          "routing": {
+            "chip_name": "chip1",
+            "ctls_type": "ChargeLine"
+          },
+          "generation_defaults": {
+            "qubits": {
+              "chip_name": "chip1",
+              "dist": 0.0
+            },
+            "readout_lines": {
+              "chip_name": "chip1"
+            },
+            "chips": {
+              "chip_name": "chip1"
+            }
+          }
+        }
+      }
+    }
+  }
+}

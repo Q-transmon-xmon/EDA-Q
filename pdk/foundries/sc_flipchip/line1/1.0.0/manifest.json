@@ -1,0 +1,20 @@
+{
+  "pdk_id": "sc_flipchip_line1",
+  "foundry": "sc_flipchip",
+  "line": "line1",
+  "version": "1.0.0",
+  "schema_version": "1.0.0",
+  "description": "Superconducting flipchip process line-1 PDK converted from foundry process flow.",
+  "status": "draft",
+  "compatibility": {
+    "edaq_min": "3.0.0",
+    "edaq_max": "3.x"
+  },
+  "files": {
+    "layers": "layers.json",
+    "design_rules": "design_rules.json",
+    "process_flow": "process_flow.json",
+    "routing_profile": "routing_profile.json",
+    "device_presets": "device_presets.json"
+  }
+}
