@@ -92,6 +92,7 @@ conda run -n pyoccenv python -m compileall api/design.py api/pdk.py pdk/core/*.p
 [@Celester7](Celester7.github.io)
 [@Yuanbenzheng](Yuanbenzheng.github.io)
 [@ZhaoBo-Snake](https://github.com/ZhaoBo-Snake)
+[@Pr0-s](https://github.com/Pr0-s)
 [@Ha-ha-123456](https://github.com/Ha-ha-123456)
 [@Sally-Star-One](https://github.com/Sally-Star-One)
 [@wxwrlr](https://github.com/wxwrlr)
