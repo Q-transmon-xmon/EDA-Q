@@ -64,6 +64,22 @@ To simplify the installation process of the **EDA-Q** tool, we provide a pre-con
    ```bash
    python -c "import api"
    ```
+
+## PDK Framework (Superconducting)
+
+The repository now includes a reusable PDK framework under `./pdk` for foundry-process packaging, versioning, and EDA-Q integration.
+
+- Full guide: `./pdk/README.md`
+- Current packaged PDK example: `./pdk/foundries/sc_flipchip/line1/1.0.0`
+- Recommended runtime for this workspace: `pyoccenv`
+
+Example commands:
+
+```bash
+conda run -n pyoccenv python pdk/tools/convert_line1_process_json.py
+conda run -n pyoccenv python -m compileall api/design.py api/pdk.py pdk/core/*.py
+```
+
 ## Ai Assistant
 ![alt text](./test/img/ai_assistant.png)
 ## Key Project Leaders
@@ -75,6 +91,16 @@ To simplify the installation process of the **EDA-Q** tool, we provide a pre-con
 [@ccccl-p](ccccl-p.github.io)
 [@Celester7](Celester7.github.io)
 [@Yuanbenzheng](Yuanbenzheng.github.io)
+[@ZhaoBo-Snake](https://github.com/ZhaoBo-Snake)
+[@Ha-ha-123456](https://github.com/Ha-ha-123456)
+[@Sally-Star-One](https://github.com/Sally-Star-One)
+[@wxwrlr](https://github.com/wxwrlr)
+[@suninwinter921](https://github.com/suninwinter921)
+[@meisen0103 ](https://github.com/meisen0103 )
+[@PengDauan](https://github.com/PengDauan)
+[@OriginQ](https://github.com/OriginQ)
+[@godoverhead](https://github.com/godoverhead)
+[@luantian0417](https://github.com/luantian0417)
 
 ## Contribution Guide
 
@@ -86,8 +112,16 @@ Submit a PR (https://github.com/Q-transmon-xmon/EDA-Q/pulls) request, and I will
 
 Thanks to all the contributors.
 
-[@Institute of Physics, Chinese Academy of Sciences]() <br>
-[@CIQTEK Co.,Ltd]() <br>
+[@Institute of Physics, Chinese Academy of Sciences]() <br>[@CIQTEK Co.,Ltd]() <br>
 [@Shenzhen International Quantum Institute]() <br>
 [@Zhejiang University]() <br>
 [@National Supercomputing Center in Zhengzhou]() <br>
+[@ACIE Lab]()<br>
+[@Nanjing University]()<br>
+[@Zhengzhou University]()<br>[@Origin Quantum]()
+[@China Academy of Electronics and Information Technology]()
+
+
+
+
+
