@@ -2,19 +2,27 @@
 
 © [2025] [EDA-Q]. All rights reserved.
 
-This project is licensed under the [GPL v3.0] License - see the [LICENSE](LICENSE) file for full details.
+This project is licensed under the [Apache License 2.0] - see the [LICENSE](LICENSE) file for full details.
 
 ## Terms
 
-1. Permission is granted to freely use, modify, and distribute this code
-2. Original copyright notice and license must be preserved
-3. Prohibited for illegal purposes
-4. Prohibited for commercial purposes
-5. Provided WITHOUT ANY WARRANTY, express or implied
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 ## Attribution Requirements
 
 When modifying or distributing this code, you must:
-- Maintain the original copyright notice in source files
+- Retain the original copyright, patent, trademark, and attribution notices
+- Include a copy of the Apache License 2.0 with the distribution
+- Cause any modified files to carry prominent notices stating that you changed them
 - Include the following in your project's documentation/credits:
   > "Based on [Project Name] (original at: [Project URL])"
